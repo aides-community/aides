@@ -1,0 +1,4 @@
+[singularityapp]
+source="snapcraft"
+snap="singularityapp"
+channel="stable"
