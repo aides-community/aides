@@ -1,0 +1,4 @@
+[vagrant]
+source = "regex"
+url = "https://hashicorp-releases.yandexcloud.net/vagrant/"
+regex = 'vagrant_([\d.]+)'
