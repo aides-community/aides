@@ -1,6 +1,3 @@
-[
-    {
-        "repo": "aides-pkgs/singularityapp",
-        "commit": "da54521cc4924cbefd5a02fe38a34ad3759fe376"
-    }
-]
+{
+  "aides-pkgs/singularityapp": "da54521cc4924cbefd5a02fe38a34ad3759fe376"
+}

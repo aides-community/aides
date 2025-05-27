@@ -32,13 +32,15 @@ def clone_or_update_repo(repo, repo_url, clone_path, local_commit):
             print(f"Не удалось получить удаленный коммит для {repo}. Пропуск.")
             return None
 
-        if os.path.exists(clone_path):
-            if local_commit == remote_commit:
-                print(f"Репозиторий {repo} уже обновлен. Пропуск.")
-                return local_commit
+        if os.path.exists(clone_path) and local_commit == remote_commit:
+            print(f"Репозиторий {repo} уже обновлен. Пропуск.")
+            return local_commit
 
         clear_directory(clone_path)
-        subprocess.run(["git", "clone", "--depth", "1", repo_url, clone_path])
+        subprocess.run(
+            ["git", "clone", "--depth", "1", repo_url, clone_path],
+            check=True
+        )
         os.chdir(clone_path)
         cloned_commit = subprocess.check_output(
             ["git", "rev-parse", "HEAD"]
@@ -58,22 +60,25 @@ def process_repositories(file_path):
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
-        for entry in data:
-            repo = entry.get("repo")
-            if repo:
-                print(f"Обработка репозитория: {repo}")
-                repo_name = repo.split("/")[-1].replace(".git", "")
-                repo_path = os.path.join(CLONE_DIR, repo_name)
-                repo_url = DEFAULT_URL.format(repo)
-                commit_hash = clone_or_update_repo(
-                    repo, repo_url,
-                    repo_path,
-                    entry.get("commit"),
-                )
-                entry["commit"] = commit_hash
+        updated = {}
+        for repo, commit in data.items():
+            print(f"Обработка репозитория: {repo}")
+            repo_name = repo.split("/")[-1]
+            repo_path = os.path.join(CLONE_DIR, repo_name)
+            repo_url = DEFAULT_URL.format(repo)
+            new_commit = clone_or_update_repo(
+                repo, repo_url,
+                repo_path,
+                commit,
+            )
+            if new_commit:
+                updated[repo] = new_commit
+            else:
+                updated[repo] = commit
+
         os.chdir(dir_path)
         with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
+            json.dump(updated, f, indent=4, ensure_ascii=False)
             print(f"Обновленный JSON сохранен в {file_path}.")
     except Exception as e:
         print(f"Непредвиденная ошибка: {e}")
