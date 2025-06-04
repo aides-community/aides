@@ -1,0 +1,83 @@
+# Example of alr.sh
+# Check l.aides.space/alr-sh for a documentation.
+name=yandex-browser-stable
+version=25.4.1.1132
+release=1
+summary="The web browser from Yandex"
+group="Networking/WWW"
+desc="The web browser from Yandex
+
+Yandex Browser is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier."
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+# Array of Go arches (go tool dist list | cut -d/ -f2 | sort | uniq) or "all"
+architectures=("amd64")
+homepage="https://browser.yandex.ru/"
+license=("custom")
+
+_pkgver=$version-1
+_pkgname=browser-stable
+
+provides=(
+	yandex-browser
+	webclient
+)
+conflicts=(
+	yandex-browser-beta
+	yandex-browser-corporate
+)
+
+build_deps=(
+	binutils
+	tar
+
+	# for update_codecs
+	wget
+	squashfs-tools
+	glibc-pthread
+
+	# for auto_req only
+	at-spi2-atk libalsa libat-spi2-core libatk libcairo libcups
+	libdbus libdrm libexpat libgbm libgio libnspr libnss
+	libpango libX11 libXcomposite libXdamage libXext libXfixes
+	libXrandr libxcb libxkbcommon
+	libwayland-client
+	libqt5-core libqt5-widgets libqt5-gui
+	libqt6-core libqt6-widgets libqt6-gui
+)
+
+auto_req=1
+auto_prov=1
+
+sources_amd64=(
+	"https://repo.yandex.ru/yandex-browser/deb/pool/main/y/yandex-${_pkgname}/yandex-${_pkgname}_${_pkgver}_amd64.deb?~name=${name}-${_pkgver}.deb"
+)
+checksums_amd64=(
+	SKIP
+)
+
+prepare() {
+	cd "$srcdir"
+	ar x ${name}-${_pkgver}.deb
+	tar -xf data.tar.xz
+}
+
+package() {
+	cp -dr --no-preserve=ownership opt usr "${pkgdir}"/
+	install -Dm 0644 "${pkgdir}"/opt/yandex/browser/product_logo_128.png "${pkgdir}"/usr/share/pixmaps/yandex-browser.png
+	install -Dm 0644 "${scriptdir}/README.md" -t "${pkgdir}/usr/share/doc/${name}/"
+	"${pkgdir}"/opt/yandex/browser/update_codecs "${pkgdir}"/opt/yandex/browser
+}
+
+files() {
+    printf '"%s" ' ./opt/**/*
+
+    echo ./usr/bin/yandex-browser-stable
+
+    echo ./usr/share/appdata/*
+	echo ./usr/share/applications/*
+    echo ./usr/share/gnome-control-center/default-apps/*
+    echo ./usr/share/pixmaps/*
+    echo ./usr/share/menu/*
+
+    files-find-doc yandex-browser-stable
+}

@@ -1,0 +1,7 @@
+[yandex-browser-stable]
+source = "apt"
+mirror = "https://repo.yandex.ru/yandex-browser/deb/"
+pkg = "yandex-browser-stable"
+suite = "stable"
+repo = "main"
+strip_release = true
