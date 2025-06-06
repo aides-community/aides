@@ -1,0 +1,117 @@
+# Example of alr.sh
+# Check l.aides.space/alr-sh for a documentation.
+name=visual-studio-code
+version=1.99.3
+release=1
+summary='Visual Studio Code'
+group='Development/Tools'
+desc='Visual Studio Code (vscode): Editor for building and debugging modern web and cloud applications (official binary version)'
+maintainer='Vladimir Vaskov <rirusha@altlinux.org>'
+architectures=('amd64')
+homepage='https://code.visualstudio.com/'
+license=('custom')
+
+provides=('code' 'vscode')
+conflicts=()
+
+sources=(
+	"https://raw.githubusercontent.com/microsoft/vscode/${version}/resources/linux/code.desktop?~name=code.desktop.in"
+	"https://raw.githubusercontent.com/microsoft/vscode/${version}/resources/linux/code-url-handler.desktop?~name=code-url-handler.desktop.in"
+	"https://raw.githubusercontent.com/microsoft/vscode/${version}/resources/linux/code-workspace.xml?~name=code-workspace.xml.in"
+	"https://update.code.visualstudio.com/${version}/linux-x64/stable?~name=code_x64_${version}.tar.gz"
+)
+
+checksums=(
+	sha256:2f1782b30c4e040efff655fd9cf477930c5a0c81ddae27749b0cbb922c1d248e
+	sha256:c361efa7e02fcad759ed80d2fbab67877f33219b981578af6fffaf18aeb12d9b
+	sha256:3af748dd6578a1775e8eb7248ba397b7e11840df2ea6ee234ff76fee3dc306cf
+	sha256:b4ff5fadb43078ba495618816f022fb859bcec81c20bb2d3f69353dd5d743835
+)
+
+_set_meta_info() {
+	sed 's/@@NAME_LONG@@/Visual Studio Code/g' "$1" |
+		sed 's/@@NAME_SHORT@@/Code/g' |
+		sed 's/@@NAME@@/code/g' |
+		sed 's#@@EXEC@@#/usr/bin/code#g' |
+		sed 's/@@ICON@@/visual-studio-code/g' |
+		sed 's/@@URLPROTOCOL@@/vscode/g'
+}
+
+_pkg() {
+	if [ "${ARCH}" = "arm64" ]; then
+		echo 'VSCode-linux-arm64'
+	else
+		echo 'VSCode-linux-x64'
+	fi
+}
+
+build_deps=(
+	at-spi2-atk
+	libXcomposite
+	libXdamage
+	libXext
+	libXfixes
+	libXrandr
+	libalsa
+	libat-spi2-core
+	libatk
+	libcairo
+	libdbus
+	libdrm
+	libgbm
+	libgio
+	libgtk+3
+	libnspr
+	libnss
+	libpango
+	libxkbcommon
+	libxkbfile
+)
+
+deps=(
+
+)
+
+auto_req=1
+auto_prov=1
+
+prepare() {
+	_set_meta_info "${srcdir}/code.desktop.in" >"${srcdir}/code.desktop"
+	_set_meta_info "${srcdir}/code-url-handler.desktop.in" >"${srcdir}/code-url-handler.desktop"
+	_set_meta_info "${srcdir}/code-workspace.xml.in" >"${srcdir}/code-workspace.xml"
+
+	cp "${scriptdir}/${name}.sh" "${srcdir}"
+}
+
+package() {
+	install -d "${pkgdir}/usr/share/licenses/${name}"
+	install -d "${pkgdir}/opt/${name}"
+	install -d "${pkgdir}/usr/bin"
+	install -d "${pkgdir}/usr/share/applications"
+	install -d "${pkgdir}/usr/share/icons"
+	install -d "${pkgdir}/usr/share/mime/packages"
+
+	install -m644 "${srcdir}/$(_pkg)/resources/app/LICENSE.rtf" "${pkgdir}/usr/share/licenses/${name}/LICENSE.rtf"
+	install -m644 "${srcdir}/$(_pkg)/resources/app/resources/linux/code.png" "${pkgdir}/usr/share/icons/${name}.png"
+	install -m644 "${srcdir}/code.desktop" "${pkgdir}/usr/share/applications/code.desktop"
+	install -m644 "${srcdir}/code-url-handler.desktop" "${pkgdir}/usr/share/applications/code-url-handler.desktop"
+	install -m644 "${srcdir}/code-workspace.xml" "${pkgdir}/usr/share/mime/packages/${name}-workspace.xml"
+	install -Dm 644 "${srcdir}/$(_pkg)/resources/completions/bash/code" "${pkgdir}/usr/share/bash-completion/completions/code"
+	install -Dm 644 "${srcdir}/$(_pkg)/resources/completions/zsh/_code" "${pkgdir}/usr/share/zsh/site-functions/_code"
+
+	cp -r "${srcdir}/$(_pkg)/"* "${pkgdir}/opt/${name}"
+
+	# Launcher
+	install -m755 "${srcdir}/${name}.sh" "${pkgdir}/usr/bin/code"
+}
+
+files() {
+	printf '"%s" ' ./opt/**/* ./opt/**/.*
+	echo ./usr/bin/code
+	echo ./usr/share/applications/*
+	echo ./usr/share/bash-completion/completions/*
+	echo ./usr/share/zsh/site-functions/*
+	echo ./usr/share/icons/*
+	echo ./usr/share/mime/packages/*
+	echo ./usr/share/licenses/**/*
+}
