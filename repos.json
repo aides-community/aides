@@ -1,7 +1,7 @@
 {
-  "aides-pkgs/singularityapp": "da54521cc4924cbefd5a02fe38a34ad3759fe376",
-  "aides-pkgs/vagrant": "2c0dbd3addb5ff8c22b6c57bc31a5ae64a834f96",
-  "aides-pkgs/yandex-browser-stable": "869f66cd0c1b48f2ccacc35809f0ee3a610e6b53",
-  "aides-pkgs/visual-studio-code": "38f39805f0666595a5feef72968b9431cf574322",
-  "aides-pkgs/yandex-disk": ""
+    "aides-pkgs/singularityapp": "da54521cc4924cbefd5a02fe38a34ad3759fe376",
+    "aides-pkgs/vagrant": "2c0dbd3addb5ff8c22b6c57bc31a5ae64a834f96",
+    "aides-pkgs/yandex-browser-stable": "869f66cd0c1b48f2ccacc35809f0ee3a610e6b53",
+    "aides-pkgs/visual-studio-code": "38f39805f0666595a5feef72968b9431cf574322",
+    "aides-pkgs/yandex-disk": "2daeb0574407c6b2f58879bd0dbfe9b53bf2547a"
 }
