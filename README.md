@@ -1,0 +1,15 @@
+Config:
+
+```
+rootCmd = 'sudo'
+pagerStyle = 'native'
+ignorePkgUpdates = []
+autoPull = false
+
+[[repo]]
+name = 'aides'
+url = 'https://altlinux.space/aides-community/aides.git'
+
+[unsafe]
+allowRunAsRoot = true
+```
