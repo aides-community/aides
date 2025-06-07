@@ -52,7 +52,7 @@ package() {
 	install -Dm 644 "${scriptdir}/README.md" -t "${pkgdir}/usr/share/doc/${name}/"
 }
 
-# files(): Lists all files to be included in the final package.
 files() {
-	echo ''
+	find -L ./etc/*
+	find -L ./usr/*
 }
