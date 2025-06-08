@@ -1,8 +1,8 @@
 {
-  "aides-pkgs/singularityapp": "da54521cc4924cbefd5a02fe38a34ad3759fe376",
-  "aides-pkgs/vagrant": "2c0dbd3addb5ff8c22b6c57bc31a5ae64a834f96",
-  "aides-pkgs/yandex-browser-stable": "869f66cd0c1b48f2ccacc35809f0ee3a610e6b53",
-  "aides-pkgs/visual-studio-code": "38f39805f0666595a5feef72968b9431cf574322",
-  "aides-pkgs/yandex-disk": "772fd1564e7d02923a9185ca01552496f92918c5",
-  "aides-pkgs/yandex-music": ""
+    "aides-pkgs/singularityapp": "da54521cc4924cbefd5a02fe38a34ad3759fe376",
+    "aides-pkgs/vagrant": "2c0dbd3addb5ff8c22b6c57bc31a5ae64a834f96",
+    "aides-pkgs/yandex-browser-stable": "869f66cd0c1b48f2ccacc35809f0ee3a610e6b53",
+    "aides-pkgs/visual-studio-code": "38f39805f0666595a5feef72968b9431cf574322",
+    "aides-pkgs/yandex-disk": "772fd1564e7d02923a9185ca01552496f92918c5",
+    "aides-pkgs/yandex-music": "70c5831a9b2743f97e568990f1873284f1196844"
 }

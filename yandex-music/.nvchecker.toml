@@ -1,0 +1,5 @@
+[yandex-music]
+source = "github"
+github = "cucumber-sp/yandex-music-linux"
+use_latest_release = true
+prefix = "v"
