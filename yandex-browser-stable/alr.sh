@@ -48,11 +48,11 @@ build_deps=(
 auto_req=1
 auto_prov=1
 
-sources_amd64=(
+sources=(
 	"https://repo.yandex.ru/yandex-browser/deb/pool/main/y/yandex-${_pkgname}/yandex-${_pkgname}_${_pkgver}_amd64.deb?~name=${name}-${_pkgver}.deb"
 )
-checksums_amd64=(
-	SKIP
+checksums=(
+	sha256:6e7a60d9540da163d7835be879af552f0e478eb2bd4a15974e25c3118110d53f
 )
 
 prepare() {
@@ -69,15 +69,15 @@ package() {
 }
 
 files() {
-    printf '"%s" ' ./opt/**/*
+	printf '"%s" ' ./opt/**/*
 
-    echo ./usr/bin/yandex-browser-stable
+	echo ./usr/bin/yandex-browser-stable
 
-    echo ./usr/share/appdata/*
+	echo ./usr/share/appdata/*
 	echo ./usr/share/applications/*
-    echo ./usr/share/gnome-control-center/default-apps/*
-    echo ./usr/share/pixmaps/*
-    echo ./usr/share/menu/*
+	echo ./usr/share/gnome-control-center/default-apps/*
+	echo ./usr/share/pixmaps/*
+	echo ./usr/share/menu/*
 
-    files-find-doc yandex-browser-stable
+	files-find-doc yandex-browser-stable
 }

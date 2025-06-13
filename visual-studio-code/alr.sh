@@ -1,7 +1,7 @@
 # Example of alr.sh
 # Check l.aides.space/alr-sh for a documentation.
 name=visual-studio-code
-version=1.100.3
+version=1.101.0
 release=1
 summary='Visual Studio Code'
 group='Development/Tools'
@@ -25,7 +25,7 @@ checksums=(
 	sha256:2f1782b30c4e040efff655fd9cf477930c5a0c81ddae27749b0cbb922c1d248e
 	sha256:c361efa7e02fcad759ed80d2fbab67877f33219b981578af6fffaf18aeb12d9b
 	sha256:3af748dd6578a1775e8eb7248ba397b7e11840df2ea6ee234ff76fee3dc306cf
-	sha256:ad193cffdfb1df1bb14fff51ff92240bbe2b0c8c8c60484b8c479eb0d0b2a44d
+	sha256:5db54c1638f83c44b7bc96be53292e2595d84e4272540479e57f1264432386fd
 )
 
 _set_meta_info() {
