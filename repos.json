@@ -1,9 +1,9 @@
 {
-  "aides-pkgs/singularityapp": "da54521cc4924cbefd5a02fe38a34ad3759fe376",
-  "aides-pkgs/vagrant": "2c0dbd3addb5ff8c22b6c57bc31a5ae64a834f96",
-  "aides-pkgs/yandex-browser-stable": "75e02ac3188b200a346458b03675971f817dd783",
-  "aides-pkgs/visual-studio-code": "b109be53faf6f8b94db58e724d0e09ed9acb6d22",
-  "aides-pkgs/yandex-disk": "772fd1564e7d02923a9185ca01552496f92918c5",
-  "aides-pkgs/yandex-music": "70c5831a9b2743f97e568990f1873284f1196844",
-  "aides-pkgs/jetbrains-toolbox": ""
+    "aides-pkgs/singularityapp": "da54521cc4924cbefd5a02fe38a34ad3759fe376",
+    "aides-pkgs/vagrant": "2c0dbd3addb5ff8c22b6c57bc31a5ae64a834f96",
+    "aides-pkgs/yandex-browser-stable": "31314cad4d74667988dba95c06571e21b705f2f8",
+    "aides-pkgs/visual-studio-code": "b109be53faf6f8b94db58e724d0e09ed9acb6d22",
+    "aides-pkgs/yandex-disk": "772fd1564e7d02923a9185ca01552496f92918c5",
+    "aides-pkgs/yandex-music": "70c5831a9b2743f97e568990f1873284f1196844",
+    "aides-pkgs/jetbrains-toolbox": "6dceea7ec73f639c0cbe9cd9094781d4841185f7"
 }

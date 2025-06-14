@@ -64,7 +64,6 @@ prepare() {
 package() {
 	cp -dr --no-preserve=ownership opt usr "${pkgdir}"/
 	install -Dm 0644 "${pkgdir}"/opt/yandex/browser/product_logo_128.png "${pkgdir}"/usr/share/pixmaps/yandex-browser.png
-	install -Dm 0644 "${scriptdir}/README.md" -t "${pkgdir}/usr/share/doc/${name}/"
 	"${pkgdir}"/opt/yandex/browser/update_codecs "${pkgdir}"/opt/yandex/browser
 }
 
