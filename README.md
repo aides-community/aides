@@ -4,9 +4,9 @@
 
 An unofficial proprietary repository for ALT (powered by ALR).
 
-> [!WARNING] **Attention!**
+> [!WARNING]
 >
-> This community project has not been verified, is not affiliated with, and is not supported by LLC "Basalt SPO" and the ALT Linux Team community.
+> **Attention!** This community project has not been verified, is not affiliated with, and is not supported by LLC "Basalt SPO" and the ALT Linux Team community.
 
 ## How to use?
 
