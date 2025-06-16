@@ -18,12 +18,9 @@ sources=(
 )
 
 checksums=(
-	sha256:35017023949c2aa74fd2ed44f34ff93c5b240e4cdbfa26e8b51d6e7cc4e2bf13
+	sha256:bdf5f305b97414cdd326fb4b090d14cffcd14d582926a266333564469d06c8df
 )
 
-# Dependencies needs for build
-# If you use auto_req=1 you must
-# list runtime dependencies here
 build_deps=(
 	libXrandr
 	libXext
@@ -48,16 +45,26 @@ build_deps=(
 	libgtk+3
 )
 
-# Runtime dependencies
 deps=()
 
 auto_req=1
 auto_prov=1
+
+firejailed=1
+firejail_profiles=(
+	['default']='firejail.profile'
+)
 
 package() {
 	mv "$srcdir/usr" "$pkgdir/usr"
 }
 
 files() {
-	printf '"%s" ' ./usr/**/*
+	echo ./usr/share/applications/$name.desktop
+	echo ./usr/share/icons/hicolor/**/apps/$name.png
+	echo ./usr/share/pixmaps/$name.png
+	echo ./usr/share/licenses/$name/*
+	echo ./usr/lib/$name
+	echo ./usr/lib/$name/**/*
+	echo ./usr/bin/$name
 }
