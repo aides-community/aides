@@ -2,7 +2,7 @@
 # Check l.aides.space/alr-sh for a documentation.
 name=visual-studio-code
 version=1.101.0
-release=1
+release=3
 summary='Visual Studio Code'
 group='Development/Tools'
 desc='Visual Studio Code (vscode): Editor for building and debugging modern web and cloud applications (official binary version)'
@@ -69,7 +69,7 @@ build_deps=(
 )
 
 deps=(
-
+	libsecret
 )
 
 auto_req=1
