@@ -1,0 +1,73 @@
+name=obsidian
+version=1.8.10
+release=1
+summary="A powerful knowledge base that works on top of a local folder of plain text Markdown files"
+group="Office"
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://obsidian.md"
+license=("custom")
+
+provides=()
+conflicts=()
+
+sources=(
+	"https://github.com/obsidianmd/obsidian-releases/releases/download/v${version}/obsidian-${version}.tar.gz"
+)
+
+checksums=(
+	sha256:c59a22e19f4930cfc510f7ef8c15c46a0de94ffb891fd76f169f2a1e74c534a1
+)
+
+build_deps=(
+	"libxcb.so.1()(64bit)"
+	"libX11.so.6()(64bit)"
+	"libXext.so.6()(64bit)"	
+	"libXrandr.so.2()(64bit)"
+	"libdbus-1.so.3()(64bit)"
+	"libsmime3.so()(64bit)"
+	"libatspi.so.0()(64bit)"
+	"libXdamage.so.1()(64bit)"
+	"libatk-bridge-2.0.so.0()(64bit)"
+	"libnssutil3.so()(64bit)"
+	"libatk-1.0.so.0()(64bit)"
+	"libgbm.so.1()(64bit)"
+	"libxkbcommon.so.0()(64bit)"
+	"libcups.so.2()(64bit)"
+	"libnss3.so()(64bit)"
+	"libpango-1.0.so.0()(64bit)"
+	"libnspr4.so()(64bit)"
+	"libXfixes.so.3()(64bit)"
+	"libgio-2.0.so.0()(64bit)"
+	"libXcomposite.so.1()(64bit)"
+	"libasound.so.2()(64bit)"
+	"libcairo.so.2()(64bit)"
+	"libgtk-3.so.0()(64bit)"
+)
+
+deps=()
+
+auto_req=1
+auto_prov=1
+
+firejailed=1
+firejail_profiles=(
+	['default']='firejail.profile'
+)
+
+package() {
+	mkdir -p "${pkgdir}/opt/${name}"
+	mv "${srcdir}/obsidian-${version}/"* "${pkgdir}/opt/${name}"
+
+	install-desktop "${scriptdir}"/obsidian.desktop
+
+	install -d "$pkgdir"/usr/bin
+	ln -s "/opt/${name}/${name}" "${pkgdir}/usr/bin/${name}"
+}
+
+files() {
+	files-find \
+		"/opt/${name}/**/*" \
+		"/usr/bin/${name}" \
+		"/usr/share/applications/${name}.desktop"
+}

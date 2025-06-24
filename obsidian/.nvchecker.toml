@@ -1,0 +1,5 @@
+[obsidian]
+source = "github"
+github = "obsidianmd/obsidian-releases"
+use_latest_release = true
+prefix = "v"
