@@ -1,6 +1,6 @@
 name=obsidian
 version=1.8.10
-release=1
+release=2
 summary="A powerful knowledge base that works on top of a local folder of plain text Markdown files"
 group="Office"
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
@@ -63,11 +63,14 @@ package() {
 
 	install -d "$pkgdir"/usr/bin
 	ln -s "/opt/${name}/${name}" "${pkgdir}/usr/bin/${name}"
+
+	install -Dm644 "${pkgdir}/opt/obsidian/resources/icon.png" "${pkgdir}/usr/share/pixmaps/obsidian.png"
 }
 
 files() {
 	files-find \
 		"/opt/${name}/**/*" \
 		"/usr/bin/${name}" \
-		"/usr/share/applications/${name}.desktop"
+		"/usr/share/applications/${name}.desktop" \
+		"/usr/share/pixmaps/${name}.png"
 }
