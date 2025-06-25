@@ -1,15 +1,12 @@
-# Example of alr.sh
-# Check l.aides.space/alr-sh for a documentation.
 name=yandex-browser-stable
 version=25.4.1.1132
-release=1
+release=2
 summary="The web browser from Yandex"
 group="Networking/WWW"
 desc="The web browser from Yandex
 
 Yandex Browser is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier."
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
-# Array of Go arches (go tool dist list | cut -d/ -f2 | sort | uniq) or "all"
 architectures=("amd64")
 homepage="https://browser.yandex.ru/"
 license=("custom")
@@ -48,6 +45,11 @@ build_deps=(
 auto_req=1
 auto_prov=1
 
+firejailed=1
+firejail_profiles=(
+	['default']='firejail.profile'
+)
+
 sources=(
 	"https://repo.yandex.ru/yandex-browser/deb/pool/main/y/yandex-${_pkgname}/yandex-${_pkgname}_${_pkgver}_amd64.deb?~name=${name}-${_pkgver}.deb"
 )
@@ -62,21 +64,20 @@ prepare() {
 }
 
 package() {
-	cp -dr --no-preserve=ownership opt usr "${pkgdir}"/
+	cp -dr opt usr "${pkgdir}"/
 	install -Dm 0644 "${pkgdir}"/opt/yandex/browser/product_logo_128.png "${pkgdir}"/usr/share/pixmaps/yandex-browser.png
 	"${pkgdir}"/opt/yandex/browser/update_codecs "${pkgdir}"/opt/yandex/browser
 }
 
 files() {
-	printf '"%s" ' ./opt/**/*
-
-	echo ./usr/bin/yandex-browser-stable
-
-	echo ./usr/share/appdata/*
-	echo ./usr/share/applications/*
-	echo ./usr/share/gnome-control-center/default-apps/*
-	echo ./usr/share/pixmaps/*
-	echo ./usr/share/menu/*
+	files-find \
+		"/opt/yandex/**/*" \
+		"/usr/bin/yandex-browser-stable" \
+		"/usr/share/appdata/*" \
+		"/usr/share/applications/*" \
+		"/usr/share/gnome-control-center/default-apps/*" \
+		"/usr/share/pixmaps/*" \
+		"/usr/share/menu/*"
 
 	files-find-doc yandex-browser-stable
 }
