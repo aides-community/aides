@@ -2,10 +2,10 @@ _alr_update_preset=snap
 
 _snap_name=singularityapp
 _snap_channel=stable
-_snap_url=https://api.snapcraft.io/api/v1/snaps/download/MGxJGb96XBV8UshTS2iqLOI4ylXW8xwY_119.snap
+_snap_url=https://api.snapcraft.io/api/v1/snaps/download/MGxJGb96XBV8UshTS2iqLOI4ylXW8xwY_120.snap
 
 name=singularityapp
-version=11.0.0
+version=11.0.1
 release=1
 summary="Most powerful chaos management planner"
 group="Office"
@@ -24,7 +24,7 @@ sources=(
 )
 
 checksums=(
-	sha256:30e2f3f21da09fd573b1828d9abe2be7f711f8bfff7ec7184bbb62fa41d36c19
+	sha256:f03b2c3a09a7e437cb6de538890c0fbcb64c9b6d78e44f9d8933462241b275f6
 )
 
 build_deps=(
@@ -61,6 +61,11 @@ auto_req_skiplist=(
 	"/opt/singularityapp/usr/lib/x86_64-linux-gnu/libappindicator3.so.1.0.0"
 )
 
+firejailed=1
+firejail_profiles=(
+	['default']='firejail.profile'
+)
+
 prepare() {
 	unsquashfs "${srcdir}/"*.snap
 }
@@ -83,8 +88,9 @@ package() {
 }
 
 files() {
-	printf '"%s" ' ./opt/**/*
-	echo ./usr/bin/$name
-	echo ./usr/share/pixmaps/$name.png
-	echo ./usr/share/applications/$name.desktop
+	files-find \
+		"/opt/${name}/**/*" \
+		"/usr/bin/$name" \
+		"/usr/share/pixmaps/$name.png" \
+		"/usr/share/applications/$name.desktop"
 }
