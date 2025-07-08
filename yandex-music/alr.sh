@@ -45,7 +45,9 @@ build_deps=(
 	libgtk+3
 )
 
-deps=()
+deps=(
+	firejail
+)
 
 auto_req=1
 auto_prov=1
