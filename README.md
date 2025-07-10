@@ -2,7 +2,7 @@
 
 > _The package repository you've been missing_
 
-An unofficial proprietary repository for ALT (powered by ALR).
+An unofficial proprietary repository for ALT (powered by [ALR](https://gitea.plemya-x.ru/Plemya-x/ALR)).
 
 > [!WARNING]
 >
