@@ -1,6 +1,6 @@
 # Example of alr.sh
 # Check l.aides.space/alr-sh for a documentation.
-name=ttf-apple-emoji
+name=apple-emoji-linux
 version=18.4 # upstream version
 release=1
 summary="Apple Color Emoji is a color typeface used by iOS and macOS to display emoji"
