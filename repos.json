@@ -1,10 +1,11 @@
 {
-    "aides-pkgs/singularityapp": "06e0220a612fb03d99489bbd9d9b20cb8e41f234",
-    "aides-pkgs/vagrant": "2c0dbd3addb5ff8c22b6c57bc31a5ae64a834f96",
-    "aides-pkgs/yandex-browser-stable": "7081521263344e2f9cdb32e8a7f73dae8bfa9432",
-    "aides-pkgs/visual-studio-code": "dbb6ce3af26aec6239c14fd8ad8d982a48a7542f",
-    "aides-pkgs/yandex-disk": "772fd1564e7d02923a9185ca01552496f92918c5",
-    "aides-pkgs/yandex-music": "f6c1be10325a0266ca917e0eae292220fdbf8c11",
-    "aides-pkgs/obsidian": "216f7457efaf9383451a273e39f95fcc0b7b6c9f",
-    "aides-pkgs/apple-emoji-linux": "7cfd5b6adffd9ff0916c34308e9454b178d0911f"
+  "aides-pkgs/singularityapp": "06e0220a612fb03d99489bbd9d9b20cb8e41f234",
+  "aides-pkgs/vagrant": "2c0dbd3addb5ff8c22b6c57bc31a5ae64a834f96",
+  "aides-pkgs/yandex-browser-stable": "7081521263344e2f9cdb32e8a7f73dae8bfa9432",
+  "aides-pkgs/visual-studio-code": "dbb6ce3af26aec6239c14fd8ad8d982a48a7542f",
+  "aides-pkgs/yandex-disk": "772fd1564e7d02923a9185ca01552496f92918c5",
+  "aides-pkgs/yandex-music": "f6c1be10325a0266ca917e0eae292220fdbf8c11",
+  "aides-pkgs/obsidian": "216f7457efaf9383451a273e39f95fcc0b7b6c9f",
+  "aides-pkgs/apple-emoji-linux": "7cfd5b6adffd9ff0916c34308e9454b178d0911f",
+  "aides-pkgs/vk-messenger": ""
 }
