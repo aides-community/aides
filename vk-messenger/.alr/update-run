@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+import sys
+sys.path.insert(0, '../..')
+
+import os
+import requests
+import subprocess
+import hashlib
+
+from _utils import get_field, set_field, get_etag_lastmod
+
+URL = get_field('_source_url')
+FILE = 'vk-messenger.rpm'
+
+with requests.get(URL, stream=True) as r:
+    r.raise_for_status()
+    with open(FILE, 'wb') as f:
+        for chunk in r.iter_content(chunk_size=8192):
+            f.write(chunk)
+
+etag, lastmod = get_etag_lastmod(r)
+
+version = subprocess.check_output(['rpm', '-qp', '--queryformat=%{VERSION}', FILE]).decode().strip()
+
+sha256 = hashlib.sha256()
+with open(FILE, 'rb') as f:
+    for block in iter(lambda: f.read(4096), b''):
+        sha256.update(block)
+checksum = f'sha256:{sha256.hexdigest()}'
+
+set_field('version', version)
+set_field('release', 1)
+set_field('_source_checksum', checksum)
+set_field('_source_etag', etag)
+set_field('_source_last_modified', lastmod)
+
+os.remove(FILE)
