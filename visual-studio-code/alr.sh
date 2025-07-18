@@ -1,5 +1,5 @@
 name=visual-studio-code
-version=1.101.2
+version=1.102.1
 release=1
 summary='Visual Studio Code'
 group='Development/Tools'
@@ -23,7 +23,7 @@ checksums=(
 	sha256:2f1782b30c4e040efff655fd9cf477930c5a0c81ddae27749b0cbb922c1d248e
 	sha256:c361efa7e02fcad759ed80d2fbab67877f33219b981578af6fffaf18aeb12d9b
 	sha256:3af748dd6578a1775e8eb7248ba397b7e11840df2ea6ee234ff76fee3dc306cf
-	sha256:ef62ab0835017bec498e7498fe79eb347f7610fe2da7bd71d5f69d8743ded033
+	sha256:ad402eebd6948cb42c0d3e612bc139c9688c7557cd16ac31f5a03ca29d59623f
 )
 
 _set_meta_info() {
