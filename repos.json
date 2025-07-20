@@ -1,11 +1,11 @@
 {
-    "aides-pkgs/singularityapp": "06e0220a612fb03d99489bbd9d9b20cb8e41f234",
-    "aides-pkgs/vagrant": "2c0dbd3addb5ff8c22b6c57bc31a5ae64a834f96",
-    "aides-pkgs/yandex-browser-stable": "9029b8519eecdb752a58cb2ef06ffb9d2c9d1a95",
-    "aides-pkgs/visual-studio-code": "e9e079dd353da04bb851f9270e3e10f83f947b77",
-    "aides-pkgs/yandex-disk": "772fd1564e7d02923a9185ca01552496f92918c5",
-    "aides-pkgs/yandex-music": "f6c1be10325a0266ca917e0eae292220fdbf8c11",
-    "aides-pkgs/obsidian": "216f7457efaf9383451a273e39f95fcc0b7b6c9f",
-    "aides-pkgs/apple-emoji-linux": "7cfd5b6adffd9ff0916c34308e9454b178d0911f",
-    "aides-pkgs/vk-messenger": "5309a7981483596b401abfcb8a208e6d57ca71f5"
+    "aides-pkgs/singularityapp": "",
+    "aides-pkgs/vagrant": "",
+    "aides-pkgs/yandex-browser-stable": "",
+    "aides-pkgs/visual-studio-code": "",
+    "aides-pkgs/yandex-disk": "",
+    "aides-pkgs/yandex-music": "",
+    "aides-pkgs/obsidian": "",
+    "aides-pkgs/apple-emoji-linux": "",
+    "aides-pkgs/vk-messenger": ""
 }
