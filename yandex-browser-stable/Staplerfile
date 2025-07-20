@@ -45,7 +45,7 @@ build_deps=(
 auto_req=1
 auto_prov=1
 
-firejailed=0
+firejailed=1
 firejail_profiles=(
 	['default']='firejail.profile'
 )

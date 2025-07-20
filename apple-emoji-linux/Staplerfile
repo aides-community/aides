@@ -1,5 +1,3 @@
-# Example of alr.sh
-# Check l.aides.space/alr-sh for a documentation.
 name=apple-emoji-linux
 version=18.4 # upstream version
 release=1

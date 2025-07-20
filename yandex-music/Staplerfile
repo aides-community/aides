@@ -10,7 +10,7 @@ architectures=("amd64")
 homepage="https://github.com/cucumber-sp/yandex-music-linux"
 license=("custom")
 
-provides=()
+provides=(yandex-music)
 conflicts=()
 
 sources=(
@@ -22,27 +22,32 @@ checksums=(
 )
 
 build_deps=(
-	libXrandr
-	libXext
-	libX11
-	libdbus
-	libnss
-	libat-spi2-core
-	libXdamage
-	at-spi2-atk
-	libatk
-	libgbm
-	libxkbcommon
-	libcups
-	libpango
-	libnspr
-	libXfixes
-	libgio
-	libxcb
-	libXcomposite
-	libalsa
-	libcairo
-	libgtk+3
+	"libXrandr.so.2()(64bit)"
+	"libXext.so.6()(64bit)"
+	"libX11.so.6()(64bit)"
+	"libdbus-1.so.3()(64bit)"
+	"libsmime3.so()(64bit)"
+	"libatspi.so.0()(64bit)"
+	"libXdamage.so.1()(64bit)"
+	"libatk-bridge-2.0.so.0()(64bit)"
+	"libnssutil3.so()(64bit)"
+	"libatk-1.0.so.0()(64bit)"
+	"libgbm.so.1()(64bit)"
+	"libxkbcommon.so.0()(64bit)"
+	"libcups.so.2()(64bit)"
+	"libnss3.so()(64bit)"
+	"libpango-1.0.so.0()(64bit)"
+	"libnspr4.so()(64bit)"
+	"libXfixes.so.3()(64bit)"
+	"libgio-2.0.so.0()(64bit)"
+	"libxcb.so.1()(64bit)"
+	"libXcomposite.so.1()(64bit)"
+	"libasound.so.2()(64bit)"
+	"libcairo.so.2()(64bit)"
+	"libgtk-3.so.0()(64bit)"
+	"libXext.so.6()(64bit)"
+	"libX11.so.6()(64bit)"
+	"libxcb.so.1()(64bit)"
 )
 
 deps=(
@@ -62,11 +67,12 @@ package() {
 }
 
 files() {
-	echo ./usr/share/applications/$name.desktop
-	echo ./usr/share/icons/hicolor/**/apps/$name.png
-	echo ./usr/share/pixmaps/$name.png
-	echo ./usr/share/licenses/$name/*
-	echo ./usr/lib/$name
-	echo ./usr/lib/$name/**/*
-	echo ./usr/bin/$name
+	files-find \
+		"/usr/share/applications/$name.desktop" \
+		"/usr/share/icons/hicolor/**/apps/$name.png" \
+		"/usr/share/pixmaps/$name.png" \
+		"/usr/share/licenses/$name/*" \
+		"/usr/lib/$name" \
+		"/usr/lib/$name/**/*" \
+		"/usr/bin/$name"
 }
