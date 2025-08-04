@@ -1,5 +1,5 @@
 name=android-studio
-version=2025.1.1.14
+version=2025.1.2.11
 release=1
 summary="The official Android IDE (Stable branch)"
 group="Development/Tools"
@@ -12,11 +12,11 @@ provides=(android-studio)
 conflicts=()
 
 sources=(
-    "https://dl.google.com/dl/android/studio/ide-zips/$version/android-studio-$version-linux.tar.gz"
+	"https://dl.google.com/dl/android/studio/ide-zips/$version/android-studio-$version-linux.tar.gz"
 )
 
 checksums=(
-    'ad364ebcb9752ea734cd73624e65683272c403058e1035b930983ccac8a2c81a'
+	'sha256:8f3874c6b119538cdd96c7bcb65555feea81133e251f69365d21ddd77777be78'
 )
 
 auto_req=1
@@ -26,34 +26,34 @@ auto_req_skiplist=(
 )
 
 prepare() {
-    cp $scriptdir/$name.desktop $srcdir
-    cp $scriptdir/license.html  $srcdir
+	cp $scriptdir/$name.desktop $srcdir
+	cp $scriptdir/license.html $srcdir
 }
 
 package() {
-    cd $srcdir/$name
+	cd $srcdir/$name
 
-    install -d $pkgdir/{opt/$name,usr/bin}
-    cp -a bin lib jbr plugins license LICENSE.txt build.txt product-info.json $pkgdir/opt/$name
-    ln -s /opt/android-studio/bin/studio $pkgdir/usr/bin/$name
+	install -d $pkgdir/{opt/$name,usr/bin}
+	cp -a bin lib jbr plugins license LICENSE.txt build.txt product-info.json $pkgdir/opt/$name
+	ln -s /opt/android-studio/bin/studio $pkgdir/usr/bin/$name
 
-    # Copy licenses
-    install-license LICENSE.txt $name/LICENSE.txt
-    install-license $srcdir/license.html $name/license.html
+	# Copy licenses
+	install-license LICENSE.txt $name/LICENSE.txt
+	install-license $srcdir/license.html $name/license.html
 
-    install -Dm644 bin/studio.png $pkgdir/usr/share/pixmaps/$name.png
-    install-desktop $srcdir/$name.desktop
+	install -Dm644 bin/studio.png $pkgdir/usr/share/pixmaps/$name.png
+	install-desktop $srcdir/$name.desktop
 
-    chmod -R ugo+rX $pkgdir/opt
+	chmod -R ugo+rX $pkgdir/opt
 }
 
 files() {
 	files-find \
-        "/opt/$name" \
+		"/opt/$name" \
 		"/opt/$name/**/*" \
 		"/usr/bin/$name" \
 		"/usr/share/applications/$name.desktop" \
-        "/usr/share/licenses/$name" \
-        "/usr/share/licenses/$name/*" \
+		"/usr/share/licenses/$name" \
+		"/usr/share/licenses/$name/*" \
 		"/usr/share/pixmaps/$name.png"
 }

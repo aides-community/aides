@@ -1,5 +1,5 @@
 name=google-chrome-stable
-version=138.0.7204.168
+version=138.0.7204.183
 release=1
 group="Networking/WWW"
 summary="The popular web browser by Google (Stable Channel)"
@@ -14,7 +14,7 @@ sources=(
 )
 
 checksums=(
-	sha256:bdf30440e87d559b0b12595df2a7de2d8f41e77cf502ac914d0ffba767311d88
+	sha256:1b175f1d4ea9b2438bd22feb98dee4c06b2e2d84e8b4bd66130e9157ba9f979d
 )
 
 auto_req=1
@@ -56,7 +56,6 @@ build_deps=(
 	"libQt6Widgets.so.6()(64bit)"
 	"libQt6Gui.so.6()(64bit)"
 )
-
 
 prepare() {
 	cp "${scriptdir}/eula_text.html" "${srcdir}"
