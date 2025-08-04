@@ -1,0 +1,4 @@
+[android-studio]
+source = "regex"
+url = "https://developer.android.com/studio"
+regex = 'android-studio-([\d.]+)-linux.tar.gz'

@@ -1,0 +1,4 @@
+[anydesk]
+source = 'regex'
+url = 'https://download.anydesk.com/linux/'
+regex = 'anydesk-([\d.]+)-amd64.tar.gz'

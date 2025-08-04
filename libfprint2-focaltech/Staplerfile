@@ -1,0 +1,64 @@
+name=libfprint2-focaltech
+version=1.94.4
+release=1
+summary="libfprint2 with FocalTech support"
+group="Other"
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://example.com"
+license=("custom")
+
+_sources_commit="6ca46535a3ed76c831e5681f04851a21b821c902"
+_sources_base_url="https://raw.githubusercontent.com/ftfpteams/focaltech-linux-fingerprint-driver/${_sources_commit}"
+sources_amd64=(
+	"${_sources_base_url}/Fedora_Redhat/libfprint-2-2_1.94.4+tod1_redhat_all_x64_20241011.install?~name=${name}-${version}.install"
+	"https://git.altlinux.org/tasks/364033/build/100/x86_64/rpms/libfprint2-1.94.8-alt3.x86_64.rpm?~name=${name}-${version}.rpm"
+)
+
+checksums_amd64=(
+	"sha256:6a26c1786e047b033fa91cdd1c5e578efe2df62b613fdb7960e4a1157bb2e28b"
+	"sha256:65c799b1b095196f41544a559355181121365bd82a093094c6d1496c221b20de"
+)
+
+auto_req=1
+auto_prov=1
+build_deps=(
+	# for auto_req only
+	libgudev
+	libgusb
+	libnss
+	libpixman
+	libgio
+)
+
+provides=()
+conflicts=(
+	"libfprint2"
+)
+
+prepare() {
+	cd "$srcdir"
+	rpm2cpio ${name}-${version}.rpm | cpio -idmv
+
+	sed -i 's|sudo tar xf "\${file_name}" -C /|tar xf "${file_name}" -C .|' ${name}-${version}.install
+	chmod +x ./${name}-${version}.install
+	./${name}-${version}.install
+}
+
+package() {
+	mv $srcdir/usr $pkgdir/usr
+
+	install -Dm 0644 "${scriptdir}/README.md" "${pkgdir}/usr/share/doc/${name}/PACKAGER-README.md"
+
+	mv "${pkgdir}/usr/share/doc/libfprint2-1.9"*/* "${pkgdir}/usr/share/doc/${name}/"
+	rmdir "${pkgdir}/usr/share/doc/libfprint2-1.9"*
+}
+
+files() {
+    files-find \
+        "/usr/lib/udev/rules.d/70-libfprint-2.rules" \
+        "/usr/lib64/libfprint-2.so.2" \
+        "/usr/lib64/libfprint-2.so.2.0.0"
+
+    files-find-doc libfprint2-focaltech
+}

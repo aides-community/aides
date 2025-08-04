@@ -1,0 +1,64 @@
+name=pycharm
+version=2025.1.3.1
+release=1
+summary="Python IDE for Professional Developers"
+group="Development/Tools"
+desc="PyCharm is an integrated development environment (IDE) used for Python programming.
+It provides code analysis, a graphical debugger, an integrated unit tester,
+integration with version control systems, and supports web development with Django."
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://www.jetbrains.com/pycharm/"
+license=("custom")
+
+provides=(
+	'pycharm'
+	'pycharm-professional'
+	'pycharm-community'
+)
+
+sources=(
+	https://download-cdn.jetbrains.com/python/pycharm-${version}.tar.gz
+)
+
+checksums=(
+	'sha256:c8f5b42843ef21673dd94f0d565cda2d09dae595736e39cf510de9a0a8a07239'
+)
+
+auto_req=1
+auto_req_skiplist=(
+	"/opt/pycharm/jbr/lib/*"
+	"/opt/pycharm/lib/**/aarch64/*.so"
+	"/opt/pycharm/plugins/**/*"
+	# /lib/ld-linux-aarch64.so.1 and /lib64/ld-linux-x86-64.so.2
+	"/opt/pycharm/bin/remote-dev-server.sh"
+)
+
+firejailed=1
+firejail_profiles=(
+	['default']='firejail.profile'
+)
+
+prepare() {
+	cp $scriptdir/pycharm.desktop $srcdir
+}
+
+package() {
+	mkdir -p "${pkgdir}/opt/$name"
+	cp -r "${srcdir}/pycharm-${version}/"* "${pkgdir}/opt/${name}"
+
+	install -dm 755 "${pkgdir}/usr/bin/"
+	ln -s "/opt/$name/bin/pycharm" "${pkgdir}/usr/bin/pycharm"
+
+	install-desktop pycharm.desktop
+
+	install -Dm644 "${pkgdir}/opt/$name/bin/pycharm.png" "${pkgdir}/usr/share/pixmaps/pycharm.png"
+}
+
+files() {
+	files-find \
+		"/opt/$name/**/*" \
+		"/usr/bin/pycharm" \
+		"/usr/share/applications/pycharm.desktop" \
+		"/usr/share/pixmaps/pycharm.png"
+}
