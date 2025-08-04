@@ -17,7 +17,7 @@ An unofficial proprietary repository for ALT (powered by [Stapler](https://stplr
 > Do not forget about root: use commands via `sudo` or as the root user (`su -`)
 
 ```shell
-apt-repo test 390150
+apt-get install stplr
 ```
 
 2. Add the Aides repository:
