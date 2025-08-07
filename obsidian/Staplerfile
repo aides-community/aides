@@ -1,6 +1,6 @@
 name=obsidian
 version=1.8.10
-release=2
+release=3
 summary="A powerful knowledge base that works on top of a local folder of plain text Markdown files"
 group="Office"
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
@@ -45,7 +45,9 @@ build_deps=(
 	"libgtk-3.so.0()(64bit)"
 )
 
-deps=()
+deps=(
+	firejail
+)
 
 auto_req=1
 auto_prov=1
