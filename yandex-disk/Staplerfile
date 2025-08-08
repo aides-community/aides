@@ -1,6 +1,6 @@
 name=yandex-disk
 version=0.1.6.1080
-release=1
+release=2
 summary='Yandex.Disk for Linux client'
 group='Other'
 desc='Yandex.Disk for Linux client'
@@ -16,14 +16,21 @@ scripts=(
 	['postinstall']='postinstall.sh'
 )
 
-_deb_package="yandex-disk_${version}_amd64.deb"
+_deb_package="${name}_${version}_amd64.deb"
+
+nonfree=1
+nonfree_msgfile="YANDEX-LICENSE.txt"
 
 sources=(
-	"https://repo.yandex.ru/yandex-disk/deb/pool/main/y/yandex-disk/$_deb_package?~name=$_deb_package"
+	"https://repo.yandex.ru/${name}/deb/pool/main/y/${name}/$_deb_package?~name=$_deb_package"
+	"local:///${name}.service"
+	"local:///README.md"
 )
 
 checksums=(
 	sha256:47ba503b4dfccecc824386d67d686abe4b5356b8b546e48fce8811b5fa88a718
+	sha256:84cf1946b9fa1a43ffebeebfcca71eb0c2e928ed0b7794b89e63fdb493bc20db
+	sha256:795f8b9cfc7193bb09a18a9f20ff15b470ff05a04b9a564081ad14f35eb8b668
 )
 
 build_deps=(
@@ -43,9 +50,9 @@ package() {
 	cd "$srcdir"
 	ar x "$_deb_package"
 	tar -xf data.tar.gz -C "$pkgdir"
-	install-license "${pkgdir}/usr/share/doc/yandex-disk/copyright" ${name}/LICENSE
-	install-systemd-user "${scriptdir}/yandex-disk.service" yandex-disk.service
-	install -Dm 644 "${scriptdir}/README.md" -t "${pkgdir}/usr/share/doc/${name}/"
+	install-license "${pkgdir}/usr/share/doc/${name}/copyright" ${name}/LICENSE
+	install-systemd-user "${srcdir}/${name}.service" ${name}.service
+	install -Dm 644 "${srcdir}/README.md" -t "${pkgdir}/usr/share/doc/${name}/"
 }
 
 files() {

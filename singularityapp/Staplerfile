@@ -6,7 +6,7 @@ _snap_url=https://api.snapcraft.io/api/v1/snaps/download/MGxJGb96XBV8UshTS2iqLOI
 
 name=singularityapp
 version=11.0.1
-release=1
+release=2
 summary="Most powerful chaos management planner"
 group="Office"
 desc="Free your head for inspiration and fresh ideas. 
@@ -16,15 +16,17 @@ architectures=("amd64")
 homepage="https://singularity-app.ru"
 license=("custom")
 
-provides=()
+provides=($name)
 conflicts=()
 
-sources=(
+sources_amd64=(
 	$_snap_url
+	"local:///singularityapp.sh"
 )
 
-checksums=(
+checksums_amd64=(
 	sha256:f03b2c3a09a7e437cb6de538890c0fbcb64c9b6d78e44f9d8933462241b275f6
+	sha256:eb776ec089778a7b04bd78b49be396404b12db85739104262f1bc1262121ddec
 )
 
 build_deps=(
@@ -56,14 +58,21 @@ build_deps=(
 	libxkbcommon
 )
 
-auto_req=1
-auto_req_skiplist=(
-	"/opt/singularityapp/usr/lib/x86_64-linux-gnu/libappindicator3.so.1.0.0"
+deps=(
+	firejail
 )
+
+nonfree=1
+nonfree_url='https://singularity-app.ru/terms_of_service/'
 
 firejailed=1
 firejail_profiles=(
 	['default']='firejail.profile'
+)
+
+auto_req=1
+auto_req_skiplist=(
+	"/opt/singularityapp/usr/lib/x86_64-linux-gnu/libappindicator3.so.1.0.0"
 )
 
 prepare() {
@@ -82,9 +91,9 @@ package() {
 	mv "${srcdir}/squashfs-root/"* "${pkgdir}/opt/${name}"
 
 	subst "s|^Icon=.*|Icon=$name|" "${pkgdir}/usr/share/applications/$name.desktop"
-	subst "s|^Comment=$|Comment=$description|" "${pkgdir}/usr/share/applications/$name.desktop"
+	subst "s|^Comment=$|Comment=$summary|" "${pkgdir}/usr/share/applications/$name.desktop"
 
-	install -m755 "${scriptdir}/singularityapp.sh" "${pkgdir}/usr/bin/singularityapp"
+	install-binary "singularityapp.sh" "${name}"
 }
 
 files() {
