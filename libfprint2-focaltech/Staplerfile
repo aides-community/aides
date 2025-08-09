@@ -20,6 +20,9 @@ checksums_amd64=(
 	"sha256:65c799b1b095196f41544a559355181121365bd82a093094c6d1496c221b20de"
 )
 
+nonfree=1
+nonfree_url=https://github.com/ftfpteams/focaltech-linux-fingerprint-driver
+
 auto_req=1
 auto_prov=1
 build_deps=(
@@ -47,9 +50,7 @@ prepare() {
 
 package() {
 	mv $srcdir/usr $pkgdir/usr
-
-	install -Dm 0644 "${scriptdir}/README.md" "${pkgdir}/usr/share/doc/${name}/PACKAGER-README.md"
-
+	mkdir -p "${pkgdir}/usr/share/doc/${name}/"
 	mv "${pkgdir}/usr/share/doc/libfprint2-1.9"*/* "${pkgdir}/usr/share/doc/${name}/"
 	rmdir "${pkgdir}/usr/share/doc/libfprint2-1.9"*
 }

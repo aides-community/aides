@@ -1,46 +1,51 @@
 name=clion
 version=2025.1.4
-release=1
+release=2
 summary="Cross-platform IDE for C and C++ from JetBrains"
 group="Development/Tools"
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://www.jetbrains.com/$name/"
 license=("custom")
+nonfree_msg_ru="CLion является проприетарным программным обеспечением JetBrains. Использование регулируется Пользовательским соглашением JetBrains."
+nonfree_msg_en="CLion is proprietary software by JetBrains. Use is subject to the JetBrains User Agreement."
+nonfree_url='https://www.jetbrains.com/legal/docs/toolbox/user/'
 
-provides=('clion')
-
-sources=(
-	https://download-cdn.jetbrains.com/cpp/CLion-${version}.tar.gz
+provides=(
+	'clion'
 )
 
 checksums=(
+	'sha256:e7319a1bb60e3e33a3d760c54aca631c75845f9aab6d6d1709cd17c3d6d52282'
 	'sha256:8d90be9d11c0f47b380f4a9f705058215817edf043bdcea2223d788d25193f78'
 )
 
-auto_req=0
-firejailed=0
+_jb_name=$name
+_jb_code="cpp/CLion"
 
-prepare() {
-	cp $scriptdir/$name.desktop $srcdir
-}
+##BEGIN:jb-template##
+sources=(
+	local:///$_jb_name.desktop
+	https://download-cdn.jetbrains.com/$_jb_code-$version.tar.gz
+)
 
 package() {
-	mkdir -p "${pkgdir}/opt/$name"
-	cp -r "${srcdir}/$name-${version}/"* "${pkgdir}/opt/${name}"
+	mkdir -p "$pkgdir/opt/$_jb_name"
+	cp -r "$srcdir/$_jb_name-$version/"* "$pkgdir/opt/$_jb_name"
 
-	install -dm 755 "${pkgdir}/usr/bin/"
-	ln -s "/opt/$name/bin/$name" "${pkgdir}/usr/bin/$name"
+	install -dm 755 "$pkgdir/usr/bin/"
+	ln -s "/opt/$_jb_name/bin/$_jb_name" "$pkgdir/usr/bin/$_jb_name"
 
-	install-desktop $name.desktop
-
-	install -Dm644 "${pkgdir}/opt/$name/bin/$name.png" "${pkgdir}/usr/share/pixmaps/$name.png"
+	install-desktop "$_jb_name.desktop"
+	install -Dm644 "$pkgdir/opt/$_jb_name/bin/$_jb_name.png" "$pkgdir/usr/share/pixmaps/$_jb_name.png"
 }
 
 files() {
 	files-find \
-		"/opt/$name/**/*" \
-		"/usr/bin/$name" \
-		"/usr/share/applications/$name.desktop" \
-		"/usr/share/pixmaps/$name.png"
+		"/opt/$_jb_name" \
+		"/opt/$_jb_name/**/*" \
+		"/usr/bin/$_jb_name" \
+		"/usr/share/applications/$_jb_name.desktop" \
+		"/usr/share/pixmaps/$_jb_name.png"
 }
+##END:jb-template##

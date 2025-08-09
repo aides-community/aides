@@ -1,6 +1,6 @@
 name=pycharm
 version=2025.1.3.1
-release=1
+release=2
 summary="Python IDE for Professional Developers"
 group="Development/Tools"
 desc="PyCharm is an integrated development environment (IDE) used for Python programming.
@@ -10,55 +10,48 @@ maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://www.jetbrains.com/pycharm/"
 license=("custom")
+nonfree=1
+nonfree_msg="PyCharm is proprietary software by JetBrains. Use is subject to the JetBrains User Agreement."
+nonfree_msg_ru="PyCharm является проприетарным программным обеспечением JetBrains. Использование регулируется Пользовательским соглашением JetBrains."
+nonfree_url='https://www.jetbrains.com/legal/docs/toolbox/user/'
 
 provides=(
-	'pycharm'
-	'pycharm-professional'
-	'pycharm-community'
-)
-
-sources=(
-	https://download-cdn.jetbrains.com/python/pycharm-${version}.tar.gz
+	"$name"
+	"$name-professional"
+	"$name-community"
 )
 
 checksums=(
+	'sha256:61286adfef1bb2fc854f937fb64dfdfb7932f450a36ddafa13396918d517b363'
 	'sha256:c8f5b42843ef21673dd94f0d565cda2d09dae595736e39cf510de9a0a8a07239'
 )
 
-auto_req=1
-auto_req_skiplist=(
-	"/opt/pycharm/jbr/lib/*"
-	"/opt/pycharm/lib/**/aarch64/*.so"
-	"/opt/pycharm/plugins/**/*"
-	# /lib/ld-linux-aarch64.so.1 and /lib64/ld-linux-x86-64.so.2
-	"/opt/pycharm/bin/remote-dev-server.sh"
-)
+_jb_name=$name
+_jb_code="python/$name"
 
-firejailed=1
-firejail_profiles=(
-	['default']='firejail.profile'
+##BEGIN:jb-template##
+sources=(
+	local:///$_jb_name.desktop
+	https://download-cdn.jetbrains.com/$_jb_code-$version.tar.gz
 )
-
-prepare() {
-	cp $scriptdir/pycharm.desktop $srcdir
-}
 
 package() {
-	mkdir -p "${pkgdir}/opt/$name"
-	cp -r "${srcdir}/pycharm-${version}/"* "${pkgdir}/opt/${name}"
+	mkdir -p "$pkgdir/opt/$_jb_name"
+	cp -r "$srcdir/$_jb_name-$version/"* "$pkgdir/opt/$_jb_name"
 
-	install -dm 755 "${pkgdir}/usr/bin/"
-	ln -s "/opt/$name/bin/pycharm" "${pkgdir}/usr/bin/pycharm"
+	install -dm 755 "$pkgdir/usr/bin/"
+	ln -s "/opt/$_jb_name/bin/$_jb_name" "$pkgdir/usr/bin/$_jb_name"
 
-	install-desktop pycharm.desktop
-
-	install -Dm644 "${pkgdir}/opt/$name/bin/pycharm.png" "${pkgdir}/usr/share/pixmaps/pycharm.png"
+	install-desktop "$_jb_name.desktop"
+	install -Dm644 "$pkgdir/opt/$_jb_name/bin/$_jb_name.png" "$pkgdir/usr/share/pixmaps/$_jb_name.png"
 }
 
 files() {
 	files-find \
-		"/opt/$name/**/*" \
-		"/usr/bin/pycharm" \
-		"/usr/share/applications/pycharm.desktop" \
-		"/usr/share/pixmaps/pycharm.png"
+		"/opt/$_jb_name" \
+		"/opt/$_jb_name/**/*" \
+		"/usr/bin/$_jb_name" \
+		"/usr/share/applications/$_jb_name.desktop" \
+		"/usr/share/pixmaps/$_jb_name.png"
 }
+##END:jb-template##
