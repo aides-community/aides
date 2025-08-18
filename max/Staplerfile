@@ -1,0 +1,74 @@
+name=max
+version=25.8.0
+release=1
+summary="Russian messenger released by VK"
+group="Networking/Instant messaging"
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://max.ru"
+license=("custom")
+
+provides=()
+conflicts=()
+
+sources=(
+	"https://download.max.ru/electron/MAX.deb?~name=$name-$version.deb"
+)
+
+checksums=(
+	sha256:5800f2d23e1b2a39d3061eb2aa5143b56eae0e7e9b89c637cf2bd8ee27738470
+)
+
+build_deps=(
+	binutils
+	tar
+
+	"libXrandr.so.2()(64bit)"
+	"libXext.so.6()(64bit)"
+	"libX11.so.6()(64bit)"
+	"libdbus-1.so.3()(64bit)"
+	"libsmime3.so()(64bit)"
+	"libatspi.so.0()(64bit)"
+	"libXdamage.so.1()(64bit)"
+	"libatk-bridge-2.0.so.0()(64bit)"
+	"libnssutil3.so()(64bit)"
+	"libatk-1.0.so.0()(64bit)"
+	"libgbm.so.1()(64bit)"
+	"libxkbcommon.so.0()(64bit)"
+	"libcups.so.2()(64bit)"
+	"libnss3.so()(64bit)"
+	"libpango-1.0.so.0()(64bit)"
+	"libnspr4.so()(64bit)"
+	"libXfixes.so.3()(64bit)"
+	"libgio-2.0.so.0()(64bit)"
+	"libxcb.so.1()(64bit)"
+	"libXcomposite.so.1()(64bit)"
+	"libasound.so.2()(64bit)"
+	"libgtk-3.so.0()(64bit)"
+	"libcairo.so.2()(64bit)"
+	"libXext.so.6()(64bit)"
+	"libX11.so.6()(64bit)"
+	"libxcb.so.1()(64bit)"
+)
+
+auto_req=1
+auto_prov=1
+
+prepare() {
+	cd "$srcdir"
+	ar x "${name}-${version}.deb"
+	tar -xf data.tar.xz
+}
+
+package() {
+	cp -dr opt usr "${pkgdir}"/
+	rm -rf "${pkgdir}/usr/share/doc/max"
+}
+
+files() {
+	files-find \
+		"/opt/MAX" \
+		"/opt/MAX/**/*" \
+		"/usr/share/icons/hicolor/*/apps/MAX.png" \
+		"/usr/share/applications/MAX.desktop"
+}
