@@ -14,11 +14,13 @@ provides=(emoji-font)
 conflicts=()
 
 sources=(
-    "$homepage/releases/download/v$version/AppleColorEmoji.ttf"
+	"$homepage/releases/download/v$version/AppleColorEmoji.ttf"
+	"local:///75-apple-color-emoji.conf"
 )
 
 checksums=(
-    sha256:a4fd077bd11437b4940d8cf08f4084e1edfd4ae359f92573ec576652f885eabd
+	sha256:a4fd077bd11437b4940d8cf08f4084e1edfd4ae359f92573ec576652f885eabd
+	sha256:f72154069e808e26f1ed800a33cfaba87c268e7e927a3d5987fde0159e341160
 )
 
 # Automatically generate runtime dependencies and provided symbols
@@ -26,8 +28,8 @@ auto_req=1
 auto_prov=1
 
 package() {
-    install -Dm644 "$srcdir/AppleColorEmoji.ttf" "$pkgdir/usr/share/fonts/ttf/apple-color-emoji/AppleColorEmoji.ttf"
-    install -Dm644 -t "$pkgdir/usr/share/fontconfig/conf.avail" "$scriptdir/75-apple-color-emoji.conf"
-    install -d "$pkgdir/etc/fonts/conf.d"
-    ln -s "/usr/share/fontconfig/conf.avail/75-apple-color-emoji.conf" "$pkgdir/etc/fonts/conf.d/"
+	install -Dm644 "$srcdir/AppleColorEmoji.ttf" "$pkgdir/usr/share/fonts/ttf/apple-color-emoji/AppleColorEmoji.ttf"
+	install -Dm644 -t "$pkgdir/usr/share/fontconfig/conf.avail" 75-apple-color-emoji.conf
+	install -d "$pkgdir/etc/fonts/conf.d"
+	ln -s "/usr/share/fontconfig/conf.avail/75-apple-color-emoji.conf" "$pkgdir/etc/fonts/conf.d/"
 }
