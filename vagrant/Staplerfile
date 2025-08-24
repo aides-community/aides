@@ -1,5 +1,5 @@
 name=vagrant
-version=2.4.8
+version=2.4.9
 release=1
 summary="Build and distribute virtualized development environments"
 group="Development/Tools"
@@ -26,7 +26,7 @@ sources=(
 )
 
 checksums=(
-	sha256:5115e5a22aba94295b5a74edd76c63ae4eed3f3b191d7a40ca74298b8ec112f4
+	sha256:42d830d05e6e9e647f8a5c854d9f5295e319dac74edd37d54b97b4f29cbbd70d
 )
 
 build_deps=(
