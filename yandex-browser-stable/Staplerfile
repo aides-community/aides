@@ -1,6 +1,6 @@
 name=yandex-browser-stable
 version=25.6.1.1039
-release=1
+release=2
 summary="The web browser from Yandex"
 group="Networking/WWW"
 desc="The web browser from Yandex
@@ -21,6 +21,10 @@ provides=(
 conflicts=(
 	yandex-browser-beta
 	yandex-browser-corporate
+)
+
+deps=(
+	firejail
 )
 
 build_deps=(
