@@ -1,5 +1,5 @@
 name=obsidian
-version=1.9.10
+version=1.9.12
 release=1
 summary="A powerful knowledge base that works on top of a local folder of plain text Markdown files"
 group="Office"
@@ -17,7 +17,7 @@ sources=(
 )
 
 checksums=(
-	sha256:e5df71f7636ef1dcc01829d37981e6bf95d037a696c517a64728c2eb037a9434
+	sha256:a92e0cf60bc2b3707690e948987fdd766d338ec55ae19ae1bb654404a60db8ca
 	sha256:d6aa7b3e8d6673cf0d7559104b4a5fc6cb54a5b55d48651b3c3ad69ccc68225d
 )
 

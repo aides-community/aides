@@ -1,5 +1,5 @@
 name=android-studio
-version=2025.1.2.12
+version=2025.1.2.13
 release=1
 summary="The official Android IDE (Stable branch)"
 group="Development/Tools"
@@ -16,7 +16,7 @@ sources=(
 )
 
 checksums=(
-	'sha256:7cb8c26c1f56c2bc7bb226104e6b56bdc7bef137584de6becba1d3b524d85806'
+	'sha256:9fb9f7e734ab4fefe3c3e2cc02a6d00194252f1a8fc64c77c529a79d313efebb'
 )
 
 auto_req=1
