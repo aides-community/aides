@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Run update script
         run: |
-          python update.py
+          python3 update.py
       - name: Check for changes
         id: check_changes
         run: |
