@@ -11,14 +11,12 @@ on:
 
 jobs:
   update:
-    runs-on: ubuntu-latest
+    runs-on: alt-latest
+    container:
+      image: altlinux.space/actions/runner/python:sisyphus
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
       - name: Run update script
         run: |
           python update.py
