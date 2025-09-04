@@ -11,55 +11,24 @@ _channel=stable
 
 sources=(
 	"https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-${_channel}/google-chrome-${_channel}_${version}-1_amd64.deb"
+	"local:///eula_text.html"
 )
 
 checksums=(
 	sha256:eae124e1ae5b565b153705be6471c18131a6c3f02b82b450c0a7cb712213b7ca
+	sha256:e93c01576427cad9099f2cf0df0be70d0a2cc0a3a66c743318b2138aa7c4ed93
 )
-
-auto_req=1
-auto_prov=1
 
 build_deps=(
 	bsdtar
-	# for auto_req only
-
-	"libXrandr.so.2()(64bit)"
-	"libXext.so.6()(64bit)"
-	"libX11.so.6()(64bit)"
-	"libdbus-1.so.3()(64bit)"
-	"libsmime3.so()(64bit)"
-	"libXdamage.so.1()(64bit)"
-	"libatspi.so.0()(64bit)"
-	"libatk-bridge-2.0.so.0()(64bit)"
-	"libnssutil3.so()(64bit)"
-	"libatk-1.0.so.0()(64bit)"
-	"libgbm.so.1()(64bit)"
-	"libxkbcommon.so.0()(64bit)"
-	"libcups.so.2()(64bit)"
-	"libnss3.so()(64bit)"
-	"libpango-1.0.so.0()(64bit)"
-	"libnspr4.so()(64bit)"
-	"libXfixes.so.3()(64bit)"
-	"libgio-2.0.so.0()(64bit)"
-	"libXcomposite.so.1()(64bit)"
-	"libxcb.so.1()(64bit)"
-	"libasound.so.2()(64bit)"
-	"libcairo.so.2()(64bit)"
-	"libXext.so.6()(64bit)"
-	"libX11.so.6()(64bit)"
-	"libxcb.so.1()(64bit)"
-	"libQt5Core.so.5()(64bit)"
-	"libQt5Widgets.so.5()(64bit)"
-	"libQt5Gui.so.5()(64bit)"
-	"libQt6Core.so.6()(64bit)"
-	"libQt6Widgets.so.6()(64bit)"
-	"libQt6Gui.so.6()(64bit)"
+	binutils
 )
 
-prepare() {
-	cp "${scriptdir}/eula_text.html" "${srcdir}"
-}
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
 
 package() {
 	ar x google-chrome-${_channel}_${version}-1_amd64.deb
@@ -86,7 +55,8 @@ package() {
 	rm -r \
 		"$pkgdir"/etc/cron.daily/ \
 		"$pkgdir"/opt/google/chrome/cron/ \
-		"$pkgdir"/opt/google/chrome/product_logo_*.{png,xpm} \
+		"$pkgdir"/opt/google/chrome/product_logo_*.png \
+		"$pkgdir"/opt/google/chrome/product_logo_*.xpm \
 		"$pkgdir"/usr/share/menu/
 }
 

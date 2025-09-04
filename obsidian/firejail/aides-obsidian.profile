@@ -1,6 +1,3 @@
-include aides-obsidian.local
-include globals.local
-
 noblacklist ${DOCUMENTS}
 noblacklist ${HOME}/.config/obsidian
 
@@ -19,4 +16,4 @@ ignore dbus-user none
 private-bin basename,bash,cat,cut,electron,electron[0-9],electron[0-9][0-9],gawk,grep,obsidian,realpath,tr
 
 # Redirect
-include electron-common.profile
+include electron.profile

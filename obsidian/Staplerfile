@@ -1,15 +1,14 @@
 name=obsidian
 version=1.9.12
-release=1
+release=2
 summary="A powerful knowledge base that works on top of a local folder of plain text Markdown files"
 group="Office"
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://obsidian.md"
 license=("custom")
-
-provides=()
-conflicts=()
+nonfree=1
+nonfree_url=https://obsidian.md/license
 
 sources=(
 	"https://github.com/obsidianmd/obsidian-releases/releases/download/v${version}/obsidian-${version}.tar.gz"
@@ -21,46 +20,18 @@ checksums=(
 	sha256:d6aa7b3e8d6673cf0d7559104b4a5fc6cb54a5b55d48651b3c3ad69ccc68225d
 )
 
-build_deps=(
-	"libxcb.so.1()(64bit)"
-	"libX11.so.6()(64bit)"
-	"libXext.so.6()(64bit)"
-	"libXrandr.so.2()(64bit)"
-	"libdbus-1.so.3()(64bit)"
-	"libsmime3.so()(64bit)"
-	"libatspi.so.0()(64bit)"
-	"libXdamage.so.1()(64bit)"
-	"libatk-bridge-2.0.so.0()(64bit)"
-	"libnssutil3.so()(64bit)"
-	"libatk-1.0.so.0()(64bit)"
-	"libgbm.so.1()(64bit)"
-	"libxkbcommon.so.0()(64bit)"
-	"libcups.so.2()(64bit)"
-	"libnss3.so()(64bit)"
-	"libpango-1.0.so.0()(64bit)"
-	"libnspr4.so()(64bit)"
-	"libXfixes.so.3()(64bit)"
-	"libgio-2.0.so.0()(64bit)"
-	"libXcomposite.so.1()(64bit)"
-	"libasound.so.2()(64bit)"
-	"libcairo.so.2()(64bit)"
-	"libgtk-3.so.0()(64bit)"
-)
+build_deps=()
 
-deps=(
-	firejail
-)
-
+auto_reqprov_method=dirty
 auto_req=1
 auto_prov=1
 
-nonfree=1
-nonfree_url=https://obsidian.md/license
-
 firejailed=1
 firejail_profiles=(
-	['default']='firejail.profile'
+	['default']='firejail/aides-obsidian-bundled.profile'
 )
+
+disable_network=1
 
 package() {
 	mkdir -p "${pkgdir}/opt/${name}"
