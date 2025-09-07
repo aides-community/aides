@@ -2,10 +2,10 @@ _stapler_update_preset=snap
 
 _snap_name=singularityapp
 _snap_channel=stable
-_snap_url=https://api.snapcraft.io/api/v1/snaps/download/MGxJGb96XBV8UshTS2iqLOI4ylXW8xwY_121.snap
+_snap_url=https://api.snapcraft.io/api/v1/snaps/download/MGxJGb96XBV8UshTS2iqLOI4ylXW8xwY_122.snap
 
 name=singularityapp
-version=11.2.0
+version=11.3.0
 release=1
 summary="Most powerful chaos management planner"
 group="Office"
@@ -25,7 +25,7 @@ sources_amd64=(
 )
 
 checksums_amd64=(
-	sha256:25c3f3742d87e6ec3147078bccce8a08dd0bde2dcb4f5fe27b1919d8e1c0f2e6
+	sha256:55ec2bc2964581b66ed96027dc877a8a54015eadf2d0c9b9c0060ca9a3278ae3
 	sha256:eb776ec089778a7b04bd78b49be396404b12db85739104262f1bc1262121ddec
 )
 
