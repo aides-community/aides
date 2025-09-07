@@ -1,0 +1,9 @@
+This package contains non-free software: Yandex Music.
+To use it, you must accept the license agreement available at the provided link.
+
+Specifics of this build:
+- The application's automatic updates are deliberately disabled.
+- The application runs in a Firejail sandbox for security, which may restrict access to certain features. 
+- Therefore, issues related to installing or using this package should not be reported to Yandex Music support.
+- This package is an unofficial repackaging and is provided "as is."
+- Repackaging and usage are performed on the user’s side. The user is solely responsible for any potential licensing risks.

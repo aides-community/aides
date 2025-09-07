@@ -1,78 +1,68 @@
 name=yandex-music
-version=5.56.0
-release=2
+version=5.67.0
+release=1
 summary="Linux client for Yandex Music"
 group="Sound"
-desc="Native YandexMusic client for Linux. 
-Built using repacking of Windows client (Electron app)."
+desc="Native YandexMusic client for Linux"
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
-homepage="https://github.com/cucumber-sp/yandex-music-linux"
+homepage="https://music.yandex.ru/download/"
 license=("custom")
+
+nonfree=1
+nonfree_msgfile=MSGFILE
+nonfree_msgfile_ru=MSGFILE_ru
+nonfree_url=https://yandex.ru/legal/music_mobile_agreement/
 
 provides=(yandex-music)
 conflicts=()
 
 sources=(
-	"https://github.com/cucumber-sp/yandex-music-linux/releases/download/v${version}/yandex-music_${version}_x64.tar.gz"
+	"https://music-desktop-application.s3.yandex.net/stable/Yandex_Music_amd64_${version}.deb?~name=${name}-${version}.deb"
+	"local:///yandex-music.sh"
 )
 
 checksums=(
-	sha256:fbe21d11f8279fc92e4a6061f6215a576a4012eede90cc70154991a4c578ea31
+	sha256:53216a33cacd8fb67ced5b6a3772f77d063fd149408097afde24366c69726d5c
+	sha256:6ffc89c0ecda4f2fd901ba949d2c7f812db64f73d154b3018f5764918b6ee5b2
 )
 
 build_deps=(
-	"libXrandr.so.2()(64bit)"
-	"libXext.so.6()(64bit)"
-	"libX11.so.6()(64bit)"
-	"libdbus-1.so.3()(64bit)"
-	"libsmime3.so()(64bit)"
-	"libatspi.so.0()(64bit)"
-	"libXdamage.so.1()(64bit)"
-	"libatk-bridge-2.0.so.0()(64bit)"
-	"libnssutil3.so()(64bit)"
-	"libatk-1.0.so.0()(64bit)"
-	"libgbm.so.1()(64bit)"
-	"libxkbcommon.so.0()(64bit)"
-	"libcups.so.2()(64bit)"
-	"libnss3.so()(64bit)"
-	"libpango-1.0.so.0()(64bit)"
-	"libnspr4.so()(64bit)"
-	"libXfixes.so.3()(64bit)"
-	"libgio-2.0.so.0()(64bit)"
-	"libxcb.so.1()(64bit)"
-	"libXcomposite.so.1()(64bit)"
-	"libasound.so.2()(64bit)"
-	"libcairo.so.2()(64bit)"
-	"libgtk-3.so.0()(64bit)"
-	"libXext.so.6()(64bit)"
-	"libX11.so.6()(64bit)"
-	"libxcb.so.1()(64bit)"
+	binutils
 )
 
-deps=(
-	firejail
-)
-
+auto_reqprov_method=dirty
 auto_req=1
 auto_prov=1
 
 firejailed=1
 firejail_profiles=(
-	['default']='firejail.profile'
+	['default']='firejail/aides-yandex-music-bundled.profile'
 )
 
+disable_network=1
+
+prepare() {
+	ar x ${name}-${version}.deb
+	tar -xf data.tar.xz
+}
+
 package() {
-	mv "$srcdir/usr" "$pkgdir/usr"
+	cp -dr opt usr "${pkgdir}"/
+
+	mv "$pkgdir/opt/Яндекс Музыка" "$pkgdir/opt/YandexMusic"
+	install-binary yandex-music.sh yandexmusic
+	sed -i 's|Exec="/opt/Яндекс Музыка/yandexmusic" %U|Exec="/usr/bin/yandexmusic" %U|' "${pkgdir}/usr/share/applications/yandexmusic.desktop"
+
+	# Breaking automatic updates
+	rm "$pkgdir/opt/YandexMusic/resources/app-update.yml"
 }
 
 files() {
 	files-find \
-		"/usr/share/applications/$name.desktop" \
-		"/usr/share/icons/hicolor/**/apps/$name.png" \
-		"/usr/share/pixmaps/$name.png" \
-		"/usr/share/licenses/$name/*" \
-		"/usr/lib/$name" \
-		"/usr/lib/$name/**/*" \
-		"/usr/bin/$name"
+		"/usr/bin/yandexmusic" \
+		"/usr/share/applications/yandexmusic.desktop" \
+		"/usr/share/icons/hicolor/**/apps/yandexmusic.png" \
+		"/opt/YandexMusic" \
+		"/opt/YandexMusic/**/*"
 }
