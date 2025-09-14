@@ -1,5 +1,5 @@
 name=google-chrome-stable
-version=140.0.7339.80
+version=140.0.7339.127
 release=1
 group="Networking/WWW"
 summary="The popular web browser by Google (Stable Channel)"
@@ -15,7 +15,7 @@ sources=(
 )
 
 checksums=(
-	sha256:f6137031651bb56b03bca73d86f7db23b3cd5589b52f59812ee5cf943cc81b8d
+	sha256:640db702ca871f39d1a1e810943bcf46f51f800edb3d0a761cc11316e02ca80f
 	sha256:e93c01576427cad9099f2cf0df0be70d0a2cc0a3a66c743318b2138aa7c4ed93
 )
 
