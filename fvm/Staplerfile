@@ -1,0 +1,70 @@
+# Example of Staplerfile
+# Check stplr.dev/staplerfile for a documentation.
+name=fvm
+version=3.2.1 # upstream version
+release=1
+summary="Flutter Version Management"
+#group="Other" # See /usr/lib/rpm/GROUPS for valid values
+desc="Flutter Version Management:
+A simple CLI to manage Flutter SDK versions."
+maintainer="vovk4morkovk4 <vovk4morkovk4@yandex.ru>"
+# Array of Go arches (go tool dist list | cut -d/ -f2 | sort | uniq) or "all"
+architectures=("amd64")
+homepage="https://fvm.app/"
+license=("MIT")
+
+provides=()
+conflicts=()
+
+sources=(
+    "https://github.com/leoafarias/fvm/releases/download/$version/$name-$version-linux-x64.tar.gz"
+    "local:///${name}.sh"
+)
+
+checksums=(
+    sha256:39e8ebdb46b93de1c2aedbfa9aa75103ef16c9bf50048a928ef70abbb456f4f8
+    sha256:1904156e8a9ac4155b0161c38e62d000db1c1dee28087644c56f1aa38051c055
+)
+
+# Dependencies needs for build
+# If you use auto_req=1 you must
+# list runtime dependencies here
+build_deps=(
+
+)
+
+# Runtime dependencies
+deps=(
+    git
+    glibc
+    unzip
+    bash
+)
+
+# Automatically generate runtime dependencies and provided symbols
+#auto_req=1
+#auto_prov=1
+
+# prepare(): Unpacks and prepares the sources
+prepare() { }
+
+# build(): Compiles or builds the software from source.
+# Since Aides is for proprietary software, it looks superfluous.
+build() {  }
+
+# package(): Installs the built files into the package directory (pkgdir).
+package() {
+    install -Dm755 "$name.sh" "$pkgdir/usr/bin/$name"
+    install -Dm755 -t "${pkgdir}/opt/${name}" "fvm/src/dart"
+    install -Dm644 -t "${pkgdir}/opt/${name}" "fvm/src/fvm.snapshot"
+    install -Dm644 -t "${pkgdir}/usr/share/licenses/${name}" "fvm/src/LICENSE"
+}
+
+# files(): Lists all files to be included in the final package.
+files() {
+     files-find-binary fvm
+     files-find \
+		"/opt/**/*" \
+		"/opt/**/.* " \
+		"/usr/share/licenses/**/*"
+}
