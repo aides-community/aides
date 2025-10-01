@@ -1,0 +1,4 @@
+[zoom]
+source = "httpheader"
+url = "https://zoom.us/client/latest/zoom_x86_64.pkg.tar.xz"
+regex = '(\d+\.\d+\.\d+\.\d+)/zoom_x86_64.pkg.tar.xz'

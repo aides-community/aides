@@ -1,0 +1,54 @@
+name=zoom
+version=6.6.0.4410
+release=1
+summary="Video Conferencing and Web Conferencing Service"
+group="Networking/Instant messaging"
+desc="$summary."
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://zoom.us/"
+license=("custom")
+nonfree=1
+nonfree_msgfile="MSGFILE"
+nonfree_url="https://explore.zoom.us/terms"
+
+# TODO: enable firejail
+# firejailed=1
+# firejail_profiles=(
+#     ['default']='firejail/aides-zoom-bundled.profile'
+# )
+
+provides=()
+conflicts=()
+
+sources=(
+	https://zoom.us/client/$version/zoom_x86_64.pkg.tar.xz
+)
+
+checksums=(
+	sha256:29383a54ed464fff29a5715ebc60f1d1bafd24697dadd52db81cc79a78e23ae9
+)
+
+auto_reqprov_method=dirty 
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+package() {
+	cp -dpr --no-preserve=ownership opt usr "${pkgdir}"
+
+	rm -f "${pkgdir}/usr/bin/zoom"
+	ln -s "${pkgdir}/opt/zoom/ZoomLauncher" "${pkgdir}/usr/bin/zoom"
+}
+
+files() {
+	files-find \
+		"/opt/**/*" \
+		"/usr/bin/zoom" \
+		"/usr/share/doc/zoom" \
+		"/usr/share/applications/Zoom.desktop" \
+		"/usr/share/mime/packages/zoom.xml" \
+		"/usr/share/pixmaps/application-x-zoom.png" \
+		"/usr/share/pixmaps/Zoom.png"
+}
