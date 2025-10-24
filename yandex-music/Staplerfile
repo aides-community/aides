@@ -1,5 +1,5 @@
 name=yandex-music
-version=5.74.0
+version=5.74.1
 release=1
 summary="Linux client for Yandex Music"
 group="Sound"
@@ -23,7 +23,7 @@ sources=(
 )
 
 checksums=(
-	sha256:75bbe8493ae7a91ee2c4991454795c2fe51bdbabe1938715c644d8b11615ae12
+	sha256:1017158e62abfa5a78ba60d7ae4ebb14eb9e03831709a196a43cc055a90dfb32
 	sha256:6ffc89c0ecda4f2fd901ba949d2c7f812db64f73d154b3018f5764918b6ee5b2
 )
 

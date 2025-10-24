@@ -1,6 +1,6 @@
 name=max
 version=25.8.0
-release=2
+release=3
 summary="Russian messenger released by VK"
 group="Networking/Instant messaging"
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"

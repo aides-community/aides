@@ -1,6 +1,10 @@
 #
-# bundled via firejail-bundler 0.1.0 (firejail version: 0.9.72)
+# bundled via firejail-bundler 0.2.0 (firejail version: 0.9.72)
 #
+include aides-max.local
+include globals.local
+#region: @bundler [aides-max.profile] BEGIN
+mkdir ${HOME}/.config/MAX
 whitelist ${HOME}/.config/MAX
 whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
@@ -15,18 +19,18 @@ env XDG_CURRENT_DESKTOP=
 env DE=flatpak
 
 # for firejail <= 0.9.74
+#region: @bundler [/etc/firejail/electron.profile] BEGIN
 # Firejail profile for electron
 # Description: Build cross platform desktop apps with web technologies
 # This file is overwritten after every install/update
 # Persistent local customizations
-# @bundler: MISSING include electron.local
 
 noblacklist ${HOME}/.config/Electron
 noblacklist ${HOME}/.config/electron*-flag*.conf
 
+#region: @bundler [/etc/firejail/disable-common.inc] BEGIN
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-# @bundler: MISSING include disable-common.local
 
 # The following block breaks trash functionality in file managers
 #read-only ${HOME}/.local
@@ -683,9 +687,10 @@ blacklist ${HOME}/.local/opt/tor-browser
 
 # pass utility (pass package in Debian etc.)
 blacklist ${HOME}/.password-store
+#endregion: @bundler [/etc/firejail/disable-common.inc] END
+#region: @bundler [/etc/firejail/disable-devel.inc] BEGIN
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-# @bundler: MISSING include disable-devel.local
 
 # development tools
 
@@ -757,9 +762,10 @@ blacklist /usr/src
 blacklist /usr/local/src
 blacklist /usr/include
 blacklist /usr/local/include
+#endregion: @bundler [/etc/firejail/disable-devel.inc] END
+#region: @bundler [/etc/firejail/disable-exec.inc] BEGIN
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-# @bundler: MISSING include disable-exec.local
 
 noexec ${HOME}
 noexec ${RUNUSER}
@@ -770,9 +776,10 @@ noexec /tmp
 # /var is noexec by default for unprivileged users
 # except there is a writable-var option, so just in case:
 noexec /var
+#endregion: @bundler [/etc/firejail/disable-exec.inc] END
+#region: @bundler [/etc/firejail/disable-interpreters.inc] BEGIN
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-# @bundler: MISSING include disable-interpreters.local
 
 # gjs
 blacklist ${PATH}/gjs
@@ -848,9 +855,10 @@ blacklist /usr/lib/python3*
 blacklist /usr/lib64/python3*
 blacklist /usr/local/lib/python3*
 blacklist /usr/share/python3*
+#endregion: @bundler [/etc/firejail/disable-interpreters.inc] END
+#region: @bundler [/etc/firejail/disable-programs.inc] BEGIN
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-# @bundler: MISSING include disable-programs.local
 
 blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
@@ -2045,9 +2053,10 @@ blacklist /var/games/slashem
 blacklist /var/games/vulturesclaw
 blacklist /var/games/vultureseye
 blacklist /var/lib/games/Maelstrom-Scores
+#endregion: @bundler [/etc/firejail/disable-programs.inc] END
+#region: @bundler [/etc/firejail/disable-xdg.inc] BEGIN
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-# @bundler: MISSING include disable-xdg.local
 
 blacklist ${DOCUMENTS}
 blacklist ${MUSIC}
@@ -2057,13 +2066,14 @@ blacklist ${VIDEOS}
 # The following should be considered catch-all directories
 #blacklist ${DESKTOP}
 #blacklist ${DOWNLOADS}
+#endregion: @bundler [/etc/firejail/disable-xdg.inc] END
 
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/Electron
 whitelist ${HOME}/.config/electron*-flag*.conf
+#region: @bundler [/etc/firejail/whitelist-common.inc] BEGIN
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-# @bundler: MISSING include whitelist-common.local
 
 # common whitelist for all profiles
 
@@ -2152,9 +2162,10 @@ whitelist ${HOME}/.local/share/qt6ct
 # NixOS specific to resolve binary paths in
 # user environment
 whitelist ${HOME}/.nix-profile
+#endregion: @bundler [/etc/firejail/whitelist-common.inc] END
+#region: @bundler [/etc/firejail/whitelist-runuser-common.inc] BEGIN
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-# @bundler: MISSING include whitelist-runuser-common.local
 
 # common ${RUNUSER} (=/run/user/$UID) whitelist for all profiles
 
@@ -2168,9 +2179,10 @@ whitelist ${RUNUSER}/pipewire-?
 whitelist ${RUNUSER}/wayland-?
 whitelist ${RUNUSER}/xauth_*
 whitelist ${RUNUSER}/[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]
+#endregion: @bundler [/etc/firejail/whitelist-runuser-common.inc] END
+#region: @bundler [/etc/firejail/whitelist-usr-share-common.inc] BEGIN
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-# @bundler: MISSING include whitelist-usr-share-common.local
 
 # common /usr/share whitelist for all profiles
 
@@ -2241,9 +2253,10 @@ whitelist /usr/share/X11
 whitelist /usr/share/xml
 whitelist /usr/share/zenity
 whitelist /usr/share/zoneinfo
+#endregion: @bundler [/etc/firejail/whitelist-usr-share-common.inc] END
+#region: @bundler [/etc/firejail/whitelist-var-common.inc] BEGIN
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-# @bundler: MISSING include whitelist-var-common.local
 
 # common /var whitelist for all profiles
 
@@ -2256,6 +2269,7 @@ whitelist /var/cache/fontconfig
 whitelist /var/tmp
 whitelist /var/run
 whitelist /var/lock
+#endregion: @bundler [/etc/firejail/whitelist-var-common.inc] END
 
 # Add the next line to your electron.local if your kernel allows unprivileged userns clone.
 #include electron-hardened.inc.profile
@@ -2277,5 +2291,7 @@ private-tmp
 
 dbus-user none
 dbus-system none
+#endregion: @bundler [/etc/firejail/electron.profile] END
 # for firejail >= 0.9.74
 # include electron-common.profile
+#endregion: @bundler [aides-max.profile] END

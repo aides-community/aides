@@ -1,3 +1,4 @@
+mkdir ${HOME}/.config/MAX
 whitelist ${HOME}/.config/MAX
 whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
