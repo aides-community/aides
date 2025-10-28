@@ -1,6 +1,6 @@
 name=yandex-browser-stable
 version=25.8.5.854
-release=1
+release=2
 summary="The web browser from Yandex"
 group="Networking/WWW"
 desc="The web browser from Yandex
@@ -57,6 +57,8 @@ prepare() {
 
 package() {
 	cp -dr opt usr "${pkgdir}"/
+	# Menu entry /usr/share/menu/yandex-browser.menu skipped: obsolete format
+	rm -f "${pkgdir}"/usr/share/menu/yandex-browser.menu
 	install -Dm 0644 "${pkgdir}"/opt/yandex/browser/product_logo_128.png "${pkgdir}"/usr/share/pixmaps/yandex-browser.png
 	"${pkgdir}"/opt/yandex/browser/update_codecs "${pkgdir}"/opt/yandex/browser
 }
@@ -68,8 +70,7 @@ files() {
 		"/usr/share/appdata/*" \
 		"/usr/share/applications/*" \
 		"/usr/share/gnome-control-center/default-apps/*" \
-		"/usr/share/pixmaps/*" \
-		"/usr/share/menu/*"
+		"/usr/share/pixmaps/*"
 
 	files-find-doc yandex-browser-stable
 }
