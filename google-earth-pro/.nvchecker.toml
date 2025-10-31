@@ -1,0 +1,7 @@
+[google-earth-pro]
+source = "apt"
+mirror = "https://dl.google.com/linux/earth/deb/"
+pkg = "google-earth-pro-stable"
+suite = "stable"
+repo = "main"
+strip_release = true
