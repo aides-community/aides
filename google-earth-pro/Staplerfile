@@ -1,6 +1,6 @@
 name=google-earth-pro
 version=7.3.6.10441
-release=1
+release=2
 summary="Virtual globe"
 group="Sciences/Geosciences"
 desc="3D interface to explore the globe, terrain, streets, buildings and other planets"
@@ -13,6 +13,11 @@ nonfree_url="https://www.google.com/help/terms_maps.html"
 
 provides=(google-earth)
 conflicts=()
+
+firejailed=1
+firejail_profiles=(
+	['default']='firejail/aides-google-earth-pro.profile'
+)
 
 sources=(
 	"https://dl.google.com/linux/earth/deb/pool/main/g/google-earth-pro-stable/google-earth-pro-stable_${version}-r0_amd64.deb"
