@@ -1,0 +1,101 @@
+# Example of Staplerfile
+# Check stplr.dev/staplerfile for a documentation.
+name=reaper
+version=7.52
+release=1
+summary="Digital Audio Workstation"
+group="Engineering"
+desc="
+Using REAPER with your PC, Mac, or Linux computer, and no other software, you can import any audio and MIDI, synthesize, sample, compose, arrange, edit, mix, and master songs or any other audio projects.
+
+If you add a hardware audio interface and a microphone, you have a complete professional quality recording studio, suitable for recording anything from a soloist to a band to an orchestra.
+
+The best way to understand what REAPER can do is to try it for yourself. There is only one version of REAPER, used by home hobbyists and high-end professional studios alike. Evaluate the full version of REAPER with no obligation for up to 60 days.
+
+The free User Guide and helpful user forum are always available if you need a hand.
+"
+maintainer="David Sultaniiazov <x1z53@alt-gnome.ru>"
+# Array of Go arches (go tool dist list | cut -d/ -f2 | sort | uniq) or "all"
+architectures=("amd64")
+homepage="https://reaper.fm"
+
+license=("custom")
+nonfree=1
+nonfree_msgfile="EULA.txt"
+
+provides=()
+conflicts=()
+
+MAJOR_VERSION=7
+
+_get_arch() {
+	if [ "${ARCH}" = "amd64" ]; then
+		echo 'x86_64'
+  elif [ "${ARCH}" = "arm64" ]; then
+		echo 'aarch64'
+	fi
+}
+
+sources=(
+  "https://www.reaper.fm/files/${version::1}.x/$name${version//.}_linux_$(_get_arch).tar.xz"
+)
+
+checksums=(
+  "sha256:fc42b2ad640f411f67fd623e47ebec0481b068787417b3841a0dada9abd7d03c"
+)
+
+opt_deps=(
+  'ffmpeg: for video rendering'
+  'jack_mixer: for JACK support'
+  'pulseaudio: for PulseAudio support'
+  'python3: for Python plugins'
+)
+opt_deps_ru=(
+  'ffmpeg: для рендеринга видео'
+  'jack_mixer: для поддержки JACK'
+  'pulseaudio: для поддержки PulseAudio'
+  'python3: для Python-плагинов'
+)
+
+build_deps=(
+  xdg-utils
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+package() {
+  cd ${name}_linux_$(_get_arch)
+
+  XDG_DATA_HOME="$srcdir/xdg/" ./install-reaper.sh --install "$pkgdir/usr/lib" --integrate-user-desktop
+  # remove unneeded uninstallation script
+  rm -v "$pkgdir/usr/lib/${name^^}/uninstall-reaper.sh"
+
+  # strip $pkgdir from XDG desktop Exec line
+  sed -e "s|$pkgdir||g" -i "$srcdir/xdg/applications/"*.desktop
+  # install only required files for XDG integration
+  install -vDm 644 "$srcdir/xdg/applications/"*.desktop -t "$pkgdir/usr/share/applications/"
+  install -vDm 644 "$srcdir/xdg/mime/packages/"*.xml -t "$pkgdir/usr/share/mime/packages/"
+  install -vDm 644 "$srcdir/xdg/icons/hicolor/256x256/apps/"*.png -t "$pkgdir/usr/share/icons/hicolor/256x256/apps/"
+
+  # add convenience symlink to PATH
+  install -vdm 755 "$pkgdir/usr/bin"
+  ln -sv /usr/lib/${name^^}/$name "$pkgdir/usr/bin/$name"
+
+  # install EULA
+  install -vDm 644 "$pkgdir/usr/lib/${name^^}/EULA.txt" -t "$pkgdir/usr/share/licenses/$name/"
+}
+
+# files(): Lists all files to be included in the final package.
+files() {
+	files-find \
+    "/usr/bin/$name" \
+    "/usr/lib/${name^^}/*" \
+    "/usr/share/applications/*" \
+    "/usr/share/mime/packages/*" \
+    "/usr/share/licenses/$name/*" \
+    "/usr/share/icons/hicolor/256x256/apps/*"
+}
