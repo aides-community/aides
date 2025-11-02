@@ -1,5 +1,5 @@
 name=anydesk
-version=7.0.2
+version=7.1.1
 release=1
 summary="The Fast Remote Desktop Application"
 group="Other"
@@ -12,72 +12,72 @@ provides=()
 conflicts=()
 
 build_deps=(
-    "libdbus-1.so.3()(64bit)"
-    "libXext.so.6()(64bit)"
-    "libXrandr.so.2()(64bit)"
-    "libxcb-shm.so.0()(64bit)"
-    "libpolkit-gobject-1.so.0()(64bit)"
-    "libX11.so.6()(64bit)"
-    "libgdk-3.so.0()(64bit)"
-    "libfontconfig.so.1()(64bit)"
-    "libxkbfile.so.1()(64bit)"
-    "libXdamage.so.1()(64bit)"
-    "libfreetype.so.6()(64bit)"
-    "libharfbuzz.so.0()(64bit)"
-    "libatk-1.0.so.0()(64bit)"
-    "libgdk_pixbuf-2.0.so.0()(64bit)"
-    "libXrender.so.1()(64bit)"
-    "libX11-xcb.so.1()(64bit)"
-    "libXtst.so.6()(64bit)"
-    "libcairo-gobject.so.2()(64bit)"
-    "libpango-1.0.so.0()(64bit)"
-    "libXfixes.so.3()(64bit)"
-    "libgio-2.0.so.0()(64bit)"
-    "libpangocairo-1.0.so.0()(64bit)"
-    "libXi.so.6()(64bit)"
-    "libxcb.so.1()(64bit)"
-    "libcairo.so.2()(64bit)"
-    "libgtk-3.so.0()(64bit)"
+	"libdbus-1.so.3()(64bit)"
+	"libXext.so.6()(64bit)"
+	"libXrandr.so.2()(64bit)"
+	"libxcb-shm.so.0()(64bit)"
+	"libpolkit-gobject-1.so.0()(64bit)"
+	"libX11.so.6()(64bit)"
+	"libgdk-3.so.0()(64bit)"
+	"libfontconfig.so.1()(64bit)"
+	"libxkbfile.so.1()(64bit)"
+	"libXdamage.so.1()(64bit)"
+	"libfreetype.so.6()(64bit)"
+	"libharfbuzz.so.0()(64bit)"
+	"libatk-1.0.so.0()(64bit)"
+	"libgdk_pixbuf-2.0.so.0()(64bit)"
+	"libXrender.so.1()(64bit)"
+	"libX11-xcb.so.1()(64bit)"
+	"libXtst.so.6()(64bit)"
+	"libcairo-gobject.so.2()(64bit)"
+	"libpango-1.0.so.0()(64bit)"
+	"libXfixes.so.3()(64bit)"
+	"libgio-2.0.so.0()(64bit)"
+	"libpangocairo-1.0.so.0()(64bit)"
+	"libXi.so.6()(64bit)"
+	"libxcb.so.1()(64bit)"
+	"libcairo.so.2()(64bit)"
+	"libgtk-3.so.0()(64bit)"
 )
 
 deps=(
-    libgtkglext
+	libgtkglext
 )
 
 sources=(
-    "https://download.anydesk.com/linux/anydesk-$version-amd64.tar.gz"
+	"https://download.anydesk.com/linux/anydesk-$version-amd64.tar.gz"
 )
 
 checksums=(
-    'a84e3dad5fd03d891bc80a690cc2ff9fa6ebce6880f77c38edb0cec22283b94a'
+	'sha256:a46cd4e1d05e5a500200ebec841cd33cde8f70d7509105c08c61672becab280e'
 )
 
 auto_req=1
 auto_prov=1
 
 package() {
-    install-binary "${srcdir}/anydesk-${version}/anydesk"
-    install-desktop "${srcdir}/anydesk-${version}/anydesk.desktop"
+	install-binary "${srcdir}/anydesk-${version}/anydesk"
+	install-desktop "${srcdir}/anydesk-${version}/anydesk.desktop"
 
-    # workaround to fix crashes
-    # sed -i 's/^Exec=/Exec=env GDK_BACKEND=x11 /' "${pkgdir}/usr/share/applications/anydesk.desktop"
+	# workaround to fix crashes
+	# sed -i 's/^Exec=/Exec=env GDK_BACKEND=x11 /' "${pkgdir}/usr/share/applications/anydesk.desktop"
 
-    # install polkit action
-    install -Dm 644 "${srcdir}/anydesk-${version}/polkit-1/com.anydesk.anydesk.policy" "${pkgdir}/usr/share/polkit-1/actions/com.anydesk.anydesk.policy"
-    # install icon
-    install -Dm 644 "${srcdir}/anydesk-${version}/icons/hicolor/scalable/apps/anydesk.svg" "${pkgdir}/usr/share/pixmaps/anydesk.svg"
+	# install polkit action
+	install -Dm 644 "${srcdir}/anydesk-${version}/polkit-1/com.anydesk.anydesk.policy" "${pkgdir}/usr/share/polkit-1/actions/com.anydesk.anydesk.policy"
+	# install icon
+	install -Dm 644 "${srcdir}/anydesk-${version}/icons/hicolor/scalable/apps/anydesk.svg" "${pkgdir}/usr/share/pixmaps/anydesk.svg"
 
-    install-license  "${srcdir}/anydesk-${version}/copyright" "${name}/LICENSE"
-    install-systemd  "${srcdir}/anydesk-${version}/systemd/anydesk.service"
+	install-license "${srcdir}/anydesk-${version}/copyright" "${name}/LICENSE"
+	install-systemd "${srcdir}/anydesk-${version}/systemd/anydesk.service"
 }
 
 files() {
 	files-find \
 		"/usr/bin/$name" \
 		"/usr/share/applications/$name.desktop" \
-        "/usr/share/licenses/$name" \
-        "/usr/share/licenses/$name/*" \
+		"/usr/share/licenses/$name" \
+		"/usr/share/licenses/$name/*" \
 		"/usr/share/pixmaps/$name.svg" \
-        "/usr/lib/systemd/system/$name.service" \
-        "/usr/share/polkit-1/actions/com.anydesk.anydesk.policy"
+		"/usr/lib/systemd/system/$name.service" \
+		"/usr/share/polkit-1/actions/com.anydesk.anydesk.policy"
 }
