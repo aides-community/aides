@@ -1,7 +1,7 @@
 # Example of Staplerfile
 # Check stplr.dev/staplerfile for a documentation.
 name=fvm
-version=3.2.1 # upstream version
+version=4.0.0 # upstream version
 release=1
 summary="Flutter Version Management"
 #group="Other" # See /usr/lib/rpm/GROUPS for valid values
@@ -17,13 +17,13 @@ provides=()
 conflicts=()
 
 sources=(
-    "https://github.com/leoafarias/fvm/releases/download/$version/$name-$version-linux-x64.tar.gz"
-    "local:///${name}.sh"
+	"https://github.com/leoafarias/fvm/releases/download/$version/$name-$version-linux-x64.tar.gz"
+	"local:///${name}.sh"
 )
 
 checksums=(
-    sha256:39e8ebdb46b93de1c2aedbfa9aa75103ef16c9bf50048a928ef70abbb456f4f8
-    sha256:1904156e8a9ac4155b0161c38e62d000db1c1dee28087644c56f1aa38051c055
+	sha256:58891a42ee8c775cc3b4baeb214d52caefb6bb312bd973c08a2561cc25baae4b
+	sha256:1904156e8a9ac4155b0161c38e62d000db1c1dee28087644c56f1aa38051c055
 )
 
 # Dependencies needs for build
@@ -35,10 +35,10 @@ build_deps=(
 
 # Runtime dependencies
 deps=(
-    git
-    glibc
-    unzip
-    bash
+	git
+	glibc
+	unzip
+	bash
 )
 
 # Automatically generate runtime dependencies and provided symbols
@@ -50,20 +50,20 @@ prepare() { }
 
 # build(): Compiles or builds the software from source.
 # Since Aides is for proprietary software, it looks superfluous.
-build() {  }
+build() { }
 
 # package(): Installs the built files into the package directory (pkgdir).
 package() {
-    install -Dm755 "$name.sh" "$pkgdir/usr/bin/$name"
-    install -Dm755 -t "${pkgdir}/opt/${name}" "fvm/src/dart"
-    install -Dm644 -t "${pkgdir}/opt/${name}" "fvm/src/fvm.snapshot"
-    install -Dm644 -t "${pkgdir}/usr/share/licenses/${name}" "fvm/src/LICENSE"
+	install -Dm755 "$name.sh" "$pkgdir/usr/bin/$name"
+	install -Dm755 -t "${pkgdir}/opt/${name}" "fvm/src/dart"
+	install -Dm644 -t "${pkgdir}/opt/${name}" "fvm/src/fvm.snapshot"
+	install -Dm644 -t "${pkgdir}/usr/share/licenses/${name}" "fvm/src/LICENSE"
 }
 
 # files(): Lists all files to be included in the final package.
 files() {
-     files-find-binary fvm
-     files-find \
+	files-find-binary fvm
+	files-find \
 		"/opt/**/*" \
 		"/opt/**/.* " \
 		"/usr/share/licenses/**/*"
