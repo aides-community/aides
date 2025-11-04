@@ -1,0 +1,4 @@
+[lunacy]
+source = "regex"
+url = "https://lunacy.docs.icons8.com/release-notes"
+regex = "Lunacy_([\\d.]+)\\.deb"
