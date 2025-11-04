@@ -2,7 +2,7 @@
 # Check stplr.dev/staplerfile for a documentation.
 name=reaper
 version=7.52
-release=1
+release=2
 summary="Digital Audio Workstation"
 group="Engineering"
 desc="
@@ -15,8 +15,13 @@ The best way to understand what REAPER can do is to try it for yourself. There i
 The free User Guide and helpful user forum are always available if you need a hand.
 "
 maintainer="David Sultaniiazov <x1z53@alt-gnome.ru>"
+
 # Array of Go arches (go tool dist list | cut -d/ -f2 | sort | uniq) or "all"
-architectures=("amd64")
+architectures=(
+  "amd64"
+  "arm64"
+)
+
 homepage="https://reaper.fm"
 
 license=("custom")
@@ -29,19 +34,25 @@ conflicts=()
 MAJOR_VERSION=7
 
 _get_arch() {
-	if [ "${ARCH}" = "amd64" ]; then
-		echo 'x86_64'
+  if [ "${ARCH}" = "amd64" ]; then
+    echo 'x86_64'
   elif [ "${ARCH}" = "arm64" ]; then
-		echo 'aarch64'
-	fi
+    echo 'aarch64'
+  fi
 }
 
 sources=(
-  "https://www.reaper.fm/files/${version::1}.x/$name${version//.}_linux_$(_get_arch).tar.xz"
+  "https://www.reaper.fm/files/${version::1}.x/$name${version//./}_linux_x86_64.tar.xz"
+)
+sources_arm64=(
+  "https://www.reaper.fm/files/${version::1}.x/$name${version//./}_linux_aarch64.tar.xz"
 )
 
 checksums=(
-  "sha256:fc42b2ad640f411f67fd623e47ebec0481b068787417b3841a0dada9abd7d03c"
+  sha256:fc42b2ad640f411f67fd623e47ebec0481b068787417b3841a0dada9abd7d03c
+)
+checksums_arm64=(
+  sha256:626c1b0001bfe4d01879ee2b1980f321b5dcf0bd326cfa8004f1c50eb600661b
 )
 
 opt_deps=(
@@ -91,11 +102,11 @@ package() {
 
 # files(): Lists all files to be included in the final package.
 files() {
-	files-find \
+  files-find \
     "/usr/bin/$name" \
-    "/usr/lib/${name^^}/*" \
+    "/usr/lib/**/*" \
     "/usr/share/applications/*" \
     "/usr/share/mime/packages/*" \
-    "/usr/share/licenses/$name/*" \
+    "/usr/share/licenses/**/*" \
     "/usr/share/icons/hicolor/256x256/apps/*"
 }
