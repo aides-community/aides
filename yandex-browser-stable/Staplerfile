@@ -1,6 +1,6 @@
 name=yandex-browser-stable
-version=25.8.5.854
-release=2
+version=25.8.5.993
+release=1
 summary="The web browser from Yandex"
 group="Networking/WWW"
 desc="The web browser from Yandex
@@ -46,7 +46,7 @@ sources=(
 	"https://repo.yandex.ru/yandex-browser/deb/pool/main/y/yandex-${_pkgname}/yandex-${_pkgname}_${_pkgver}_amd64.deb?~name=${name}-${_pkgver}.deb"
 )
 checksums=(
-	sha256:f5b2ae39831397713fa9e1c3c423cddee75006dafd03c4f2b0d96a8be16b6b27
+	sha256:78b5fdd0c4e053467b036384e6ffa57e5459158b9a1f69c5e9b17dc46903b222
 )
 
 prepare() {
