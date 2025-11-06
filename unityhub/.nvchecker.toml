@@ -1,0 +1,7 @@
+[unityhub]
+source = "apt"
+mirror = "https://hub.unity3d.com/linux/repos/deb"
+pkg = "unityhub"
+suite = "stable"
+repo = "main"
+strip_release = true

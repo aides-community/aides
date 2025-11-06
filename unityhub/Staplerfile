@@ -1,0 +1,66 @@
+name=unityhub
+version=3.15.2
+release=1
+summary="The Unity Hub is a standalone application that streamlines the way you find, download, and manage your Unity Projects and installations"
+group="Development/Tools"
+desc="$summary."
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://unity.com/"
+license=("custom")
+
+nonfree=1
+nonfree_url="https://unity.com/legal/terms-of-service"
+
+provides=()
+conflicts=()
+
+# "https://hub.unity3d.com/linux/repos/deb/pool/main/u/unity/unityhub_amd64/unityhub-amd64-${version}.deb?~name=${name}-${version}.deb"
+sources=(
+	"https://hub.unity3d.com/linux/repos/deb/pool/main/u/unity/unityhub_amd64/UnityHubSetup-amd64.deb?~name=${name}-${version}.deb"
+	"local:///services-config.json"
+)
+
+checksums=(
+	sha256:4557902db7d03a49f94b3a0f5ba6e3ae769135f94f7157f0fa0aeac4c5338206
+	sha256:20b38d9caf81d580cc7f6bca624bc976fdeac4c408ada8ae4c69ecbd8cd44a89
+)
+
+build_deps=(
+	bsdtar
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+auto_req_filter=(
+	libc\.musl-x86_64
+)
+
+disable_network=1
+
+prepare() {
+	mkdir -p "${name}-${version}"
+	bsdtar -xf "${name}-${version}.deb" -C "${name}-${version}/"
+	bsdtar -xf "${name}-${version}"/data.tar.* -C "$pkgdir/"
+}
+
+package() {
+	mkdir -p "$pkgdir/usr/bin"
+	ln -sf '/opt/unityhub/unityhub' "$pkgdir/usr/bin/unityhub"
+	install -Dm644 "$srcdir/services-config.json" "$pkgdir/usr/share/unity3d/config/services-config.json"
+}
+
+files() {
+	files-find-binary unityhub
+	files-find-desktop unityhub.desktop
+	files-find-doc unityhub
+
+	files-find \
+		"/opt/${name}" \
+		"/opt/${name}/**/*" \
+		"/usr/share/icons/hicolor/**/apps/unityhub.png"
+
+	files-find "/usr/share/unity3d/config/services-config.json"
+}
