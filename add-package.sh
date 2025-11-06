@@ -11,6 +11,6 @@ if jq -e 'has("'$PACKAGE_REPO'")' repos.json > /dev/null; then
     echo "Error: Repository already exists!" >&2
     exit 1
 else
-    jq '. + { "'$PACKAGE_REPO'": "" }' repos.json > tmp.json && mv tmp.json repos.json
+    jq --indent 4 '. + { "'$PACKAGE_REPO'": "" }' repos.json > tmp.json && mv tmp.json repos.json
     echo "Repository added successfully."
 fi
