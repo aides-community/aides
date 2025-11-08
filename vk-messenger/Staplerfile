@@ -1,5 +1,5 @@
 name=vk-messenger
-version=6.0.54
+version=6.0.55
 release=1
 summary="VK Messenger"
 group="Networking/Instant messaging"
@@ -12,9 +12,9 @@ provides=()
 conflicts=()
 
 _source_url=https://upload.object2.vk-apps.com/vk-me-desktop-dev-5837a06d-5f28-484a-ac22-045903cb1b1a/latest/vk-messenger.rpm
-_source_checksum=sha256:2c2082d5a25572de4686d8423bad51fa6bcf70d73c1e0ffbdaa063c33a1b9ff8
-_source_etag=532f9a78d1bf51e41f103376f5dfc27e
-_source_last_modified='Mon, 25 Aug 2025 08:21:45 GMT'
+_source_checksum=sha256:6188a936f8165fdb60b470319e7166404c949b212bd648339555331074baff43
+_source_etag=7abdf2592a08146ded9587e094fac724
+_source_last_modified='Fri, 07 Nov 2025 16:53:25 GMT'
 
 sources=($_source_url)
 checksums=($_source_checksum)
