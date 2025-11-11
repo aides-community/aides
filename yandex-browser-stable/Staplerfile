@@ -1,6 +1,6 @@
 name=yandex-browser-stable
 version=25.8.5.993
-release=1
+release=2
 summary="The web browser from Yandex"
 group="Networking/WWW"
 desc="The web browser from Yandex
@@ -10,6 +10,9 @@ maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://browser.yandex.ru/"
 license=("custom")
+
+nonfree=1
+nonfree_url="https://yandex.ru/legal/browser_agreement/ru/"
 
 _pkgver=$version-1
 _pkgname=browser-stable
@@ -50,7 +53,6 @@ checksums=(
 )
 
 prepare() {
-	cd "$srcdir"
 	ar x ${name}-${_pkgver}.deb
 	tar -xf data.tar.xz
 }
@@ -60,6 +62,10 @@ package() {
 	# Menu entry /usr/share/menu/yandex-browser.menu skipped: obsolete format
 	rm -f "${pkgdir}"/usr/share/menu/yandex-browser.menu
 	install -Dm 0644 "${pkgdir}"/opt/yandex/browser/product_logo_128.png "${pkgdir}"/usr/share/pixmaps/yandex-browser.png
+
+	sed -i 's|export CHROME_WRAPPER="`readlink -f "$0"`"|export CHROME_WRAPPER=/usr/bin/yandex-browser-stable|' "${pkgdir}"/opt/yandex/browser/yandex-browser
+	sed -i 's|HERE="`dirname "$CHROME_WRAPPER"`"|HERE=/opt/yandex/browser|' "${pkgdir}"/opt/yandex/browser/yandex-browser
+
 	"${pkgdir}"/opt/yandex/browser/update_codecs "${pkgdir}"/opt/yandex/browser
 }
 

@@ -1,6 +1,6 @@
 name=visual-studio-code
 version=1.105.1
-release=1
+release=2
 summary='Visual Studio Code'
 group='Development/Tools'
 desc='Visual Studio Code (vscode): Editor for building and debugging modern web and cloud applications (official binary version)'
@@ -35,7 +35,8 @@ _set_meta_info() {
 	sed 's/@@NAME_LONG@@/Visual Studio Code/g' "$1" |
 		sed 's/@@NAME_SHORT@@/Code/g' |
 		sed 's/@@NAME@@/code/g' |
-		sed 's#@@EXEC@@#/usr/bin/code#g' |
+		# https://altlinux.space/aides-pkgs/visual-studio-code/issues/20
+		sed 's#@@EXEC@@#/usr/bin/code --enable-features=UseOzonePlatform --ozone-platform=wayland#g' |
 		sed 's/@@ICON@@/visual-studio-code/g' |
 		sed 's/@@URLPROTOCOL@@/vscode/g'
 }
