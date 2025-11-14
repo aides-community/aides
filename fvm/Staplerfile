@@ -1,7 +1,7 @@
 # Example of Staplerfile
 # Check stplr.dev/staplerfile for a documentation.
 name=fvm
-version=4.0.0 # upstream version
+version=4.0.1 # upstream version
 release=1
 summary="Flutter Version Management"
 #group="Other" # See /usr/lib/rpm/GROUPS for valid values
@@ -18,12 +18,10 @@ conflicts=()
 
 sources=(
 	"https://github.com/leoafarias/fvm/releases/download/$version/$name-$version-linux-x64.tar.gz"
-	"local:///${name}.sh"
 )
 
 checksums=(
-	sha256:58891a42ee8c775cc3b4baeb214d52caefb6bb312bd973c08a2561cc25baae4b
-	sha256:1904156e8a9ac4155b0161c38e62d000db1c1dee28087644c56f1aa38051c055
+	sha256:f6aa53e1f0f73f942d104317eead9a957313e2cbbc0287c62342422e12e4a3ee
 )
 
 # Dependencies needs for build
@@ -46,25 +44,24 @@ deps=(
 #auto_prov=1
 
 # prepare(): Unpacks and prepares the sources
-prepare() { }
+#prepare() {}
 
 # build(): Compiles or builds the software from source.
 # Since Aides is for proprietary software, it looks superfluous.
-build() { }
+#build() {}
 
 # package(): Installs the built files into the package directory (pkgdir).
 package() {
-	install -Dm755 "$name.sh" "$pkgdir/usr/bin/$name"
-	install -Dm755 -t "${pkgdir}/opt/${name}" "fvm/src/dart"
-	install -Dm644 -t "${pkgdir}/opt/${name}" "fvm/src/fvm.snapshot"
+	install-binary "$name/$name"
 	install -Dm644 -t "${pkgdir}/usr/share/licenses/${name}" "fvm/src/LICENSE"
+
 }
 
 # files(): Lists all files to be included in the final package.
 files() {
 	files-find-binary fvm
 	files-find \
-		"/opt/**/*" \
-		"/opt/**/.* " \
+		#"/opt/**/*" \
+		#"/opt/**/.* " \
 		"/usr/share/licenses/**/*"
 }

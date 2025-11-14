@@ -1,6 +1,6 @@
 name=yandex-music
 version=5.75.2
-release=1
+release=2
 summary="Linux client for Yandex Music"
 group="Sound"
 desc="Native YandexMusic client for Linux"

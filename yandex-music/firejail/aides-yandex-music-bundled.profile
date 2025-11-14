@@ -8,8 +8,22 @@ noblacklist ${HOME}/.config/YandexMusic
 mkdir ${HOME}/.config/YandexMusic
 whitelist ${HOME}/.config/YandexMusic
 
+# fix system tray: https://github.com/netblue30/firejail/issues/1137#issuecomment-669496384
+ignore private-tmp
+mkdir /tmp/yandex-music-tmp
+whitelist /tmp/yandex-music-tmp
+env TMPDIR=/tmp/yandex-music-tmp
+env TMP=/tmp/yandex-music-tmp
+
 ignore dbus-user none
 
+dbus-user filter
+dbus-user.own org.mpris.MediaPlayer2.chromium.*
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.portal.Desktop
+dbus-user.talk org.kde.StatusNotifierWatcher
+
+# for firejail <= 0.9.74
 #region: @bundler [/etc/firejail/electron.profile] BEGIN
 # Firejail profile for electron
 # Description: Build cross platform desktop apps with web technologies
@@ -2283,4 +2297,6 @@ private-tmp
 dbus-user none
 dbus-system none
 #endregion: @bundler [/etc/firejail/electron.profile] END
+# for firejail >= 0.9.74
+# include electron-common.profile
 #endregion: @bundler [firejail/aides-yandex-music.profile] END
