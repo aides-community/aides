@@ -1,0 +1,71 @@
+name=wps-office
+version=11.1.0.11723
+release=1
+summary="Kingsoft Office (WPS Office) - an office productivity suite"
+group="Office"
+desc="$summary."
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+# Array of Go arches (go tool dist list | cut -d/ -f2 | sort | uniq) or "all"
+architectures=("amd64")
+homepage="https://www.wps.com"
+license=("custom")
+
+nonfree=1
+nonfree_url=https://www.wps.com/eula/
+
+provides=()
+conflicts=()
+
+sources=(
+	"https://wdl1.pcfg.cache.wpscdn.com/wpsdl/wpsoffice/download/linux/${version##*.}/wps-office_${version}.XA_amd64.deb?~name=${name}-${version}.deb"
+)
+
+checksums=(
+	sha256:fe6326210f69d94efdbf2728914d293036be391b93a614f58cd0e1ff1d4923b3
+)
+
+build_deps=(
+	binutils
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_req_filter=(
+	libuof\\.so
+)
+
+disable_network=1
+
+prepare() {
+	ar x ${name}-${version}.deb
+	tar -xf data.tar.xz
+}
+
+package() {
+	cp -dr opt usr "${pkgdir}"/
+
+	_office6="${pkgdir}"/opt/kingsoft/wps-office/office6
+	rm -f "${_office6}"/libjpeg.so*
+	rm -f "${_office6}"/librpcwpsapi.so
+	rm -f "${_office6}"/librpcwppapi.so
+	rm -f "${_office6}"/librpcetapi.so
+	rm -f "${_office6}"/addons/pdfbatchcompression/libpdfbatchcompressionapp.so
+}
+
+files() {
+	files-find-desktop wps-office-{et,pdf,prometheus,wpp,wps}.desktop
+	files-find-binary et wpp wps wpspdf
+
+	files-find \
+		"/opt/kingsoft/wps-office" \
+		"/opt/kingsoft/wps-office/**/*"
+
+	files-find \
+        "/usr/share/fonts/wps-office" \
+		"/usr/share/fonts/wps-office/*" \
+		"/usr/share/templates/**/*" \
+		"/usr/share/icons/hicolor/*/mimetypes/*.png" \
+		"/usr/share/icons/hicolor/*/apps/*.png" \
+		"/usr/share/mime/packages/*.xml" \
+		"/usr/share/desktop-directories/wps-office.directory"
+}

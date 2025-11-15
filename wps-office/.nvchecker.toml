@@ -1,0 +1,5 @@
+[wps-office]
+source = 'regex'
+url = 'https://wps.com/whatsnew/linux/'
+encoding = 'utf8'
+regex = '\((\d+\.\d+\.\d+\.\d+)\)'
