@@ -1,0 +1,7 @@
+# This file describes how to check for updates using nvchecker.
+# For more information, visit l.aides.space/nvchecker
+
+[cursor]
+source = "regex"
+regex = "<span class=\"type-md\">([0-9.]*)</span><span class=\"label border-theme-text-sec text-theme-text\">Latest</span>"
+url = "https://cursor.com/download"

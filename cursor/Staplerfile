@@ -1,0 +1,56 @@
+name=cursor
+version=2.0
+release=1
+summary="The AI Code Editor"
+group="Development/Tools"
+desc="The AI Code Editor."
+maintainer="Firstname Lastname <email@domain.com>"
+architectures=("amd64" "arm64")
+homepage="https://cursor.com/"
+license=("MIT")
+
+nonfree=1
+
+nonfree_msg="This software contains proprietary software..."
+
+provides=()
+conflicts=()
+
+_pkg_arch() {
+	if [ "${ARCH}" = "arm64" ]; then
+		echo "${ARCH}"
+	else
+		echo "x64"
+	fi
+}
+
+sources=("https://api2.cursor.sh/updates/download/golden/linux-$(_pkg_arch)-rpm/${name}/${version}?~name=${name}.rpm")
+
+checksums=(sha256:72a62a49e78818c7f752674a3a03dc2fe2f41b18ffa66e4badee26bbb7f7dc4c)
+
+deps=(
+	libsecret
+)
+
+auto_req=1
+auto_prov=1
+auto_reqprov_method=dirty
+
+disable_network=1
+
+package() {
+	cd $pkgdir
+	rpm2cpio $srcdir/${name}.rpm | cpio -idmv
+}
+
+files() {
+	files-find-binary ${name}
+	files-find \
+		"/usr/share/appdata/*" \
+		"/usr/share/applications/*" \
+		"/usr/share/bash-completion/completions/*" \
+		"/usr/share/${name}/**/*" \
+		"/usr/share/mime/packages/*" \
+		"/usr/share/pixmaps/*" \
+		"/usr/share/zsh/site-functions/*"
+}
