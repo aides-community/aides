@@ -20,5 +20,6 @@
     "aides-pkgs/reaper": "e81373c4cd8ef08b7b5501c733a608c4619c85db",
     "aides-pkgs/lunacy": "30d5fa6d370266692499a4ecbcb6a7d55fdd9d09",
     "aides-pkgs/unityhub": "2472eaf684f8453a169a5ea8987fb1233a718d23",
-    "aides-pkgs/wps-office": "df7e7558af36658e4f4ff1d30262140bf96b23f6"
+    "aides-pkgs/wps-office": "df7e7558af36658e4f4ff1d30262140bf96b23f6",
+    "aides-pkgs/cursor": ""
 }
