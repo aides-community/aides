@@ -2,7 +2,7 @@
     "aides-pkgs/singularityapp": "245de1023073e2916e504bf338a81601346d42c0",
     "aides-pkgs/vagrant": "bd6704af4ec6d4cb114fe5ab96e1ff0405c27bc1",
     "aides-pkgs/yandex-browser-stable": "4d5b0b947e3a9c3b4852c83e9b24d14efce8e866",
-    "aides-pkgs/visual-studio-code": "89f7d41fa0e3ef42e416d62602d1a667815b6b83",
+    "aides-pkgs/visual-studio-code": "a4b7ec33e7e1fd3b815b75b836045098dc8b24cc",
     "aides-pkgs/yandex-disk": "3f102cf5af42527f4dd7d58f7136e7f68f97c420",
     "aides-pkgs/yandex-music": "632753dd96853ee2470159b9957b1b2f50d717ad",
     "aides-pkgs/obsidian": "8f3185d76009d51688fcf716c959a21f4460ba15",
@@ -21,5 +21,5 @@
     "aides-pkgs/lunacy": "30d5fa6d370266692499a4ecbcb6a7d55fdd9d09",
     "aides-pkgs/unityhub": "2472eaf684f8453a169a5ea8987fb1233a718d23",
     "aides-pkgs/wps-office": "df7e7558af36658e4f4ff1d30262140bf96b23f6",
-    "aides-pkgs/cursor": "6e2a2c62f7dd2187088c1616b4190c3ce73b5a83"
+    "aides-pkgs/cursor": "c2f251ebf753381b4813a271e723ad9184b4f7ae"
 }
