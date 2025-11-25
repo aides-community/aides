@@ -1,32 +1,37 @@
 name=cursor
-version=2.1
+version=2.1.26
 release=1
 summary="The AI Code Editor"
 group="Development/Tools"
-desc="The AI Code Editor."
+desc="$summary."
 maintainer="Vladimir Romanov <rirusha@altlinux.org>"
 architectures=("amd64" "arm64")
 homepage="https://cursor.com/"
 license=("MIT")
 
 nonfree=1
-
-nonfree_msg="This software contains proprietary software..."
+nonfree_url="https://cursor.com/terms-of-service"
 
 provides=()
 conflicts=()
 
-_pkg_arch() {
-	if [ "${ARCH}" = "arm64" ]; then
-		echo "${ARCH}"
-	else
-		echo "x64"
-	fi
-}
+_commit=f628a4761be40b8869ca61a6189cafd14756dff4
 
-sources=("https://api2.cursor.sh/updates/download/golden/linux-$(_pkg_arch)-rpm/${name}/${version}?~name=${name}.rpm")
+sources_amd64=(
+	"https://downloads.cursor.com/production/${_commit}/linux/x64/rpm/x86_64/cursor-${version}.el8.x86_64.rpm?~name=${name}.rpm"
+)
 
-checksums=(sha256:5db12254b268fc973c4cacf1ca59fbabbd0de40612e96ad601059dbd5a52ce7a)
+sources_arm64=(
+	"https://downloads.cursor.com/production/${_commit}/linux/arm64/rpm/aarch64/cursor-${version}.el8.aarch64.rpm?~name=${name}.rpm"
+)
+
+checksums_amd64=(
+	sha256:4d5faa6b3fefbd04ccd4cef2c2eb995b9a9aa7b555d72064b2feff34889cec42
+)
+
+checksums_arm64=(
+	sha256:c20f54566826d0e45d94f9d267f441969309fd49fb9ac24f40ae61c4255678ac
+)
 
 deps=(
 	libsecret

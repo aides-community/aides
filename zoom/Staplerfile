@@ -1,5 +1,5 @@
 name=zoom
-version=6.6.6.5306
+version=6.6.10.5815
 release=1
 summary="Video Conferencing and Web Conferencing Service"
 group="Networking/Instant messaging"
@@ -26,7 +26,7 @@ sources=(
 )
 
 checksums=(
-	sha256:6bc627824e8ac01b140a8bafe4515f119421789494f3c82b9509b6eea840351c
+	sha256:4af3c086fe896b7edabe21b81a1eb916f0dcf54e1f50329126fbeef3fb5bc65b
 )
 
 auto_reqprov_method=dirty

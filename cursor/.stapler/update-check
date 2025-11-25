@@ -1,0 +1,8 @@
+#!/bin/bash
+
+. "$(dirname "$0")/_common.sh"
+
+version=$(stplr-spec get-field version)
+new_version=$(curl -s $CURSOR_API_URL | jq -r .version)
+
+echo $version $new_version

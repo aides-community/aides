@@ -1,8 +1,8 @@
 # Example of Staplerfile
 # Check stplr.dev/staplerfile for a documentation.
 name=reaper
-version=7.52
-release=2
+version=7.54
+release=1
 summary="Digital Audio Workstation"
 group="Engineering"
 desc="
@@ -18,8 +18,8 @@ maintainer="David Sultaniiazov <x1z53@alt-gnome.ru>"
 
 # Array of Go arches (go tool dist list | cut -d/ -f2 | sort | uniq) or "all"
 architectures=(
-  "amd64"
-  "arm64"
+	"amd64"
+	"arm64"
 )
 
 homepage="https://reaper.fm"
@@ -34,42 +34,42 @@ conflicts=()
 MAJOR_VERSION=7
 
 _get_arch() {
-  if [ "${ARCH}" = "amd64" ]; then
-    echo 'x86_64'
-  elif [ "${ARCH}" = "arm64" ]; then
-    echo 'aarch64'
-  fi
+	if [ "${ARCH}" = "amd64" ]; then
+		echo 'x86_64'
+	elif [ "${ARCH}" = "arm64" ]; then
+		echo 'aarch64'
+	fi
 }
 
 sources=(
-  "https://www.reaper.fm/files/${version::1}.x/$name${version//./}_linux_x86_64.tar.xz"
+	"https://www.reaper.fm/files/${version::1}.x/$name${version//./}_linux_x86_64.tar.xz"
 )
 sources_arm64=(
-  "https://www.reaper.fm/files/${version::1}.x/$name${version//./}_linux_aarch64.tar.xz"
+	"https://www.reaper.fm/files/${version::1}.x/$name${version//./}_linux_aarch64.tar.xz"
 )
 
 checksums=(
-  sha256:fc42b2ad640f411f67fd623e47ebec0481b068787417b3841a0dada9abd7d03c
+	sha256:0ce8566ae2a322fe5c6a1fbac8efd990743a5f4a9ccb1c560fa076c47ff39b87
 )
 checksums_arm64=(
-  sha256:626c1b0001bfe4d01879ee2b1980f321b5dcf0bd326cfa8004f1c50eb600661b
+	sha256:4c3ea41c0ccd0520d0c664f6dd527009471f6e5a780df7ce68a84a54f48083ac
 )
 
 opt_deps=(
-  'ffmpeg: for video rendering'
-  'jack_mixer: for JACK support'
-  'pulseaudio: for PulseAudio support'
-  'python3: for Python plugins'
+	'ffmpeg: for video rendering'
+	'jack_mixer: for JACK support'
+	'pulseaudio: for PulseAudio support'
+	'python3: for Python plugins'
 )
 opt_deps_ru=(
-  'ffmpeg: для рендеринга видео'
-  'jack_mixer: для поддержки JACK'
-  'pulseaudio: для поддержки PulseAudio'
-  'python3: для Python-плагинов'
+	'ffmpeg: для рендеринга видео'
+	'jack_mixer: для поддержки JACK'
+	'pulseaudio: для поддержки PulseAudio'
+	'python3: для Python-плагинов'
 )
 
 build_deps=(
-  xdg-utils
+	xdg-utils
 )
 
 auto_reqprov_method=dirty
@@ -79,34 +79,34 @@ auto_prov=1
 disable_network=1
 
 package() {
-  cd ${name}_linux_$(_get_arch)
+	cd ${name}_linux_$(_get_arch)
 
-  XDG_DATA_HOME="$srcdir/xdg/" ./install-reaper.sh --install "$pkgdir/usr/lib" --integrate-user-desktop
-  # remove unneeded uninstallation script
-  rm -v "$pkgdir/usr/lib/${name^^}/uninstall-reaper.sh"
+	XDG_DATA_HOME="$srcdir/xdg/" ./install-reaper.sh --install "$pkgdir/usr/lib" --integrate-user-desktop
+	# remove unneeded uninstallation script
+	rm -v "$pkgdir/usr/lib/${name^^}/uninstall-reaper.sh"
 
-  # strip $pkgdir from XDG desktop Exec line
-  sed -e "s|$pkgdir||g" -i "$srcdir/xdg/applications/"*.desktop
-  # install only required files for XDG integration
-  install -vDm 644 "$srcdir/xdg/applications/"*.desktop -t "$pkgdir/usr/share/applications/"
-  install -vDm 644 "$srcdir/xdg/mime/packages/"*.xml -t "$pkgdir/usr/share/mime/packages/"
-  install -vDm 644 "$srcdir/xdg/icons/hicolor/256x256/apps/"*.png -t "$pkgdir/usr/share/icons/hicolor/256x256/apps/"
+	# strip $pkgdir from XDG desktop Exec line
+	sed -e "s|$pkgdir||g" -i "$srcdir/xdg/applications/"*.desktop
+	# install only required files for XDG integration
+	install -vDm 644 "$srcdir/xdg/applications/"*.desktop -t "$pkgdir/usr/share/applications/"
+	install -vDm 644 "$srcdir/xdg/mime/packages/"*.xml -t "$pkgdir/usr/share/mime/packages/"
+	install -vDm 644 "$srcdir/xdg/icons/hicolor/256x256/apps/"*.png -t "$pkgdir/usr/share/icons/hicolor/256x256/apps/"
 
-  # add convenience symlink to PATH
-  install -vdm 755 "$pkgdir/usr/bin"
-  ln -sv /usr/lib/${name^^}/$name "$pkgdir/usr/bin/$name"
+	# add convenience symlink to PATH
+	install -vdm 755 "$pkgdir/usr/bin"
+	ln -sv /usr/lib/${name^^}/$name "$pkgdir/usr/bin/$name"
 
-  # install EULA
-  install -vDm 644 "$pkgdir/usr/lib/${name^^}/EULA.txt" -t "$pkgdir/usr/share/licenses/$name/"
+	# install EULA
+	install -vDm 644 "$pkgdir/usr/lib/${name^^}/EULA.txt" -t "$pkgdir/usr/share/licenses/$name/"
 }
 
 # files(): Lists all files to be included in the final package.
 files() {
-  files-find \
-    "/usr/bin/$name" \
-    "/usr/lib/**/*" \
-    "/usr/share/applications/*" \
-    "/usr/share/mime/packages/*" \
-    "/usr/share/licenses/**/*" \
-    "/usr/share/icons/hicolor/256x256/apps/*"
+	files-find \
+		"/usr/bin/$name" \
+		"/usr/lib/**/*" \
+		"/usr/share/applications/*" \
+		"/usr/share/mime/packages/*" \
+		"/usr/share/licenses/**/*" \
+		"/usr/share/icons/hicolor/256x256/apps/*"
 }
