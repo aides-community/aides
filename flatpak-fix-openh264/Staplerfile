@@ -1,0 +1,41 @@
+name=flatpak-fix-openh264
+version=2.0.0
+release=1
+summary="Fix for org.freedesktop.Platform.openh264"
+group="Other"
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=("amd64")
+# Some related links:
+# - https://wiki.geekcom.org/ru/guides/openh264_fix
+# - https://forum.altlinux.org/index.php?topic=49315.msg401097#msg401097
+# - https://steamcommunity.com/app/1675200/discussions/0/597407469759704872
+# (there are more references available)
+homepage="https://github.com/Nospire/fx"
+license=("custom")
+nonfree=1
+nonfree_msgfile=MSGFILE
+
+deps=(firsttime-flatpak-mask-openh264)
+
+disable_network=1
+
+sources=(
+	"https://github.com/Nospire/fx/releases/download/v2.0.0/install_openh264_v2.tar.gz"
+)
+
+checksums=(
+	sha256:d142266ed069969ce0dc3ffb2c6aa3da98c83d5022a0d6d9cf5df8021f094a6c
+)
+
+_open264_ref='org.freedesktop.Platform.openh264'
+_open264_ver='2.5.1'
+_dest_dir="/var/lib/flatpak/runtime/${_open264_ref}/x86_64/${_open264_ver}"
+
+package() {
+	mkdir -p "${pkgdir}${_dest_dir}"
+	tar -xzvf "openh264-${_open264_ver}.tar.gz" -C "${pkgdir}${_dest_dir}"
+}
+
+files() {
+	files-find "$_dest_dir" "$_dest_dir/**/*"
+}
