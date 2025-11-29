@@ -1,0 +1,38 @@
+# This file describes how to check for updates using nvchecker.
+# For more information, visit l.aides.space/nvchecker
+
+[brother-dcp-t310]
+source = "manual"
+version = "1.0.0"
+
+# Some examples are listed below:
+
+# [bitwarden-cli]
+# source = "httpheader"
+# url = "https://bitwarden.com/download/?app=cli&platform=linux"
+# regex = 'bw-linux-([\d.]+).zip'
+
+# [google-chrome]
+# source = "apt"
+# mirror = "https://dl.google.com/linux/chrome/deb/"
+# pkg = "google-chrome-stable"
+# suite = "stable"
+# repo = "main"
+# strip_release = true
+
+# [vscode]
+# source = "github"
+# github = "microsoft/vscode"
+# use_latest_release = true
+# prefix = "v"
+
+# [jetbrains-toolbox]
+# source = 'regex'
+# url = 'https://data.services.jetbrains.com/products?code=TBA&release.type=release'
+# encoding = 'utf8'
+# regex = 'jetbrains-toolbox-([\d.]+).tar.gz'
+
+# [singularityapp]
+# source="snapcraft"
+# snap="singularityapp"
+# channel="stable"
