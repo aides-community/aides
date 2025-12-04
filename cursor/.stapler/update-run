@@ -6,3 +6,4 @@ api_res=$(curl -s $CURSOR_API_URL)
 
 stplr-spec set-field version "$(echo $api_res | jq -r .version)"
 stplr-spec set-field _commit "$(echo $api_res | jq -r .commitSha)"
+stplr-spec update-checksums
