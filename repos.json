@@ -14,14 +14,14 @@
     "aides-pkgs/google-chrome-stable": "4b046163129e63e856d037ced16eddfc383ca242",
     "aides-pkgs/clion": "2c46a845c2218398a0f636bd7dee2439d470e611",
     "aides-pkgs/max": "d6cd37e59d97e04bf527778fa73392f346bd8a60",
-    "aides-pkgs/fvm": "af541c21d24c3330f0cf71a4bd1118fae87e5876",
+    "aides-pkgs/fvm": "673bbba5ab0723b1adf328dc857e5e395ec739d7",
     "aides-pkgs/zoom": "b977ce46c330cff1e3fe2113e9131713b34c6cd4",
     "aides-pkgs/google-earth-pro": "2146592a70d49f140a28dbe58ad1673aa5688f79",
     "aides-pkgs/reaper": "f783746462de7dcce54292954ca8d2d2fda90c92",
     "aides-pkgs/lunacy": "30d5fa6d370266692499a4ecbcb6a7d55fdd9d09",
     "aides-pkgs/unityhub": "2472eaf684f8453a169a5ea8987fb1233a718d23",
     "aides-pkgs/wps-office": "df7e7558af36658e4f4ff1d30262140bf96b23f6",
-    "aides-pkgs/cursor": "2b708faa8be2abd24d4af6a02e6983eb0a3672b8",
+    "aides-pkgs/cursor": "78a271382eb91cb062195c248fb9f844dc106e53",
     "aides-pkgs/flatpak-fix-openh264": "e9def7c969483cf0b65f6e0a37adf1d5e716a1b6",
     "aides-pkgs/brother-dcp-t310": "50fdcc5a50066d9d539f5d68fd5e6a0e544ec142"
 }

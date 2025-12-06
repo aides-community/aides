@@ -1,7 +1,7 @@
 # Example of Staplerfile
 # Check stplr.dev/staplerfile for a documentation.
 name=fvm
-version=4.0.1 # upstream version
+version=4.0.2 # upstream version
 release=1
 summary="Flutter Version Management"
 #group="Other" # See /usr/lib/rpm/GROUPS for valid values
@@ -21,7 +21,7 @@ sources=(
 )
 
 checksums=(
-	sha256:f6aa53e1f0f73f942d104317eead9a957313e2cbbc0287c62342422e12e4a3ee
+	sha256:1f9524a0cd05abac8e48e0e63c3472a4964a9762516fbe2101f0ee66b1806142
 )
 
 # Dependencies needs for build
