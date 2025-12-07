@@ -1,0 +1,4 @@
+[packer]
+source = "regex"
+url = "https://hashicorp-releases.yandexcloud.net/packer/"
+regex = 'packer_([\d.]+)'

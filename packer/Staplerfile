@@ -1,0 +1,39 @@
+name=packer
+version=1.14.3
+release=1
+summary="Packer is a tool for creating identical machine images for multiple platforms from a single source configuration"
+group="Development/Tools"
+desc="$summary."
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://developer.hashicorp.com/packer"
+license=("BUSL-1.1")
+
+nonfree=1
+nonfree_msgfile="LICENSE-packer"
+nonfree_url="https://www.hashicorp.com/en/license-faq"
+
+provides=()
+conflicts=()
+
+sources=(
+	"https://hashicorp-releases.yandexcloud.net/packer/1.14.3/packer_1.14.3_linux_amd64.zip"
+)
+
+checksums=(
+	sha256:95041cc0a30f05d5583be26a7c0b715f488e461418ce0c5d88ba204cb092bef1
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+package() {
+	install-binary packer
+}
+
+files() {
+	files-find-binary packer
+}
