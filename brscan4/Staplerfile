@@ -1,0 +1,67 @@
+name=brscan4
+version=0.4.11_1
+release=1
+summary="SANE drivers from Brother for compatible models"
+group="System/Configuration/Printing"
+desc="$summary."
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=("amd64")
+homepage="http://support.brother.com"
+license=("custom")
+
+nonfree=1
+nonfree_url="https://support.brother.com/g/s/agreement/English_eula/agree.html"
+
+provides=()
+conflicts=()
+
+sources=(
+	"https://download.brother.com/welcome/dlf105203/brscan4-0.4.11-1.x86_64.rpm?~name=$name-$version.amd64.rpm"
+	"local:///mk-udev-hwdb"
+)
+
+checksums=(
+	sha256:7d7dcbe8349ae4d4ab816e4551017f2f1fd9fd6bf3f4f3c570fbd9576248dd9f
+	sha256:482bd055817daa29152f28986e489841d7d434a9aeb0bb886cc9d1c8d7cb0b3a
+)
+
+scripts=(
+	['postinstall']='postinstall.sh'
+	['preremove']='preremove.sh'
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+build_deps=(
+	# for mk-udev-hwdb
+	gawk
+)
+
+deps=(
+    sane
+)
+
+prepare() {
+	rpm2cpio $name-$version.amd64.rpm | cpio -idm
+	chmod +x ./mk-udev-hwdb
+	./mk-udev-hwdb opt/brother/scanner/brscan4/{Brsane4.ini,models4/*.ini} >hwdb
+}
+
+package() {
+	cp -dr etc opt usr "${pkgdir}"/
+	install -D -m644 $srcdir/hwdb $pkgdir/usr/lib/udev/hwdb.d/20-$name.hwdb
+}
+
+files() {
+	files-find-binary brsaneconfig4
+
+	files-find \
+		"/usr/lib/udev/hwdb.d/20-brscan4.hwdb" \
+		"/usr/lib64/sane/libsane-brother4.so*" \
+		"/etc/opt/**/*" \
+		"/opt/**/*"
+}
