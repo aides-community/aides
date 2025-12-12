@@ -9,6 +9,8 @@ architectures=("amd64" "arm64")
 homepage="https://cursor.com/"
 license=("MIT")
 
+appstream_app_id='co.anysphere.cursor'
+
 nonfree=1
 nonfree_url="https://cursor.com/terms-of-service"
 
