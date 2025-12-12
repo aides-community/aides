@@ -9,6 +9,8 @@ architectures=('amd64' 'arm64')
 homepage='https://code.visualstudio.com/'
 license=('custom')
 
+appstream_app_id='com.visualstudio.code'
+
 provides=('code' 'vscode')
 conflicts=()
 
