@@ -11,6 +11,7 @@ license=("custom")
 nonfree=1
 nonfree_msgfile="MSGFILE"
 nonfree_url="https://explore.zoom.us/terms"
+appstream_app_id='us.zoom.Zoom'
 
 # TODO: enable firejail
 # firejailed=1

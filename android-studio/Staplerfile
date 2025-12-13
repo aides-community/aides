@@ -7,6 +7,11 @@ maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://developer.android.com/"
 license=("custom")
+appstream_app_id='com.google.AndroidStudio'
+
+nonfree=1
+nonfree_url='https://developer.android.com/studio/terms'
+
 
 provides=(android-studio)
 conflicts=()

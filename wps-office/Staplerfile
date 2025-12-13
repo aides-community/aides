@@ -5,10 +5,10 @@ summary="Kingsoft Office (WPS Office) - an office productivity suite"
 group="Office"
 desc="$summary."
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
-# Array of Go arches (go tool dist list | cut -d/ -f2 | sort | uniq) or "all"
 architectures=("amd64")
 homepage="https://www.wps.com"
 license=("custom")
+appstream_app_id='com.wps.Office'
 
 nonfree=1
 nonfree_url=https://www.wps.com/eula/

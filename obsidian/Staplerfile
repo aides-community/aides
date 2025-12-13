@@ -7,6 +7,7 @@ maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://obsidian.md"
 license=("custom")
+appstream_app_id='md.obsidian.Obsidian'
 nonfree=1
 nonfree_url=https://obsidian.md/license
 

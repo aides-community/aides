@@ -8,6 +8,7 @@ maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://music.yandex.ru/download/"
 license=("custom")
+appstream_app_id='ru.yandex.Music'
 
 nonfree=1
 nonfree_msgfile=MSGFILE
