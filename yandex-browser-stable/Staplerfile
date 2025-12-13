@@ -10,7 +10,7 @@ maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://browser.yandex.ru/"
 license=("custom")
-
+appstream_app_id='ru.yandex.Browser'
 nonfree=1
 nonfree_url="https://yandex.ru/legal/browser_agreement/ru/"
 

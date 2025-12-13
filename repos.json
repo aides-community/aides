@@ -1,7 +1,7 @@
 {
     "aides-pkgs/singularityapp": "245de1023073e2916e504bf338a81601346d42c0",
     "aides-pkgs/vagrant": "bd6704af4ec6d4cb114fe5ab96e1ff0405c27bc1",
-    "aides-pkgs/yandex-browser-stable": "6dd23c206af91bd3a4c273b54c5a4be05b417f01",
+    "aides-pkgs/yandex-browser-stable": "4b9bbd57242aec9a0b92f3efdedd9e2cf4fbbf84",
     "aides-pkgs/visual-studio-code": "b1e649f6bad4a878d4a2e4f9bbcc31deee02c02c",
     "aides-pkgs/yandex-disk": "3f102cf5af42527f4dd7d58f7136e7f68f97c420",
     "aides-pkgs/yandex-music": "a70bb02df90c0291f733f21c47fa92cd7919a9b2",
@@ -13,7 +13,7 @@
     "aides-pkgs/anydesk": "ce83c12c8ffc33b3166ab8cfb03ea257f95dc9c3",
     "aides-pkgs/google-chrome-stable": "ebcce2669ef951e1d56ab944fdf12a373176ba82",
     "aides-pkgs/clion": "2c46a845c2218398a0f636bd7dee2439d470e611",
-    "aides-pkgs/max": "de35744be051a4c29623c9e9809a1084946488de",
+    "aides-pkgs/max": "a9711c5ee7c151fe0e4e5e60ac3499cc65784199",
     "aides-pkgs/fvm": "88d8aa3e24f57a5304dbbe0bf7aca8c33512ba35",
     "aides-pkgs/zoom": "ba8b10b6e3c7dbe680dbb8f7135b2d2ac21eb2e4",
     "aides-pkgs/google-earth-pro": "2146592a70d49f140a28dbe58ad1673aa5688f79",

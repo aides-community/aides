@@ -9,6 +9,7 @@ homepage="https://max.ru"
 license=("custom")
 nonfree=1
 nonfree_url="https://legal.max.ru/ps"
+appstream_app_id='ru.max.MAX'
 
 sources=(
 	"https://download.max.ru/electron/MAX.deb?~name=$name-$version.deb"
