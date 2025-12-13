@@ -15,6 +15,7 @@ maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://singularity-app.ru"
 license=("custom")
+appstream_app_id='com.singularityapp.SingularityApp'
 
 provides=($name)
 conflicts=()
