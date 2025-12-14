@@ -8,6 +8,7 @@ maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://unity.com/"
 license=("custom")
+appstream_app_id='com.unity.UnityHub'
 
 nonfree=1
 nonfree_url="https://unity.com/legal/terms-of-service"
