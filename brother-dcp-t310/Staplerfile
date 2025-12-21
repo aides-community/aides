@@ -1,6 +1,6 @@
 name=brother-dcp-t310
 version=1.0.1
-release=1
+release=2
 summary="Driver for the Brother DCP-T310 multifuncional printer"
 group="System/Configuration/Printing"
 desc="$summary."
@@ -16,6 +16,9 @@ provides=()
 conflicts=()
 
 deps=('cups')
+
+opt_deps=('brscan4: scanner support')
+opt_deps_ru=('brscan4: поддержка сканера')
 
 auto_reqprov_method=dirty 
 auto_req=1
