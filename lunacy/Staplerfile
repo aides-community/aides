@@ -27,6 +27,7 @@ maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://icons8.com/lunacy"
 license=("custom")
+appstream_app_id="com.icons8.Lunacy"
 nonfree=1
 nonfree_url="https://lunacy.docs.icons8.com/lunacy%20license/"
 
