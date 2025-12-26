@@ -1,44 +1,27 @@
 name=anydesk
 version=7.1.1
-release=1
+release=2
 summary="The Fast Remote Desktop Application"
+summary_ru="Приложение для быстрого удаленного доступа"
 group="Other"
+desc="Discover AnyDesk, the secure and intuitive remote desktop \
+app with innovative features, perfect for seamless remote \
+desktop application across devices."
+desc_ru="Откройте для себя AnyDesk, безопасное ПО для удаленного \
+доступа с интуитивно понятным управлением, и воспользуйтесь \
+преимуществами инновационных функций приложения."
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://anydesk.com"
 license=("custom")
 
+appstream_app_id='com.anydesk.Anydesk'
+
+nonfree=1
+nonfree_url="https://anydesk.com/ru/obshhie-komercheskie-uslovija"
+
 provides=()
 conflicts=()
-
-build_deps=(
-	"libdbus-1.so.3()(64bit)"
-	"libXext.so.6()(64bit)"
-	"libXrandr.so.2()(64bit)"
-	"libxcb-shm.so.0()(64bit)"
-	"libpolkit-gobject-1.so.0()(64bit)"
-	"libX11.so.6()(64bit)"
-	"libgdk-3.so.0()(64bit)"
-	"libfontconfig.so.1()(64bit)"
-	"libxkbfile.so.1()(64bit)"
-	"libXdamage.so.1()(64bit)"
-	"libfreetype.so.6()(64bit)"
-	"libharfbuzz.so.0()(64bit)"
-	"libatk-1.0.so.0()(64bit)"
-	"libgdk_pixbuf-2.0.so.0()(64bit)"
-	"libXrender.so.1()(64bit)"
-	"libX11-xcb.so.1()(64bit)"
-	"libXtst.so.6()(64bit)"
-	"libcairo-gobject.so.2()(64bit)"
-	"libpango-1.0.so.0()(64bit)"
-	"libXfixes.so.3()(64bit)"
-	"libgio-2.0.so.0()(64bit)"
-	"libpangocairo-1.0.so.0()(64bit)"
-	"libXi.so.6()(64bit)"
-	"libxcb.so.1()(64bit)"
-	"libcairo.so.2()(64bit)"
-	"libgtk-3.so.0()(64bit)"
-)
 
 deps=(
 	libgtkglext
@@ -52,6 +35,7 @@ checksums=(
 	'sha256:a46cd4e1d05e5a500200ebec841cd33cde8f70d7509105c08c61672becab280e'
 )
 
+auto_reqprov_method=dirty
 auto_req=1
 auto_prov=1
 
