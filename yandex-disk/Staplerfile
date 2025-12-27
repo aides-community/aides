@@ -1,10 +1,12 @@
 name=yandex-disk
 version=0.1.6.1080
-release=2
+release=3
 summary='Yandex.Disk for Linux client'
+summary_ru='Клиент Яндекс.Диск для Linux'
 group='Other'
-desc='Yandex.Disk for Linux client'
-maintainer='Vladimir Vaskov <rirusha@altlinux.org'
+desc='$summary.'
+desc_ru='$summary_ru.'
+maintainer='Vladimir Romanov <rirusha@altlinux.org>'
 architectures=('amd64')
 homepage='http://disk.yandex.ru/'
 license=('custom')
