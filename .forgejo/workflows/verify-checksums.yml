@@ -15,11 +15,28 @@ jobs:
         run: |
           apt-get update
           apt-get install -y curl jq
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+      - name: Cache stplr-spec
+        uses: actions/cache@v4
+        with:
+          path: /usr/bin/stplr-spec
+          key: stplr-spec-v0.0.8
       - name: Install stplr-spec
         run: |
-          curl -L https://altlinux.space/stapler/stplr-utils/releases/download/v0.0.8/stplr-spec-linux-amd64 -o /usr/bin/stplr-spec
-          chmod +x /usr/bin/stplr-spec
-      - run: npm ci
+          if [ ! -x /usr/bin/stplr-spec ]; then
+            curl -L https://altlinux.space/stapler/stplr-utils/releases/download/v0.0.8/stplr-spec-linux-amd64 \
+              -o /usr/bin/stplr-spec
+            chmod +x /usr/bin/stplr-spec
+          fi
+      - name: Install npm deps
+        run: npm ci --registry=https://npm-mirror.gitverse.ru
+
       - name: Verify checksums
         uses: actions/forgejo-script@v1
         with:
