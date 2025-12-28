@@ -1,9 +1,11 @@
 name=yandex-music
 version=5.82.0
-release=1
-summary="Linux client for Yandex Music"
+release=2
+summary='Linux client for Yandex Music'
+summary_ru='Linux-клиент для Яндекс Музыки'
 group="Sound"
-desc="Native YandexMusic client for Linux"
+desc='Native Yandex Music client for Linux'
+desc_ru='Нативный клиент Яндекс Музыки для Linux'
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://music.yandex.ru/download/"
