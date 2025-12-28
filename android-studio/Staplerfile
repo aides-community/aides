@@ -1,5 +1,5 @@
 name=android-studio
-version=2025.2.2.7
+version=2025.2.2.8
 release=1
 summary="The official Android IDE (Stable branch)"
 group="Development/Tools"
@@ -12,7 +12,6 @@ appstream_app_id='com.google.AndroidStudio'
 nonfree=1
 nonfree_url='https://developer.android.com/studio/terms'
 
-
 provides=(android-studio)
 conflicts=()
 
@@ -23,7 +22,7 @@ sources=(
 )
 
 checksums=(
-	sha256:a6f9d40d87856f13a7c3674ff4178a16eb219d31e6a43ac1c269cd583c7ca5b4
+	sha256:c6cf40050f5ff3f82dc5ca226647ffc44b664ce8faadbe13cbec3bd3ff82e12b
 	sha256:73cd2dde1d0f99aaba5baad1e2b91c834edd5db3c817f6fb78868d102360d3c4
 	sha256:9a7563f7fb88c9a83df6cee9731660dc73a039ab594747e9e774916275b2e23e
 )

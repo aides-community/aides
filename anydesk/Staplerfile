@@ -1,6 +1,6 @@
 name=anydesk
-version=7.1.1
-release=2
+version=7.1.2
+release=1
 summary="The Fast Remote Desktop Application"
 summary_ru="Приложение для быстрого удаленного доступа"
 group="Other"
@@ -32,7 +32,7 @@ sources=(
 )
 
 checksums=(
-	'sha256:a46cd4e1d05e5a500200ebec841cd33cde8f70d7509105c08c61672becab280e'
+	'sha256:e93b4247e7b1b45415c9ca01aa72e5b9f2f929e18156cdd4e8f3b10ab4bb1bcf'
 )
 
 auto_reqprov_method=dirty
