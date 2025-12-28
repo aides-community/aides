@@ -1,9 +1,9 @@
 #
 # bundled via firejail-bundler 0.2.0 (firejail version: 0.9.72)
 #
-include aides-yandex-browser.local
+include aides-yandex-browser-stable.local
 include globals.local
-#region: @bundler [aides-yandex-browser.profile] BEGIN
+#region: @bundler [aides-yandex-browser-stable.profile] BEGIN
 # This is necessary to insert screenshots
 noblacklist ${PICTURES}
 whitelist ${PICTURES}
@@ -11,6 +11,49 @@ whitelist ${PICTURES}
 # https://altlinux.space/aides-pkgs/yandex-browser-stable/issues/19
 noblacklist ${DESKTOP}
 whitelist ${DESKTOP}
+
+#region: partitial fix for https://altlinux.space/aides-pkgs/yandex-browser-stable/issues/23
+whitelist /usr/share/doc
+#endregion
+
+#region: fix for https://altlinux.space/aides-pkgs/yandex-browser-stable/issues/24
+ignore read-only ${HOME}/.config/mimeapps.list
+noblacklist ${HOME}/.config/mimeapps.list
+
+noblacklist ${HOME}/.config/yandex-browser
+noblacklist ${HOME}/.config/yandex-browser-beta
+#region: @bundler [/etc/firejail/whitelist-1793-workaround.inc] BEGIN
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+# This works around bug 1793, and allows whitelisting to be used for some KDE applications.
+
+noblacklist ${HOME}/.config/ibus
+noblacklist ${HOME}/.config/mimeapps.list
+noblacklist ${HOME}/.config/pkcs11
+noblacklist ${HOME}/.config/user-dirs.dirs
+noblacklist ${HOME}/.config/user-dirs.locale
+noblacklist ${HOME}/.config/dconf
+noblacklist ${HOME}/.config/fontconfig
+noblacklist ${HOME}/.config/gtk-2.0
+noblacklist ${HOME}/.config/gtk-3.0
+noblacklist ${HOME}/.config/gtk-4.0
+noblacklist ${HOME}/.config/gtkrc
+noblacklist ${HOME}/.config/gtkrc-2.0
+noblacklist ${HOME}/.config/Kvantum
+noblacklist ${HOME}/.config/Trolltech.conf
+noblacklist ${HOME}/.config/QtProject.conf
+noblacklist ${HOME}/.config/kdeglobals
+noblacklist ${HOME}/.config/kio_httprc
+noblacklist ${HOME}/.config/kioslaverc
+noblacklist ${HOME}/.config/ksslcablacklist
+noblacklist ${HOME}/.config/qt5ct
+noblacklist ${HOME}/.config/qt6ct
+noblacklist ${HOME}/.config/qtcurve
+
+blacklist ${HOME}/.config/*
+whitelist ${HOME}/.config
+#endregion: @bundler [/etc/firejail/whitelist-1793-workaround.inc] END
+#endregion
 
 # For PWA
 ignore read-only ${HOME}/.local/share/applications
@@ -2360,4 +2403,4 @@ dbus-system none
 ?HAS_NODBUS: env NO_CHROME_KDE_FILE_DIALOG=1
 #endregion: @bundler [/etc/firejail/chromium-common.profile] END
 #endregion: @bundler [/etc/firejail/yandex-browser.profile] END
-#endregion: @bundler [aides-yandex-browser.profile] END
+#endregion: @bundler [aides-yandex-browser-stable.profile] END

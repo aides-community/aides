@@ -1,11 +1,15 @@
 name=yandex-browser-stable
 version=25.10.1.1173
-release=1
+release=2
 summary="The web browser from Yandex"
 group="Networking/WWW"
-desc="The web browser from Yandex
+desc="$summary.
 
 Yandex Browser is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier."
+summary_ru="Веб-браузер от Яндекса"
+desc_ru="$summary_ru.
+
+Яндекс Браузер - это браузер, который сочетает в себе минималистичный дизайн со сложными технологиями, чтобы сделать работу в Интернете быстрее, безопаснее и проще."
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://browser.yandex.ru/"
@@ -42,7 +46,7 @@ auto_prov=1
 
 firejailed=1
 firejail_profiles=(
-	['default']='aides-yandex-browser-bundled.profile'
+	['default']='aides-yandex-browser-stable-bundled.profile'
 )
 
 sources=(
