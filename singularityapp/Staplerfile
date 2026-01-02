@@ -6,11 +6,14 @@ _snap_url=https://api.snapcraft.io/api/v1/snaps/download/MGxJGb96XBV8UshTS2iqLOI
 
 name=singularityapp
 version=12.0.3
-release=1
+release=2
 summary="Most powerful chaos management planner"
+summary_ru="Бесплатный планировщик задач"
 group="Office"
 desc="Free your head for inspiration and fresh ideas. 
 SingularityApp takes over your routine"
+desc_ru="Освободи голову для наблюдений и новых идей.
+А для рутины теперь есть SingularityApp."
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://singularity-app.ru"
