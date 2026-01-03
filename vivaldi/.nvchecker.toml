@@ -1,0 +1,4 @@
+[vivaldi]
+source = "httpheader"
+url = "https://vivaldi.com/download/vivaldi-stable.x86_64.rpm"
+regex = 'vivaldi-stable-([\d.]+)-1.x86_64.rpm'
