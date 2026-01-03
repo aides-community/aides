@@ -46,21 +46,21 @@ module.exports = async ({ forgejo, exec }) => {
 
         console.log(`Closing issue #${index}`);
 
-        await forgejo.repos.issueEditIssue(
-            owner,
-            pkg,
-            index,
-            {
-                state: "closed",
-            }
-        );
-
         await forgejo.repos.issueCreateComment(
             owner,
             pkg,
             index,
             {
                 body: `Issue resolved. Package now passes checksum verification.`,
+            }
+        );
+
+        await forgejo.repos.issueEditIssue(
+            owner,
+            pkg,
+            index,
+            {
+                state: "closed",
             }
         );
     }
@@ -78,7 +78,7 @@ module.exports = async ({ forgejo, exec }) => {
         } catch {
             reportFailed(pkg);
         } finally {
-            await exec.exec(`rm -rf $HOME/.stapler-spec`)
+            await exec.exec(`rm -rf $HOME/.cache/.stapler-spec`)
         }
     }
 }
