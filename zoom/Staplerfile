@@ -1,9 +1,11 @@
 name=zoom
-version=6.7.0.6313
+version=6.7.2.6498
 release=1
 summary="Video Conferencing and Web Conferencing Service"
+summary_ru="Сервис видеоконференций и веб-конференций"
 group="Networking/Instant messaging"
 desc="$summary."
+desc_ru="$summary_ru."
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://zoom.us/"
@@ -27,7 +29,7 @@ sources=(
 )
 
 checksums=(
-	sha256:066e4b106986374894c3329d57389cc5fc7a2b783d1467afbd1fe050805a3e3f
+	sha256:7ef64c2a3cd016420a9774d438c60747be520c74a190a8e4e7da6ce79a3d424b
 )
 
 auto_reqprov_method=dirty
