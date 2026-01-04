@@ -1,0 +1,54 @@
+name=postman
+version=11.77.2
+release=1
+summary="Build, test, and document your APIs faster"
+group="Development/Tools"
+desc="Postman is the complete toolchain for API developers, used by 5 million
+      developers and more than 100,000 companies worldwide to access 130 million
+      APIs every month. Postman makes working with APIs faster and easier by
+      supporting developers at every stage of their workflow, and is available
+      for macOS, Windows, Linux and Chrome users."
+maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://www.getpostman.com"
+license=("custom")
+appstream_app_id="com.getpostman.Postman"
+nonfree=1
+nonfree_url="https://privacy.postman.com/policies"
+
+sources=(
+	"https://dl.pstmn.io/download/version/$version/linux64"
+	"local:///postman.desktop"
+)
+
+checksums=(
+	sha256:4cf1cfcafe45c7606c37cb155151627648ee90269c7da7c9dad2c9d2ce079519
+	sha256:258ba5b0b3d9e257fed8de366a66eb92a9ffc902e0d82d60ba83d7a8359327bd
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+package() {
+	install -dm755 "$pkgdir/opt/"
+	install -dm755 "$pkgdir/usr/bin"
+	install -dm755 "$pkgdir/usr/share/icons/hicolor/128x128/apps"
+	install -Dm644 "$name.desktop" "$pkgdir/usr/share/applications/$name.desktop"
+
+	cp -r "${name^}" "$pkgdir/opt/$name"
+	ln -sf "app/${name^}" "$pkgdir/opt/$name/${name^}"
+	ln -s "/opt/$name/${name^}" "$pkgdir/usr/bin/$name"
+	ln -s "/opt/postman/app/resources/app/assets/icon.png" "$pkgdir/usr/share/icons/hicolor/128x128/apps/$appstream_app_id.png"
+}
+
+files() {
+	files-find \
+		"/opt/${name}/**/*" \
+		"/usr/share/icons/hicolor/128x128/apps/$appstream_app_id.png"
+
+	files-find-binary "$name"
+	files-find-desktop "$name.desktop"
+}

@@ -1,0 +1,4 @@
+[postman]
+source = "regex"
+regex = "\"changelog\":\\[{\"name\":\"([\\d.]+)\""
+url = "https://dl.pstmn.io/changelog?channel=stable&platform=linux"
