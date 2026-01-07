@@ -1,6 +1,6 @@
 name=yandex-browser-stable
 version=25.10.1.1173
-release=2
+release=3
 summary="The web browser from Yandex"
 group="Networking/WWW"
 desc="$summary.
