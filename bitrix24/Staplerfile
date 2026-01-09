@@ -1,0 +1,55 @@
+name=bitrix24
+version=19.0.23.89
+release=1
+summary="Bitrix24 unified workspace app (CRM, comms, tasks, and more)"
+group="Communications"
+desc="$summary."
+maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://www.bitrix24.ru"
+license=("custom")
+nonfree=1
+nonfree_url="https://www.bitrix24.com/eula/"
+appstream_app_id="ru.bitrix24.Bitrix24"
+sources=(
+	"https://repos.1c-bitrix.ru/b24/${name}_desktop.deb"
+)
+
+checksums=(
+	sha256:af1272c2ff9b5ab2469fb66a6e46e872ab5bf0bc2796d662dcf6313f2d525887
+)
+
+build_deps=(
+	binutils
+)
+
+auto_reqprov_method=dirty
+
+auto_req_filter=(
+  "libopenh264\.so\.8"
+)
+
+auto_req=1
+auto_prov=1
+disable_network=1
+
+package() {
+	ar x ${name}_desktop.deb
+	tar -xf data.tar.xz -C "$pkgdir/"
+
+	install -d "$pkgdir/usr/bin"
+    
+	for _name in ${name^}-web ${name^} BDisk; do
+		ln -s "/opt/Bitrix24/$_name" "$pkgdir/usr/bin/$_name"
+	done
+}
+
+files() {
+	files-find \
+		"/opt/${name^}/**/*" \
+		"/usr/share/applications/${name^}.desktop" \
+		"/usr/share/icons/hicolor/128x128/apps/$name-web.png"
+	files-find-binary "${name^}" \
+		"BDisk" \
+		"${name^}-web"
+}
