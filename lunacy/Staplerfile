@@ -1,6 +1,6 @@
 name=lunacy
 version=11.6
-release=1
+release=2
 summary="Free graphic design tool for UX/UI"
 group="Graphics"
 desc="Lunacy is the ultimate graphic design editor for UX/UI, and Web.
@@ -9,7 +9,7 @@ your workflow and minimize distractions. Take advantage of the built-in
 graphics library, use powerful AI tools, and collaborate on projects with
 your team on several platforms simultaneously!
 
-Let’s take a look at what’s inside:
+Let's take a look at what's inside:
 
 * Real-time collaboration with comments, stickers, and audio messages
 * 1 500 000 icons, photos, and illustrations
@@ -21,7 +21,7 @@ Let’s take a look at what’s inside:
 * 26 supported languages
 
 And much more!
-Don’t forget to join our growing designer community!
+Don't forget to join our growing designer community!
 "
 maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
 architectures=("amd64")
@@ -31,14 +31,30 @@ appstream_app_id="com.icons8.Lunacy"
 nonfree=1
 nonfree_url="https://lunacy.docs.icons8.com/lunacy%20license/"
 
+architectures=(
+	"amd64"
+	"arm64"
+)
+
 sources=(
 	"https://lcdn.icons8.com/setup/${name^}_$version.deb"
 	"local:///lunacy-mimetype.xml"
 )
 
+sources_arm64=(
+	"https://lcdn.icons8.com/setup/${name^}.ARM.deb"
+	"local:///lunacy-mimetype.xml"
+
+)
+
 checksums=(
-	"sha256:543776a813630b27cecb7bd915a55cdc123cce1426cc4231603370b3b0c86027"
-	"sha256:a977a0b9a89bc048bea4c6a747e83b1d1c7ce05cd0aac3d2d40a78dc005c0a8a"
+	sha256:543776a813630b27cecb7bd915a55cdc123cce1426cc4231603370b3b0c86027
+	sha256:a977a0b9a89bc048bea4c6a747e83b1d1c7ce05cd0aac3d2d40a78dc005c0a8a
+)
+
+checksums_arm64=(
+	sha256:fb99c38cf55357679af93c38e87b008c87530bbaf708fa4a6b356d98e2287f3d 
+	sha256:a977a0b9a89bc048bea4c6a747e83b1d1c7ce05cd0aac3d2d40a78dc005c0a8a
 )
 
 build_deps=(

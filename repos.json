@@ -18,7 +18,7 @@
     "aides-pkgs/zoom": "5ed9bfac19783b5160c027452c90f72911e347a5",
     "aides-pkgs/google-earth-pro": "2146592a70d49f140a28dbe58ad1673aa5688f79",
     "aides-pkgs/reaper": "f783746462de7dcce54292954ca8d2d2fda90c92",
-    "aides-pkgs/lunacy": "b82fb077deb82e059c0e0c39db12eb0f85aa5810",
+    "aides-pkgs/lunacy": "c0ce1ba13beb0d4626d8d757b90d3c02bce860e6",
     "aides-pkgs/unityhub": "e25c678c214a0e60fe93a8bf1c6986a24ff54d04",
     "aides-pkgs/wps-office": "cf03845b205b2f7386a00ef553f6bfe91a649e6f",
     "aides-pkgs/cursor": "acfa5422deefd9fe80427de4747cb327832ee484",
@@ -27,6 +27,6 @@
     "aides-pkgs/packer": "068841c51b56597c084a67d636ba8e208680956d",
     "aides-pkgs/brscan4": "f9cc8e5e5442080f735dccfa63b5dbcb6e71fe33",
     "aides-pkgs/vivaldi": "b48f0483280e6628b8ce4de5754f448858e94251",
-    "aides-pkgs/postman": "d49a1df6f1f4585d765b084d549cee416b473181",
+    "aides-pkgs/postman": "c66f420b6a46c7326a3cd5aee9c4b0dcf89bbc3c",
     "aides-pkgs/bitrix24": "ac199ce67390e4421ad3362ed3761add7ea63de2"
 }
