@@ -1,5 +1,5 @@
 name=vivaldi
-version=7.7.3851.66
+version=7.7.3851.67
 release=1
 summary="An advanced browser made with the power user in mind"
 group="Networking/WWW"
@@ -16,7 +16,7 @@ nonfree_url=https://vivaldi.com/privacy/vivaldi-end-user-license-agreement/
 nonfree_url_ru="https://vivaldi.com/ru/privacy/vivaldi-end-user-license-agreement/"
 
 provides=(
-    vivaldi-stable
+	vivaldi-stable
 )
 conflicts=()
 
@@ -25,7 +25,7 @@ sources=(
 )
 
 checksums=(
-	sha256:7c9b79fb747cd6208bb34264e1d789ef5b88c98fc27f80fa5ce2017f29e20944
+	sha256:d7063d0a9d4c08fa27ff4cf51437f7f84d402a7ec42a8ab8592e0fb66ae06c4c
 )
 
 auto_reqprov_method=dirty
@@ -35,7 +35,7 @@ auto_prov=1
 disable_network=1
 
 build_deps=(
-    /usr/bin/magick
+	/usr/bin/magick
 )
 
 prepare() {
@@ -43,38 +43,38 @@ prepare() {
 }
 
 package() {
-    # Inspired by https://gitlab.archlinux.org/archlinux/packaging/packages/vivaldi/-/blob/main/PKGBUILD
+	# Inspired by https://gitlab.archlinux.org/archlinux/packaging/packages/vivaldi/-/blob/main/PKGBUILD
 
 	cp --parents -a {opt,usr/bin,usr/share} "$pkgdir"
 
-    # Vivaldi has different design for each size of icons. Avoid using them.
-    # hicolor xdg fallback
-    install -Dm644 "$pkgdir/opt/$name/resources/vivaldi/resources/welcomepage-vivaldi.svg" \
-        "$pkgdir/usr/share/icons/hicolor/scalable/${name}.svg"
-    install -Dm644 "$pkgdir/opt/$name/product_logo_256.png" \
-        "$pkgdir/usr/share/icons/hicolor/256x256/apps/$name.png"
-    for _res in 128 64 48 32 22; do
-        install -d "$pkgdir/usr/share/icons/hicolor/${_res}x${_res}/apps"
-        magick "$pkgdir/opt/$name/product_logo_256.png" \
-            -resize ${_res}x${_res} \
-            "$pkgdir/usr/share/icons/hicolor/${_res}x${_res}/apps/$name.png"
-    done
-    install -d "$pkgdir/usr/share/pixmaps"
-    install -Dm644 "$pkgdir/opt/$name/product_logo_256.png" \
-        "$pkgdir/usr/share/pixmaps/${name}.png"
+	# Vivaldi has different design for each size of icons. Avoid using them.
+	# hicolor xdg fallback
+	install -Dm644 "$pkgdir/opt/$name/resources/vivaldi/resources/welcomepage-vivaldi.svg" \
+		"$pkgdir/usr/share/icons/hicolor/scalable/${name}.svg"
+	install -Dm644 "$pkgdir/opt/$name/product_logo_256.png" \
+		"$pkgdir/usr/share/icons/hicolor/256x256/apps/$name.png"
+	for _res in 128 64 48 32 22; do
+		install -d "$pkgdir/usr/share/icons/hicolor/${_res}x${_res}/apps"
+		magick "$pkgdir/opt/$name/product_logo_256.png" \
+			-resize ${_res}x${_res} \
+			"$pkgdir/usr/share/icons/hicolor/${_res}x${_res}/apps/$name.png"
+	done
+	install -d "$pkgdir/usr/share/pixmaps"
+	install -Dm644 "$pkgdir/opt/$name/product_logo_256.png" \
+		"$pkgdir/usr/share/pixmaps/${name}.png"
 
-    install -Dm644 "usr/share/appdata/$name.appdata.xml" -t \
-        "$pkgdir/usr/share/metainfo/"
-    rm -rv "$pkgdir/usr/share/appdata"
+	install -Dm644 "usr/share/appdata/$name.appdata.xml" -t \
+		"$pkgdir/usr/share/metainfo/"
+	rm -rv "$pkgdir/usr/share/appdata"
 }
 
 files() {
-    files-find-binary vivaldi-stable
-    files-find-desktop vivaldi-stable.desktop
-    files-find-pixmap $name.png
+	files-find-binary vivaldi-stable
+	files-find-desktop vivaldi-stable.desktop
+	files-find-pixmap $name.png
 
 	files-find \
-        "usr/share/icons/hicolor/*/apps/$name.png" \
-        "/usr/share/metainfo/$name.appdata.xml" \
-        "/opt/**/*"
+		"usr/share/icons/hicolor/*/apps/$name.png" \
+		"/usr/share/metainfo/$name.appdata.xml" \
+		"/opt/**/*"
 }
