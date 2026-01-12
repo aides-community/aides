@@ -1,0 +1,86 @@
+name=chitubox-basic
+version=2.3.1
+release=1
+summary="All-in-one SLA/DLP/LCD Slicer"
+group="Graphics"
+desc="$summary."
+maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://www.chitubox.com/download.html"
+license=("custom")
+appstream_app_id="com.chitubox.ChituboxBasic"
+nonfree=1
+nonfree_msgfile="EULA.txt"
+
+provides=()
+conflicts=()
+
+sources=(
+	"https://sac.chitubox.com/software/download.do?installerUrl=https%3A%2F%2Fdownload.chitubox.com%2F17839%2Fv2.3.1%2FCHITUBOX_Basic_linux_Installer_2.3.1&softwareId=17839&softwareVersionId=v2.3.1"
+	"local:///chitubox-basic.desktop"
+	"local:///chitubox-basic.xml"
+)
+
+checksums=(sha256:397e058de53b692e1db61657929e1ce9f88f090cb973c8c20fde5b0d4dfa6268 sha256:850deb96a824bd16a393fbfe42fcd41cf51a268e14edf380e0cee93026d41cd4 sha256:fede9c1383063dbfade24289c1adeda505f2333b1206865a6696f0a9f6c7390b
+)
+
+build_deps=(
+	icoutils
+        libxkbcommon-x11
+	libxcbutil-icccm
+	libxcbutil-image
+	libxcbutil-keysyms
+	libxcb-render-util
+	libX11
+	libfreetype
+	libfontconfig1
+	libdbus
+	glibc-pthread
+)
+
+deps=(
+
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+package() {
+	_NAME="CHITUBOX_Basic"
+	_INSTALL_ROOT="$srcdir/opt/$_NAME"
+	_OPT_DIR="$pkgdir/opt"
+	_APP_DIR="$_OPT_DIR/$_NAME"
+	_RUNFILE="${_NAME}_linux_Installer_2.3.1"
+
+	chmod +x "$srcdir/$_RUNFILE"
+	"${srcdir}/$_RUNFILE" --root "$_INSTALL_ROOT" --accept-licenses --no-size-checking --accept-messages --confirm-command install
+
+	install -Dm644 "$_INSTALL_ROOT/Licenses/LICENSE.txt" "$pkgdir/usr/share/licenses/$name/LICENSE"
+
+	install -d "$pkgdir/opt"
+	mv "$_INSTALL_ROOT" "$_OPT_DIR/"
+
+	install -d "$pkgdir/usr/bin"
+	ln -s "/opt/$_NAME/$_NAME.sh" "$pkgdir/usr/bin/$name"
+
+	install -Dm644 "$name.desktop" "$pkgdir/usr/share/applications/$name.desktop"
+
+	# Extract the included Windows ICO file into PNG(s)
+	icotool --extract "$_APP_DIR/bin/Resources/Image/SoftwareIcon/freeIcon.ico" --output .
+	install -Dm644 freeIcon_1_256x256x32.png "$pkgdir/usr/share/icons/hicolor/256x256/apps/$appstream_app_id.png"
+
+	install -Dm644 $name.xml "$pkgdir/usr/share/mime/packages/$name.xml"
+}
+
+files() {
+	files-find "/opt/CHITUBOX_Basic/**/*" \
+		"/usr/share/icons/hicolor/256x256/apps/$appstream_app_id.png" \
+		"/usr/share/mime/packages/$name.xml" \
+
+	files-find-binary "$name"
+	files-find-desktop "$name.desktop"
+	files-find-license "$name/LICENSE"
+}
