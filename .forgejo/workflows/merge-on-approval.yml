@@ -1,0 +1,63 @@
+name: Merge on maintainer approval
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+
+jobs:
+  auto-merge:
+    if: github.event.review.state == 'approved'
+    runs-on: alt-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Parse package name from PR body
+        id: parse
+        run: |
+          BODY="${{ github.event.pull_request.body }}"
+          PACKAGE=$(echo "$BODY" | grep -oE '\*\*[a-zA-Z0-9._+-]+\*\*' | tr -d '*')
+
+          if [ -z "$PACKAGE" ]; then
+            echo "Package not found"
+            exit 1
+          fi
+
+          echo "package=$PACKAGE" >> $GITHUB_OUTPUT
+
+      - name: Get maintainer from config
+        id: maintainer
+        uses: actions/forgejo-script@v1
+        env:
+          PACKAGE: ${{ steps.parse.outputs.package }}
+        with:
+          github-token: ${{ secrets.TOKEN }}
+          script: |
+            const script = require('./.forgejo/get-maintainer.js')
+            await script({ forgejo, core })
+
+      - name: Check reviewer is maintainer
+        run: |
+          REVIEWER="${{ github.event.review.user.login }}"
+          MAINTAINER="${{ steps.maintainer.outputs.maintainer }}"
+
+          echo "Reviewer: $REVIEWER"
+          echo "Maintainer: $MAINTAINER"
+
+          if [ "$REVIEWER" != "$MAINTAINER" ]; then
+            echo "Reviewer is not maintainer — skipping"
+            exit 0
+          fi
+
+      - name: Remove WIP from PR title and merge
+        uses: actions/forgejo-script@v1
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+          NUMBER: ${{ github.event.pull_request.number }}
+        with:
+          github-token: ${{ secrets.TOKEN }}
+          script: |
+            const script = require('./.forgejo/remove-wip-and-merge.js')
+            await script({ forgejo, core })
