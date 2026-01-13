@@ -1,18 +1,36 @@
 name: Merge on maintainer approval
 
 on:
-  pull_request_review:
-    types: [submitted]
-
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   auto-merge:
-    if: github.event.review.state == 'approved'
+    if: github.event.pull_request.user.login == 'aides-helper-bot'
     runs-on: alt-latest
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Check approvals
+        env:
+          FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          REPO=${{ github.repository }}
+
+          APPROVALS=$(curl -s \
+            -H "Authorization: token $FORGEJO_TOKEN" \
+            $GITHUB_SERVER_URL/api/v1/repos/$REPO/pulls/$PR_NUMBER/reviews \
+            | jq '[.[] | select(.state=="APPROVED")] | length')
+
+          echo "Approvals: $APPROVALS"
+
+          if [ "$APPROVALS" -lt 1 ]; then
+            echo "Not approved yet"
+            exit 1
+          fi
 
       - name: Parse package name from PR body
         id: parse
