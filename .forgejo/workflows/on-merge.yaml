@@ -1,0 +1,84 @@
+name: On merged
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+jobs:
+  update:
+    if: github.event.pull_request.merged == true
+    runs-on: alt-latest
+    steps:
+      - name: Extract issue and package name from PR body
+        id: parse
+        run: |
+          BODY="${{ github.event.pull_request.body }}"
+          ISSUE=$(echo "$BODY" | grep -oE 'issues/[0-9]+' | grep -oE '[0-9]+')
+          PACKAGE=$(echo "$BODY" | grep -oE '\*\*[a-zA-Z0-9._+-]+\*\*' | tr -d '*')
+          echo "issue=$ISSUE" >> $GITHUB_OUTPUT
+          echo "package=$PACKAGE" >> $GITHUB_OUTPUT
+
+      - name: Comment
+        uses: actions/comment@v1
+        with:
+          issue-number: ${{ steps.parse.outputs.issue }}
+          repository: aides-community/package-requests
+          token: ${{ secrets.TOKEN }}
+          body: |
+            Package added: [${{ steps.parse.outputs.package }}](https://pkgs.aides.space/pkg/${{ steps.parse.outputs.package }}).
+            Thank the maintainer — he earned it.
+
+      - name: Change label
+        uses: actions/forgejo-script@v1
+        env:
+          ISSUE_NUMBER: ${{ steps.issue.outputs.issue }}
+        with:
+          github-token: ${{ secrets.TOKEN }}
+          script: |
+            const owner = 'aides-community';
+            const repo = 'package-requests';
+            const issueNumber = `${process.env.ISSUE_NUMBER}`;
+
+            console.log('Getting labels...')
+            const { data: labels } = await forgejo.repos.issueGetLabels(
+              owner,
+              repo,
+              issueNumber,
+            );
+
+            const newLabels = labels
+              .map(l => l.name)
+              .filter(name => name !== 'status/in-progress');
+
+            if (!newLabels.includes('status/done')) {
+              newLabels.push('status/done');
+            }
+
+            console.log('Replacing labels...')
+            await forgejo.repos.issueReplaceLabels(
+              owner,
+              repo,
+              issueNumber,
+              { labels: newLabels }
+            )
+
+            console.log(`Updated labels for issue #${issueNumber}: ${newLabels.join(', ')}`);
+
+      - name: Close issue
+        uses: actions/forgejo-script@v1
+        env:
+          ISSUE_NUMBER: ${{ steps.issue.outputs.issue }}
+        with:
+          github-token: ${{ secrets.TOKEN }}
+          script: |
+            const owner = 'aides-community';
+            const repo = 'package-requests';
+            const issueNumber = `${process.env.ISSUE_NUMBER}`;
+
+            await forgejo.repos.issueEditIssue(
+              owner,
+              repo,
+              issueNumber,
+              { state: "closed" }
+            )
