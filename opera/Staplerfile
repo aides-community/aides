@@ -1,0 +1,55 @@
+name=opera
+version=126.0.5750.18
+release=1
+summary="A fast and secure web browser"
+group="Networking/WWW"
+desc="$summary."
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://www.opera.com/"
+license=("custom")
+appstream_app_id="com.opera.Opera"
+
+nonfree=1
+nonfree_url="https://www.opera.com/ru/legal/eula-computers"
+
+provides=()
+conflicts=()
+
+sources=(
+	"https://rpm.opera.com/rpm/opera_stable-${version}-linux-release-x64-signed.rpm?~name=${name}-${version}.rpm"
+)
+
+checksums=(
+	sha256:bb6f6b6dec7df3ea1af2ecd91624ed1808190189e6d6357273589815bc9f712d
+)
+
+build_deps=()
+
+deps=()
+
+auto_reqprov_method=dirty
+
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+prepare() {
+	rpm2cpio "$name-$version.rpm" | cpio -idm
+}
+
+package() {
+	cp -R $srcdir/usr $pkgdir/usr
+}
+
+files() {
+	files-find-binary opera
+	files-find-desktop opera.desktop
+
+	files-find \
+		"/usr/share/mime/packages/opera-stable.xml" \
+		"/usr/share/icons/hicolor/*/apps/opera.png" \
+		"/usr/lib64/opera-stable" \
+		"/usr/lib64/opera-stable/**/*"
+}
