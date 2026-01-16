@@ -1,5 +1,5 @@
 name=clion
-version=2025.2.1
+version=2025.3.1
 release=1
 summary="Cross-platform IDE for C and C++ from JetBrains"
 group="Development/Tools"
@@ -7,9 +7,11 @@ maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://www.jetbrains.com/$name/"
 license=("custom")
-nonfree_msg_ru="CLion является проприетарным программным обеспечением JetBrains. Использование регулируется Пользовательским соглашением JetBrains."
-nonfree_msg_en="CLion is proprietary software by JetBrains. Use is subject to the JetBrains User Agreement."
+nonfree=1
 nonfree_url='https://www.jetbrains.com/legal/docs/toolbox/user/'
+nonfree_msg="CLion is proprietary software by JetBrains. Use is subject to the JetBrains User Agreement."
+nonfree_msg_ru="CLion является проприетарным программным обеспечением JetBrains. Использование регулируется Пользовательским соглашением JetBrains."
+appstream_app_id='com.jetbrains.CLion'
 
 provides=(
 	'clion'
@@ -17,13 +19,14 @@ provides=(
 
 checksums=(
 	'sha256:e7319a1bb60e3e33a3d760c54aca631c75845f9aab6d6d1709cd17c3d6d52282'
-	'sha256:f50e1a1e5172f652efdb7d72dc8c2a6222564671983b0c8b03caa68c56630648'
+	'sha256:44ae3da5358ba010a62d55ab412b72f364c5dcd2c2dcd2004ae34b7463807bbd'
 )
 
 _jb_name=$name
 _jb_code="cpp/CLion"
 
 ##BEGIN:jb-template##
+disable_network=1
 sources=(
 	local:///$_jb_name.desktop
 	https://download-cdn.jetbrains.com/$_jb_code-$version.tar.gz
