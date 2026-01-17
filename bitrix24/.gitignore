@@ -1,1 +1,3 @@
 *.rpm
+__pycache__
+bitrix-24.deb

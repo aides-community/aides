@@ -1,5 +1,5 @@
 name=bitrix24
-version=19.0.23.89
+version=20.0.28.90
 release=1
 summary="Bitrix24 unified workspace app (CRM, comms, tasks, and more)"
 group="Communications"
@@ -11,12 +11,18 @@ license=("custom")
 nonfree=1
 nonfree_url="https://www.bitrix24.com/eula/"
 appstream_app_id="ru.bitrix24.Bitrix24"
+
+_source_url="https://repos.1c-bitrix.ru/b24/${name}_desktop.deb"
+_source_checksum=sha256:daae990ffe52285aecf1df7455c457539b5ec4129cf0cf0c4bdff94032779b41
+_source_etag=696769d3-a6f0954
+_source_last_modified='Wed, 14 Jan 2026 10:02:59 GMT'
+
 sources=(
-	"https://repos.1c-bitrix.ru/b24/${name}_desktop.deb"
+	"$_source_url"
 )
 
 checksums=(
-	sha256:af1272c2ff9b5ab2469fb66a6e46e872ab5bf0bc2796d662dcf6313f2d525887
+	"$_source_checksum"
 )
 
 build_deps=(
@@ -26,7 +32,7 @@ build_deps=(
 auto_reqprov_method=dirty
 
 auto_req_filter=(
-  "libopenh264\.so\.8"
+	"libopenh264\.so\.8"
 )
 
 auto_req=1
@@ -38,7 +44,7 @@ package() {
 	tar -xf data.tar.xz -C "$pkgdir/"
 
 	install -d "$pkgdir/usr/bin"
-    
+
 	for _name in ${name^}-web ${name^} BDisk; do
 		ln -s "/opt/Bitrix24/$_name" "$pkgdir/usr/bin/$_name"
 	done
