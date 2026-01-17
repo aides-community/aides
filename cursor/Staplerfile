@@ -1,5 +1,5 @@
 name=cursor
-version=2.3.35
+version=2.3.41
 release=1
 summary="The AI Code Editor"
 group="Development/Tools"
@@ -17,7 +17,7 @@ nonfree_url="https://cursor.com/terms-of-service"
 provides=()
 conflicts=()
 
-_commit=cf8353edc265f5e46b798bfb276861d0bf3bf129
+_commit=2ca326e0d1ce10956aea33d54c0e2d8c13c58a32
 
 sources_amd64=(
 	"https://downloads.cursor.com/production/${_commit}/linux/x64/rpm/x86_64/cursor-${version}.el8.x86_64.rpm?~name=${name}.rpm"
@@ -28,11 +28,11 @@ sources_arm64=(
 )
 
 checksums_amd64=(
-	sha256:da2b559cba895a99ef13cd8df6707fcde1e0ee800c533b4400f9f4fabbc706a4
+	sha256:c5ae4fbe49c9cc332aac0660876ca9e234e97712f08a745fa0405f5147b3995f
 )
 
 checksums_arm64=(
-	sha256:8ef40ba543f23f970894fa68310cd6dcda0dad919995980d6a8082aa8f6a0f78
+	sha256:7a2c7c321f6f904ecb48221a96cd9f2e6de1d1099a42c5e0b545bb2a7a14da6b
 )
 
 deps=(
