@@ -1,0 +1,67 @@
+name=docker-desktop
+version=4.56.0
+release=1
+_revision=214940
+summary="Docker Desktop is an easy-to-install application that enables you to locally build and share containerized applications and microservices"
+group="Other"
+desc="$summary."
+maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://www.docker.com/products/docker-desktop/"
+license=("custom")
+appstream_app_id="com.Docker.DockerDesktop"
+nonfree=1
+nonfree_url="https://www.docker.com/legal/docker-subscription-service-agreement/"
+
+provides=()
+conflicts=()
+
+sources=(
+	"https://desktop.docker.com/linux/main/$architectures/$_revision/$name-x86_64.rpm"
+)
+
+checksums=(
+	sha256:9ff620312e97cf64edca7f36e14a0c4c4a0b1aaf632110281257df18f58509be
+)
+
+build_deps=(
+
+)
+
+deps=(
+	docker-buildx
+	docker-compose
+	ca-trust-directory-hash
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+prepare() {
+	rpm2cpio "docker-desktop-x86_64.rpm" | cpio -idm
+}
+
+package() {
+	cp -R $srcdir/opt $srcdir/usr $pkgdir/
+
+	install -d "$pkgdir/usr/bin"
+	ln -s /opt/$name/bin/$name "$pkgdir"/usr/bin/$name
+
+	rm "$pkgdir/usr/lib/docker/cli-plugins/docker-buildx"
+	rm "$pkgdir/usr/lib/docker/cli-plugins/docker-compose"
+
+}
+
+files() {
+	files-find \
+		"/opt/$name/**/*" \
+		"/usr/lib/docker/cli-plugins/*"
+
+	files-find-binary "$name"
+	files-find-desktop "$name.desktop" \
+		"${name}-uri-handler.desktop"
+	files-find-systemd-user "$name.service"
+}
