@@ -1,6 +1,6 @@
 name=docker-desktop
 version=4.56.0
-release=1
+release=2
 _revision=214940
 summary="Docker Desktop is an easy-to-install application that enables you to locally build and share containerized applications and microservices"
 group="Other"
@@ -32,6 +32,7 @@ deps=(
 	docker-buildx
 	docker-compose
 	ca-trust-directory-hash
+	qemu-system-x86
 )
 
 auto_reqprov_method=dirty
@@ -52,7 +53,6 @@ package() {
 
 	rm "$pkgdir/usr/lib/docker/cli-plugins/docker-buildx"
 	rm "$pkgdir/usr/lib/docker/cli-plugins/docker-compose"
-
 }
 
 files() {
@@ -60,7 +60,8 @@ files() {
 		"/opt/$name/**/*" \
 		"/usr/lib/docker/cli-plugins/*"
 
-	files-find-binary "$name"
+	files-find-binary "$name" \
+		"docker-credential-desktop"
 	files-find-desktop "$name.desktop" \
 		"${name}-uri-handler.desktop"
 	files-find-systemd-user "$name.service"
