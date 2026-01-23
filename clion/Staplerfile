@@ -27,6 +27,7 @@ _jb_code="cpp/CLion"
 
 ##BEGIN:jb-template##
 disable_network=1
+
 sources=(
 	local:///$_jb_name.desktop
 	https://download-cdn.jetbrains.com/$_jb_code-$version.tar.gz
