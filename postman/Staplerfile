@@ -1,5 +1,5 @@
 name=postman
-version=11.80.4
+version=11.81.4
 release=1
 summary="Build, test, and document your APIs faster"
 group="Development/Tools"
@@ -22,7 +22,7 @@ sources=(
 )
 
 checksums=(
-	sha256:e5d695a059ed1b17c447023e110aa4d1603fb39e3fff1fb3660519d8b093a1a4
+	sha256:d75de10a57c866f78eaf7fcbb8c89ac2bb5f78ac7362ece80d6485338969851a
 	sha256:258ba5b0b3d9e257fed8de366a66eb92a9ffc902e0d82d60ba83d7a8359327bd
 )
 
