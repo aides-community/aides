@@ -13,6 +13,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Install deps
+        run: |
+          apt-get update && apt-get install -y curl jq
+
       - name: Check approvals
         env:
           FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
