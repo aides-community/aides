@@ -32,7 +32,7 @@ jobs:
       - name: Change label
         uses: actions/forgejo-script@v1
         env:
-          ISSUE_NUMBER: ${{ steps.issue.outputs.issue }}
+          ISSUE_NUMBER: ${{ steps.parse.outputs.issue }}
         with:
           github-token: ${{ secrets.TOKEN }}
           script: |
@@ -68,7 +68,7 @@ jobs:
       - name: Close issue
         uses: actions/forgejo-script@v1
         env:
-          ISSUE_NUMBER: ${{ steps.issue.outputs.issue }}
+          ISSUE_NUMBER: ${{ steps.parse.outputs.issue }}
         with:
           github-token: ${{ secrets.TOKEN }}
           script: |
