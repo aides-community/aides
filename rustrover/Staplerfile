@@ -1,0 +1,67 @@
+name=rustrover
+version=2025.3.2
+release=1
+summary="Cross-platform IDE for Rust from JetBrains"
+group="Development/Tools"
+desc="RustRover is a cross-platform IDE that provides consistent experience \
+on the Windows, macOS, and Linux operating systems. It also provides \
+essential support for Python, popular web technologies (like JavaScript, \
+XML, HTML, Markdown and others), and this also includes support for all the \
+other languages that are available through bundled and repository plugins.
+
+RustRover is free for non-commercial use. When using commercially, it is \
+available for a free 30-day evaluation. After that period monthly and yearly \
+subscription options exists for commercial use."
+
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://www.jetbrains.com/rust/"
+license=("custom")
+nonfree=1
+nonfree_url='https://www.jetbrains.com/legal/docs/toolbox/user/'
+nonfree_msg="RustRover is proprietary software by JetBrains. Use is subject to the JetBrains User Agreement."
+nonfree_msg_ru="RustRover является проприетарным программным обеспечением JetBrains. Использование регулируется Пользовательским соглашением JetBrains."
+appstream_app_id='com.jetbrains.RustRover'
+
+_jb_name=$name
+_jb_code="rustrover/RustRover"
+_jb_checksum=sha256:73a3e8bba6b6edcc0272f7292a78503add8499ffa2487c8e2102325d3101de11
+
+checksums=(
+	sha256:d34f87d7af95a28530d3acc8b8c6b4f23bd31772d594e1eb0a4689f791919297
+	$_jb_checksum
+)
+
+prepare() {
+    # RustRover-version -> rustrover-version
+    mv "RustRover-$version" "$_jb_name-$version"
+}
+
+##BEGIN:jb-template##
+disable_network=1
+
+sources=(
+	local:///$_jb_name.desktop
+	https://download-cdn.jetbrains.com/$_jb_code-$version.tar.gz
+)
+
+package() {
+	mkdir -p "$pkgdir/opt/$_jb_name"
+	cp -r "$srcdir/$_jb_name-$version/"* "$pkgdir/opt/$_jb_name"
+
+	install -dm 755 "$pkgdir/usr/bin/"
+	ln -s "/opt/$_jb_name/bin/$_jb_name" "$pkgdir/usr/bin/$_jb_name"
+
+	install-desktop "$_jb_name.desktop"
+	install -Dm644 "$pkgdir/opt/$_jb_name/bin/$_jb_name.png" "$pkgdir/usr/share/pixmaps/$_jb_name.png"
+}
+
+files() {
+	files-find \
+		"/opt/$_jb_name" \
+		"/opt/$_jb_name/**/*" \
+		"/usr/bin/$_jb_name" \
+		"/usr/share/applications/$_jb_name.desktop" \
+		"/usr/share/pixmaps/$_jb_name.png"
+}
+##END:jb-template##

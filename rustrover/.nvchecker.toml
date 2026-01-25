@@ -1,0 +1,5 @@
+[rustrover]
+source = 'regex'
+url = 'https://data.services.jetbrains.com/products/releases?code=RR&latest=false&type=release'
+encoding = 'utf8'
+regex = 'RustRover-([\d.]+).tar.gz'
