@@ -1,0 +1,5 @@
+#!/bin/bash
+version="${1}"
+_jb_code=$(stplr-spec get-field _jb_code)
+checksum=$(curl -s https://download-cdn.jetbrains.com/$_jb_code-$version.tar.gz.sha256 | cut -d' ' -f1)
+stplr-spec set-field _jb_checksum "sha256:$checksum"
