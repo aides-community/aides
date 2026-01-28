@@ -2,6 +2,7 @@
 minVersion = "v0.0.28"
 url = "https://altlinux.space/aides-community/aides.git"
 mirrors = [
+    "https://git.sourcecraft.dev/aides-community/aides.git"
     "https://github.com/aides-community/aides.git",
     "https://codeberg.org/aides-community/aides.git"
 ]
