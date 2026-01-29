@@ -10,6 +10,7 @@ maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://gitverse.ru/features/gigaide/"
 license=("custom")
+appstream_app_id="ru.gitverse.GigaIDE"
 
 nonfree=1
 
