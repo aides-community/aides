@@ -2,11 +2,11 @@ _stapler_update_preset=snap
 
 _snap_name=singularityapp
 _snap_channel=stable
-_snap_url=https://api.snapcraft.io/api/v1/snaps/download/MGxJGb96XBV8UshTS2iqLOI4ylXW8xwY_127.snap
+_snap_url=https://api.snapcraft.io/api/v1/snaps/download/MGxJGb96XBV8UshTS2iqLOI4ylXW8xwY_128.snap
 
 name=singularityapp
-version=12.0.3
-release=2
+version=12.0.4
+release=1
 summary="Most powerful chaos management planner"
 summary_ru="Бесплатный планировщик задач"
 group="Office"
@@ -29,7 +29,7 @@ sources_amd64=(
 )
 
 checksums_amd64=(
-	sha256:62b457f1ab70b454a904f3e70db885a7aaaf305e425c39d0902b4c3d1430aa51
+	sha256:576409694c8e61516997883cfc0dfbeffa9d4b5d5cdd41ef46b1b87bbe6a78e7
 	sha256:eb776ec089778a7b04bd78b49be396404b12db85739104262f1bc1262121ddec
 )
 
