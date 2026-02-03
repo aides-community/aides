@@ -1,5 +1,7 @@
+sfe_249_new_extractor=1
+
 name=opera
-version=126.0.5750.59
+version=127.0.5778.14
 release=1
 summary="A fast and secure web browser"
 group="Networking/WWW"
@@ -21,7 +23,7 @@ sources=(
 )
 
 checksums=(
-	sha256:c83e0b4b84c16b06a6cb6b1b2f17962569767a9d8df522bee40eea35f4b352f5
+	sha256:a5e313051ce3e231ea08f05b2874bbf80619dc7a646d5a8b3f4f3304f49a8c13
 )
 
 build_deps=()
@@ -35,8 +37,14 @@ auto_prov=1
 
 disable_network=1
 
+# TODO: remove after v0.0.30 in p11
 prepare() {
-	rpm2cpio "$name-$version.rpm" | cpio -idm
+	if [ -f "$name-$version.rpm" ]; then
+		echo "Using rpm2cpio extraction"
+		rpm2cpio "$name-$version.rpm" | cpio -idm
+	else
+		echo "RPM already extracted"
+	fi
 }
 
 package() {
