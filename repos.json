@@ -1,7 +1,7 @@
 {
     "aides-pkgs/singularityapp": "b21d9b280f2d7ed576d475e85c1c9078f380b59c",
     "aides-pkgs/vagrant": "bd6704af4ec6d4cb114fe5ab96e1ff0405c27bc1",
-    "aides-pkgs/yandex-browser-stable": "ccf9bcb8d7377dc84cc7b7098f4d7f7853bda656",
+    "aides-pkgs/yandex-browser-stable": "eaeddd708a4a08f636f161420addf82170c2350c",
     "aides-pkgs/visual-studio-code": "1a0759244f0bbc18d56a304f2e34023a390b0ffe",
     "aides-pkgs/yandex-disk": "c07d137df5ea12086a912d73a5e341e50366a038",
     "aides-pkgs/yandex-music": "236269e02b3c6e9436f5f98389de2ca7f912e04a",
@@ -11,7 +11,7 @@
     "aides-pkgs/pycharm": "6b25602ae21f09f8588f32815ed1fd9abcd5cdb7",
     "aides-pkgs/android-studio": "147a71c274b54c9b9b437266e1d76e8f160dcac5",
     "aides-pkgs/anydesk": "814b723b5ca32fb9bfdbfcf08124ea7bba4c406a",
-    "aides-pkgs/google-chrome-stable": "ace428886b2904c95c1cd3a36d0b2f296802938b",
+    "aides-pkgs/google-chrome-stable": "66ae308d7d6317bc51eecd175aaba78bd315e3a9",
     "aides-pkgs/clion": "1587afafee0deb7b97752f0af387f43fc9bc55dd",
     "aides-pkgs/max": "a9711c5ee7c151fe0e4e5e60ac3499cc65784199",
     "aides-pkgs/fvm": "0d59b73c0dd6139e9167b541ac825b2fee3cdece",

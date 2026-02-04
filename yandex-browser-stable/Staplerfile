@@ -1,6 +1,8 @@
+sfe_249_new_extractor=1
+
 name=yandex-browser-stable
 version=25.12.1.1217
-release=1
+release=2
 summary="The web browser from Yandex"
 group="Networking/WWW"
 desc="$summary.
@@ -57,7 +59,12 @@ checksums=(
 )
 
 prepare() {
-	ar x ${name}-${_pkgver}.deb
+	if [ -f "${name}-${_pkgver}.deb" ]; then
+		echo "Using ar extraction"
+		ar x ${name}-${_pkgver}.deb
+	else
+		echo "deb already extracted"
+	fi
 	tar -xf data.tar.xz
 }
 
@@ -71,16 +78,19 @@ package() {
 	sed -i 's|HERE="`dirname "$CHROME_WRAPPER"`"|HERE=/opt/yandex/browser|' "${pkgdir}"/opt/yandex/browser/yandex-browser
 
 	"${pkgdir}"/opt/yandex/browser/update_codecs "${pkgdir}"/opt/yandex/browser
+
+	# remove legacy .desktop file (GNOME shows duplicate YB entries otherwise)
+	rm -f "${pkgdir}"/usr/share/applications/yandex-browser.desktop
 }
 
 files() {
+	files-find-binary yandex-browser-stable
+	files-find-doc yandex-browser-stable
+	files-find-desktop ru.yandex.desktop.browser.desktop
+	files-find-pixmap yandex-browser.png
+
 	files-find \
 		"/opt/yandex/**/*" \
-		"/usr/bin/yandex-browser-stable" \
 		"/usr/share/appdata/*" \
-		"/usr/share/applications/*" \
-		"/usr/share/gnome-control-center/default-apps/*" \
-		"/usr/share/pixmaps/*"
-
-	files-find-doc yandex-browser-stable
+		"/usr/share/gnome-control-center/default-apps/*"
 }
