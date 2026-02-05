@@ -1,0 +1,6 @@
+#!/bin/bash
+
+old_version=$(stplr-spec get-field _upstream_version)
+new_version=$(nvchecker -c .nvchecker.toml --logger json | jq .version -r)
+
+echo $old_version $new_version
