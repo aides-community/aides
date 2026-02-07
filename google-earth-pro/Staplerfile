@@ -1,6 +1,8 @@
+sfe_249_new_extractor=1
+
 name=google-earth-pro
 version=7.3.6.10441
-release=2
+release=3
 summary="Virtual globe"
 group="Sciences/Geosciences"
 desc="3D interface to explore the globe, terrain, streets, buildings and other planets"
@@ -8,6 +10,9 @@ maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://www.google.com/earth/"
 license=("custom")
+
+appstream_app_id=com.google.EarthPro
+
 nonfree=1
 nonfree_url="https://www.google.com/help/terms_maps.html"
 
@@ -20,15 +25,11 @@ firejail_profiles=(
 )
 
 sources=(
-	"https://dl.google.com/linux/earth/deb/pool/main/g/google-earth-pro-stable/google-earth-pro-stable_${version}-r0_amd64.deb"
+	"https://dl.google.com/linux/earth/rpm/stable/x86_64/google-earth-pro-stable-${version}-0.x86_64.rpm?~name=$name-$version.rpm"
 )
 
 checksums=(
-	sha256:3f74f02231e2bb473996d4b5a72530f0cf7a0d6e7f93b2523dfe0a47dfb10dbc
-)
-
-build_deps=(
-	bsdtar
+	sha256:93c4bd171da6eba9a3a0489cfcd40e66aaed4d912057ddaaa86426b32815df56
 )
 
 auto_reqprov_method=dirty
@@ -40,15 +41,23 @@ disable_network=1
 _installdir='/opt/google/earth/pro'
 
 prepare() {
-	mkdir -p "${name}-${version}"
-	bsdtar -xf "google-earth-pro-stable_${version}-r0_amd64.deb" -C "${name}-${version}"
+	_file="$name-$version.rpm"
+
+	if [ -f "$_file" ]; then
+		echo "Using rpm2cpio extraction"
+		rpm2cpio "$_file" | cpio -idm
+	else
+		echo "RPM already extracted"
+	fi
 }
 
 package() {
-	bsdtar -xf "${name}-${version}/data.tar.xz" -C "$pkgdir"
+	cp -dr usr opt "${pkgdir}"/
+
+	mkdir -p ${pkgdir}/usr/share/applications
 
 	# desktop file
-	mv "${pkgdir}/${_installdir}/google-earth-pro.desktop" "${pkgdir}/usr/share/applications"
+	mv "${pkgdir}${_installdir}/google-earth-pro.desktop" "${pkgdir}/usr/share/applications"
 
 	# icons
 	for _res in 16 22 24 32 48 64 128 256; do
@@ -56,18 +65,17 @@ package() {
 			"${pkgdir}/usr/share/icons/hicolor/${_res}x${_res}/apps/google-earth-pro.png"
 	done
 
-	# remove the debian-intended cron job and duplicated images
-	rm -r "${pkgdir}/etc/cron.daily" "${pkgdir}/${_installdir}"/product_logo_*.png
-
-	rm "${pkgdir}/usr/share/menu/google-earth-pro.menu"
+	# remove duplicated images
+	rm "${pkgdir}/${_installdir}"/product_logo_*.png
 
 	# Remove SGID
 	chmod -R 'a-s' "${pkgdir}"
 }
 
 files() {
+	files-find-binary google-earth-pro
+
 	files-find \
-		"/usr/bin/google-earth-pro" \
 		"/usr/share/icons/hicolor/*/apps/${name}.png" \
 		"/usr/share/applications/*" \
 		"$_installdir" \
