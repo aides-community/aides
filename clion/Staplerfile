@@ -1,6 +1,6 @@
 name=clion
 version=2025.3.2
-release=1
+release=2
 summary="Cross-platform IDE for C and C++ from JetBrains"
 group="Development/Tools"
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
@@ -28,8 +28,10 @@ _jb_code="cpp/CLion"
 ##BEGIN:jb-template##
 disable_network=1
 
+sfe_249_new_extractor=1
+
 sources=(
-	local:///$_jb_name.desktop
+	local:///$_jb_name.desktop?~archive=false
 	https://download-cdn.jetbrains.com/$_jb_code-$version.tar.gz
 )
 

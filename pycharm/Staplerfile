@@ -1,5 +1,5 @@
 name=pycharm
-version=2025.3.2
+version=2025.3.2.1
 release=1
 summary="Python IDE for Professional Developers"
 group="Development/Tools"
@@ -24,7 +24,7 @@ provides=(
 
 checksums=(
 	'sha256:61286adfef1bb2fc854f937fb64dfdfb7932f450a36ddafa13396918d517b363'
-	'sha256:60b5cef9886e9587e439247a7e364aba9a663dafae2eabcffc4e0dc409bba3c4'
+	'sha256:6d3cc25041c2a091695cfe733e8893ddda154e6f9b92cc060a6d1be3e8779fae'
 )
 
 _jb_name=$name
@@ -33,8 +33,10 @@ _jb_code="python/$name"
 ##BEGIN:jb-template##
 disable_network=1
 
+sfe_249_new_extractor=1
+
 sources=(
-	local:///$_jb_name.desktop
+	local:///$_jb_name.desktop?~archive=false
 	https://download-cdn.jetbrains.com/$_jb_code-$version.tar.gz
 )
 
