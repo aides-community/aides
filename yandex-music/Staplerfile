@@ -1,5 +1,7 @@
+sfe_249_new_extractor=1
+
 name=yandex-music
-version=5.85.0
+version=5.86.0
 release=1
 summary='Linux client for Yandex Music'
 summary_ru='Linux-клиент для Яндекс Музыки'
@@ -22,16 +24,12 @@ conflicts=()
 
 sources=(
 	"https://music-desktop-application.s3.yandex.net/stable/Yandex_Music_amd64_${version}.deb?~name=${name}-${version}.deb"
-	"local:///yandex-music.sh"
+	"local:///yandex-music.sh?~archive=false"
 )
 
 checksums=(
-	sha256:d5ab2d819094f47e8685509230c61bbf479ab1940bb44768083c504a29b18c1d
+	sha256:7298a75e9711bbf5a75b01ff92adb0cbb6ab89fcf38d7a3fa8cdf8da11c60c5e
 	sha256:6ffc89c0ecda4f2fd901ba949d2c7f812db64f73d154b3018f5764918b6ee5b2
-)
-
-build_deps=(
-	binutils
 )
 
 auto_reqprov_method=dirty
@@ -46,7 +44,6 @@ firejail_profiles=(
 disable_network=1
 
 prepare() {
-	ar x ${name}-${version}.deb
 	tar -xf data.tar.xz
 }
 
