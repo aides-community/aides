@@ -7,3 +7,7 @@ mirrors = [
     "https://codeberg.org/aides-community/aides.git"
 ]
 report_url = 'https://altlinux.space/aides-pkgs/{{ .BasePackageName }}/issues'
+
+title = 'Aides'
+homepage = 'https://aides.space'
+icon = 'https://aides.space/logo.svg'
