@@ -1,7 +1,7 @@
 sfe_249_new_extractor=1
 
 name=vivaldi
-version=7.8.3925.62
+version=7.8.3925.66
 release=1
 summary="An advanced browser made with the power user in mind"
 group="Networking/WWW"
@@ -27,7 +27,7 @@ sources=(
 )
 
 checksums=(
-	sha256:e53fb85a857c6a215b1b34633c425f258d68af4dd252af26bc9ce5679f259a8a
+	sha256:d0585725703b4a873a3977a2e7e14b0bee39f9d488ca8b813233edf30f7132d8
 )
 
 auto_reqprov_method=dirty
