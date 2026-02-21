@@ -1,7 +1,7 @@
 name=docker-desktop
-version=4.56.0
-release=2
-_revision=214940
+version=4.61.0
+release=1
+_revision=219004
 summary="Docker Desktop is an easy-to-install application that enables you to locally build and share containerized applications and microservices"
 group="Other"
 desc="$summary."
@@ -12,6 +12,7 @@ license=("custom")
 appstream_app_id="com.Docker.DockerDesktop"
 nonfree=1
 nonfree_url="https://www.docker.com/legal/docker-subscription-service-agreement/"
+sfe_249_new_extractor=1
 
 provides=()
 conflicts=()
@@ -21,7 +22,7 @@ sources=(
 )
 
 checksums=(
-	sha256:9ff620312e97cf64edca7f36e14a0c4c4a0b1aaf632110281257df18f58509be
+	sha256:089d60908c3be5b64addb8bca07c22b9e5a3038c116cb16b7a6627b6b5a035ed
 )
 
 build_deps=(
@@ -40,10 +41,6 @@ auto_req=1
 auto_prov=1
 
 disable_network=1
-
-prepare() {
-	rpm2cpio "docker-desktop-x86_64.rpm" | cpio -idm
-}
 
 package() {
 	cp -R $srcdir/opt $srcdir/usr $pkgdir/
