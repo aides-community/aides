@@ -1,6 +1,6 @@
 name=bitrix24
-version=20.0.28.90
-release=1
+version=21.0.28.90
+release=2
 summary="Bitrix24 unified workspace app (CRM, comms, tasks, and more)"
 group="Communications"
 desc="$summary."
@@ -11,11 +11,12 @@ license=("custom")
 nonfree=1
 nonfree_url="https://www.bitrix24.com/eula/"
 appstream_app_id="ru.bitrix24.Bitrix24"
+sfe_249_new_extractor=1
 
 _source_url="https://repos.1c-bitrix.ru/b24/${name}_desktop.deb"
-_source_checksum=sha256:daae990ffe52285aecf1df7455c457539b5ec4129cf0cf0c4bdff94032779b41
-_source_etag=696769d3-a6f0954
-_source_last_modified='Wed, 14 Jan 2026 10:02:59 GMT'
+_source_checksum=sha256:5afb56815c9e1a3b711d2af757c28cc7e843d77cc9f3e8c16ef04dd787b3fabd
+_source_etag=69971fa1-a81ebc8
+_source_last_modified='Thu, 19 Feb 2026 14:35:13 GMT'
 
 sources=(
 	"$_source_url"
@@ -40,7 +41,6 @@ auto_prov=1
 disable_network=1
 
 package() {
-	ar x ${name}_desktop.deb
 	tar -xf data.tar.xz -C "$pkgdir/"
 
 	install -d "$pkgdir/usr/bin"
