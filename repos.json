@@ -33,5 +33,6 @@
     "aides-pkgs/opera": "91ec07b7bc4dbc0fc81034782142c871b149cddb",
     "aides-pkgs/docker-desktop": "cab8d77591de6ce480faa9171734d5e30c189b8d",
     "aides-pkgs/rustrover": "620ca7265bbff0f402b6854efb635b99fcdb7d3a",
-    "aides-pkgs/gigaide": "78e04cb4e0d1e51cee004e0bcce73ad78abd0391"
+    "aides-pkgs/gigaide": "78e04cb4e0d1e51cee004e0bcce73ad78abd0391",
+    "aides-pkgs/webstorm": ""
 }
