@@ -1,5 +1,5 @@
 name=lunacy
-version=12.2
+version=12.3
 release=1
 summary="Free graphic design tool for UX/UI"
 group="Graphics"
@@ -49,12 +49,12 @@ sources_arm64=(
 )
 
 checksums=(
-	sha256:f2c6a90846f65bfbfd5690b31ff3a805dd1bbf6e4e8322689821ba643ec3e677
+	sha256:49ae8b9c1f981a41e93691138c61d850284216ee868a7cfe5503bc74f2954411
 	sha256:a977a0b9a89bc048bea4c6a747e83b1d1c7ce05cd0aac3d2d40a78dc005c0a8a
 )
 
 checksums_arm64=(
-	sha256:0a4ed3eea32ee4fc38c0cad652b1079571fa871363bad254d08be929fa388b72
+	sha256:bc9fbccbd8feb620cfc11b0db20e583c08cd99b153b604b951ba5bbd35c5ab7d
 	sha256:a977a0b9a89bc048bea4c6a747e83b1d1c7ce05cd0aac3d2d40a78dc005c0a8a
 )
 

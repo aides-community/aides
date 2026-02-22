@@ -18,7 +18,7 @@
     "aides-pkgs/zoom": "0db77c25e3ded6fecd00397092ee45003f3cd080",
     "aides-pkgs/google-earth-pro": "8dd354998bb8b02e1bf7eec22765ed62ceb7e570",
     "aides-pkgs/reaper": "fe4b4b1a2f1b37a791d35865e03395b616035e46",
-    "aides-pkgs/lunacy": "e192333528f8b8a9c70432a1e4076e2c62b35165",
+    "aides-pkgs/lunacy": "cc2519231f053344a465abbceda72c222005b617",
     "aides-pkgs/unityhub": "ffe614b175a1ae04ef538f729dfc87f4c4fe7be0",
     "aides-pkgs/wps-office": "cf03845b205b2f7386a00ef553f6bfe91a649e6f",
     "aides-pkgs/cursor": "09ddc7cdc27baa45943bf32bef208470ab2b58a0",
@@ -34,5 +34,5 @@
     "aides-pkgs/docker-desktop": "cab8d77591de6ce480faa9171734d5e30c189b8d",
     "aides-pkgs/rustrover": "620ca7265bbff0f402b6854efb635b99fcdb7d3a",
     "aides-pkgs/gigaide": "78e04cb4e0d1e51cee004e0bcce73ad78abd0391",
-    "aides-pkgs/webstorm": ""
+    "aides-pkgs/webstorm": "04f431025770ebf8a7a90a0e945363a9e858bbd9"
 }
