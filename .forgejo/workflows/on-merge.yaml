@@ -8,7 +8,7 @@ on:
 jobs:
   update:
     if: github.event.pull_request.merged == true
-    runs-on: alt-latest
+    runs-on: als-tiny
     steps:
       - name: Extract issue and package name from PR body
         id: parse

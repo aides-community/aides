@@ -11,7 +11,7 @@ on:
 
 jobs:
   update:
-    runs-on: alt-latest
+    runs-on: als-tiny
     container:
       image: altlinux.space/actions/runner/python:sisyphus
     steps:
@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Run update script
         run: |
-          python3 update.py
+          .repo/scripts/update
       - name: Check for changes
         id: check_changes
         run: |

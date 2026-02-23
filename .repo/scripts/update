@@ -1,0 +1,82 @@
+#!/usr/bin/env python3
+import os
+import subprocess
+import shutil
+import glob
+
+AIDES_DIR = ".repo/pkgs"
+CLONE_DIR = "."
+DEFAULT_URL = "https://altlinux.space/aides-pkgs/{}.git"
+
+
+def get_remote_commit(repo_url):
+    try:
+        result = subprocess.check_output(
+            ["git", "ls-remote", repo_url, "HEAD"]
+        )
+        return result.decode("utf-8").split()[0]
+    except subprocess.CalledProcessError as e:
+        print(f"Ошибка при получении удаленного коммита {repo_url}: {e}")
+        return None
+
+
+def clear_directory(directory):
+    if os.path.exists(directory):
+        shutil.rmtree(directory)
+
+
+def clone_or_update_repo(pkg, repo_url, clone_path, local_commit):
+    try:
+        remote_commit = get_remote_commit(repo_url)
+
+        if remote_commit is None:
+            print(f"Не удалось получить удаленный коммит для {pkg}. Пропуск.")
+            return False
+
+        if os.path.exists(clone_path) and local_commit == remote_commit:
+            print(f"Репозиторий {pkg} уже обновлен. Пропуск.")
+            return False
+
+        clear_directory(clone_path)
+        subprocess.run(
+            ["git", "clone", "--depth", "1", repo_url, clone_path],
+            check=True
+        )
+        os.chdir(clone_path)
+        cloned_commit = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"]
+        ).strip().decode("utf-8")
+        git_folder = '.git'
+        if os.path.exists(git_folder):
+            shutil.rmtree(git_folder)
+        os.chdir("..")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Ошибка при клонировании/обновлении {pkg}: {e}")
+        return False
+
+
+def process_repositories():
+    dir_path = subprocess.Popen(['git', 'rev-parse', '--show-toplevel'], stdout=subprocess.PIPE).communicate()[0].rstrip().decode('utf-8')
+    
+    for aides_file in glob.glob(os.path.join(AIDES_DIR, "*")):
+        pkg = os.path.basename(aides_file)
+        print(f"Обработка репозитория: {pkg}")
+
+        with open(aides_file, "r") as f:
+            local_commit = f.read().strip()
+
+        repo_url = DEFAULT_URL.format(pkg)
+        clone_path = os.path.join(CLONE_DIR, pkg)
+
+        new_commit = clone_or_update_repo(pkg, repo_url, clone_path, local_commit)
+
+        os.chdir(dir_path)
+
+        if new_commit:
+            with open(aides_file, "w") as f:
+                f.write(new_commit)
+
+
+if __name__ == "__main__":
+    process_repositories()
