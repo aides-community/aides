@@ -1,12 +1,14 @@
+sfe_249_new_extractor=1
+
 _stapler_update_preset=snap
 
 _snap_name=singularityapp
 _snap_channel=stable
-_snap_url=https://api.snapcraft.io/api/v1/snaps/download/MGxJGb96XBV8UshTS2iqLOI4ylXW8xwY_127.snap
+_snap_url=https://api.snapcraft.io/api/v1/snaps/download/MGxJGb96XBV8UshTS2iqLOI4ylXW8xwY_129.snap
 
 name=singularityapp
-version=12.0.3
-release=2
+version=12.0.5
+release=1
 summary="Most powerful chaos management planner"
 summary_ru="Бесплатный планировщик задач"
 group="Office"
@@ -18,52 +20,27 @@ maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://singularity-app.ru"
 license=("custom")
+
+nonfree=1
+nonfree_url='https://singularity-app.ru/terms_of_service/'
+
 appstream_app_id='com.singularityapp.SingularityApp'
 
 provides=($name)
 conflicts=()
 
 sources_amd64=(
-	$_snap_url
-	"local:///singularityapp.sh"
+	"$_snap_url?~archive=false"
+	"local:///singularityapp.sh?~archive=false"
 )
 
 checksums_amd64=(
-	sha256:62b457f1ab70b454a904f3e70db885a7aaaf305e425c39d0902b4c3d1430aa51
+	sha256:0acbbfc1b0a930c99b8ab9afdc45d6b5ba1bf4e95051ba4e5a194ba9b1f8358a
 	sha256:eb776ec089778a7b04bd78b49be396404b12db85739104262f1bc1262121ddec
 )
 
 build_deps=(
 	squashfs-tools
-	at-spi2-atk
-	libXcomposite
-	libXdamage
-	libXext
-	libXfixes
-	libXrandr
-	libalsa
-	libat-spi2-core
-	libatk
-	libcairo
-	libcups
-	libdbus
-	libdbusmenu
-	libdbusmenu-gtk3
-	libdrm
-	libgbm
-	libgdk-pixbuf
-	libgio
-	libgtk+3
-	libnspr
-	libnss
-	libpango
-	libsqlite3
-	libsystemd
-	libxkbcommon
-)
-
-deps=(
-	firejail
 )
 
 nonfree=1
@@ -74,20 +51,18 @@ firejail_profiles=(
 	['default']='firejail.profile'
 )
 
+auto_reqprov_method=dirty
 auto_req=1
-auto_req_skiplist=(
-	"/opt/singularityapp/usr/lib/x86_64-linux-gnu/libappindicator3.so.1.0.0"
-)
 
 prepare() {
 	unsquashfs "${srcdir}/"*.snap
 }
 
 package() {
-	mkdir -p "${pkgdir}/usr/share/pixmaps/"
-	mkdir -p "${pkgdir}/usr/share/applications/"
-	mkdir -p "${pkgdir}/opt/${name}"
-	mkdir -p "${pkgdir}/usr/bin/"
+	mkdir -p "${pkgdir}/usr/share/pixmaps/" \
+         "${pkgdir}/usr/share/applications/" \
+         "${pkgdir}/opt/${name}" \
+         "${pkgdir}/usr/bin/"
 
 	install ${srcdir}/squashfs-root/meta/gui/icon.png "${pkgdir}/usr/share/pixmaps/$name.png"
 	install ${srcdir}/squashfs-root/meta/gui/*.desktop "${pkgdir}/usr/share/applications/$name.desktop"
@@ -101,9 +76,11 @@ package() {
 }
 
 files() {
+	files-find-binary "$name"
+	files-find-desktop "$name.desktop"
+	files-find-pixmap "$name.png"
+
 	files-find \
-		"/opt/${name}/**/*" \
-		"/usr/bin/$name" \
-		"/usr/share/pixmaps/$name.png" \
-		"/usr/share/applications/$name.desktop"
+		"/opt/${name}" \
+		"/opt/${name}/**/*"
 }

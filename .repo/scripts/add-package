@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PACKAGE="$1"
+PKGS_DIR="$(dirname "$0")/../pkgs"
+
+if [[ -z "$PACKAGE" ]]; then
+    echo "Error: Package name must be provided as an argument." >&2
+    exit 1
+fi
+
+if [[ -e "$PKGS_DIR/$PACKAGE" ]]; then
+    echo "Error: Package already exists!" >&2
+    exit 1
+fi
+
+touch "$PKGS_DIR/$PACKAGE"
+echo "Package added successfully."

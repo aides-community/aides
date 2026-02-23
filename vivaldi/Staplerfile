@@ -1,5 +1,7 @@
+sfe_249_new_extractor=1
+
 name=vivaldi
-version=7.7.3851.67
+version=7.8.3925.73
 release=1
 summary="An advanced browser made with the power user in mind"
 group="Networking/WWW"
@@ -25,7 +27,7 @@ sources=(
 )
 
 checksums=(
-	sha256:d7063d0a9d4c08fa27ff4cf51437f7f84d402a7ec42a8ab8592e0fb66ae06c4c
+	sha256:58ad8d046a4139c8fa5d4afcf6ef6abc3ca565f2b5a952661603591bd2e6c76b
 )
 
 auto_reqprov_method=dirty
@@ -39,7 +41,12 @@ build_deps=(
 )
 
 prepare() {
-	rpm2cpio $name-$version.amd64.rpm | cpio -idm
+	if [ -f "$name-$version.amd64.rpm" ]; then
+		echo "Using rpm2cpio extraction"
+		rpm2cpio "$name-$version.amd64.rpm" | cpio -idm
+	else
+		echo "RPM already extracted"
+	fi
 }
 
 package() {

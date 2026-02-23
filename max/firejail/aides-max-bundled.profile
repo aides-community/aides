@@ -3,39 +3,21 @@
 #
 include aides-max.local
 include globals.local
-#region: @bundler [aides-max.profile] BEGIN
-mkdir ${HOME}/.config/MAX
-whitelist ${HOME}/.config/MAX
-whitelist ${DOCUMENTS}
-whitelist ${DOWNLOADS}
+#region: @bundler [firejail/aides-max.profile] BEGIN
 
-# fix system tray: https://github.com/netblue30/firejail/issues/1137#issuecomment-669496384
-ignore private-tmp
-mkdir /tmp/MAX-tmp
-whitelist /tmp/MAX-tmp
-env TMPDIR=/tmp/MAX-tmp
-env TMP=/tmp/MAX-tmp
-
-ignore dbus-user none
-dbus-user filter
-dbus-user.talk org.freedesktop.Notifications
-dbus-user.talk org.freedesktop.portal.Desktop
-# system tray
-dbus-user.talk org.kde.StatusNotifierWatcher
 
 # Fix url open
 env XDG_CURRENT_DESKTOP=
 env DE=flatpak
 
-# for firejail <= 0.9.74
-#region: @bundler [/etc/firejail/electron.profile] BEGIN
-# Firejail profile for electron
-# Description: Build cross platform desktop apps with web technologies
-# This file is overwritten after every install/update
-# Persistent local customizations
+#region: @bundler [/etc/firejail/allow-bin-sh.inc] BEGIN
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
 
-noblacklist ${HOME}/.config/Electron
-noblacklist ${HOME}/.config/electron*-flag*.conf
+noblacklist ${PATH}/bash
+noblacklist ${PATH}/dash
+noblacklist ${PATH}/sh
+#endregion: @bundler [/etc/firejail/allow-bin-sh.inc] END
 
 #region: @bundler [/etc/firejail/disable-common.inc] BEGIN
 # This file is overwritten during software install.
@@ -57,6 +39,7 @@ blacklist-nolog ${HOME}/.histfile
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.kde/share/apps/klipper
 blacklist-nolog ${HOME}/.kde4/share/apps/klipper
+blacklist-nolog ${HOME}/.lesshst
 blacklist-nolog ${HOME}/.local/share/fish/fish_history
 blacklist-nolog ${HOME}/.local/share/ibus-typing-booster
 blacklist-nolog ${HOME}/.local/share/klipper
@@ -64,15 +47,17 @@ blacklist-nolog ${HOME}/.local/share/nvim
 blacklist-nolog ${HOME}/.local/state/nvim
 blacklist-nolog ${HOME}/.macromedia
 blacklist-nolog ${HOME}/.mupdf.history
+blacklist-nolog ${HOME}/.mutthistory
+blacklist-nolog ${HOME}/.ne
 blacklist-nolog ${HOME}/.python-history
-blacklist-nolog ${HOME}/.python_history
 blacklist-nolog ${HOME}/.pythonhist
-blacklist-nolog ${HOME}/.lesshst
 blacklist-nolog ${HOME}/.viminfo
 blacklist-nolog /tmp/clipmenu*
 
 # X11 session autostart
-# blacklist ${HOME}/.xpra - this will kill --x11=xpra cmdline option for all programs
+# this will kill --x11=xpra cmdline option for all programs
+#blacklist ${HOME}/.xpra
+blacklist ${HOME}/.Xresources
 blacklist ${HOME}/.Xsession
 blacklist ${HOME}/.blackbox
 blacklist ${HOME}/.config/autostart
@@ -100,14 +85,23 @@ blacklist ${HOME}/.kde4/shutdown
 blacklist ${HOME}/.kde4/share/config/startupconfig
 blacklist ${HOME}/.kde4/share/config/startupconfigkeys
 blacklist ${HOME}/.local/share/autostart
+blacklist ${HOME}/.local/share/xorg
 blacklist ${HOME}/.xinitrc
 blacklist ${HOME}/.xprofile
 blacklist ${HOME}/.xserverrc
 blacklist ${HOME}/.xsession
 blacklist ${HOME}/.xsessionrc
 blacklist /etc/X11/Xsession.d
+blacklist /etc/X11/xinit
+blacklist /etc/X11/xorg.conf.d
 blacklist /etc/xdg/autostart
+blacklist /var/log/Xorg.*
 read-only ${HOME}/.Xauthority
+read-only ${HOME}/.Xdefaults
+read-only ${HOME}/.Xdefaults-*
+read-only ${HOME}/.config/awesome/autorun.sh
+read-only ${HOME}/.config/openbox/autostart
+read-only ${HOME}/.config/openbox/environment
 
 # Session manager
 # see #3358
@@ -162,6 +156,7 @@ read-only ${HOME}/.config/kio_httprc
 read-only ${HOME}/.config/kiorc
 read-only ${HOME}/.config/kioslaverc
 read-only ${HOME}/.config/ksslcablacklist
+read-only ${HOME}/.config/lxqt
 read-only ${HOME}/.kde/share/apps/konsole
 read-only ${HOME}/.kde/share/apps/kssl
 read-only ${HOME}/.kde/share/config/*notifyrc
@@ -201,14 +196,24 @@ blacklist ${RUNUSER}/gnome-session-leader-fifo
 blacklist ${RUNUSER}/gnome-shell
 blacklist ${RUNUSER}/gsconnect
 
+# i3 IPC socket (allows arbitrary shell script execution)
+blacklist ${RUNUSER}/i3/ipc-socket.*
+blacklist /tmp/i3-*/ipc-socket.*
+
+# sway IPC socket (allows arbitrary shell script execution)
+blacklist ${RUNUSER}/sway-ipc.*
+blacklist /tmp/sway-ipc.*
+
 # systemd
 blacklist ${HOME}/.config/systemd
 blacklist ${HOME}/.local/share/systemd
 blacklist ${PATH}/systemctl
-blacklist ${PATH}/systemd-run
+blacklist ${PATH}/systemd*
 blacklist ${RUNUSER}/systemd
+blacklist /etc/credstore*
 blacklist /etc/systemd/network
 blacklist /etc/systemd/system
+blacklist /run/credentials
 blacklist /var/lib/systemd
 # creates problems on Arch where /etc/resolv.conf is a symlink to /var/run/systemd/resolve/resolv.conf
 #blacklist /var/run/systemd
@@ -224,6 +229,7 @@ blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/VirtualBox VMs
 
 # GNOME Boxes
+blacklist ${HOME}/.cache/gnome-boxes
 blacklist ${HOME}/.config/gnome-boxes
 blacklist ${HOME}/.local/share/gnome-boxes
 
@@ -274,8 +280,9 @@ blacklist /var/lib/mysql/mysql.sock
 blacklist /var/lib/mysqld/mysql.sock
 blacklist /var/lib/pacman
 blacklist /var/lib/upower
-# blacklist /var/log - a virtual /var/log directory (mostly empty) is build up by default for
-# every sandbox, unless --writable-var-log switch is activated
+# a virtual /var/log directory (mostly empty) is build up by default for every
+# sandbox, unless --writable-var-log switch is activated
+#blacklist /var/log
 blacklist /var/mail
 blacklist /var/opt
 blacklist /var/run/acpid.socket
@@ -352,7 +359,7 @@ read-only ${HOME}/.zshenv
 read-only ${HOME}/.zshrc
 read-only ${HOME}/.zshrc.local
 
-# Remote access
+# Remote access (used only by sshd; should always be blacklisted)
 blacklist ${HOME}/.rhosts
 blacklist ${HOME}/.shosts
 blacklist ${HOME}/.ssh/authorized_keys
@@ -360,18 +367,23 @@ blacklist ${HOME}/.ssh/authorized_keys2
 blacklist ${HOME}/.ssh/environment
 blacklist ${HOME}/.ssh/rc
 blacklist /etc/hosts.equiv
-read-only ${HOME}/.ssh/config
-read-only ${HOME}/.ssh/config.d
 
 # Initialization files that allow arbitrary command execution
 read-only ${HOME}/.caffrc
 read-only ${HOME}/.cargo/env
+read-only ${HOME}/.config/mpv
+read-only ${HOME}/.config/msmtp
+read-only ${HOME}/.config/nano
+read-only ${HOME}/.config/ncmpcpp/config
+read-only ${HOME}/.config/nsxiv/exec
 read-only ${HOME}/.config/nvim
 read-only ${HOME}/.config/pkcs11
 read-only ${HOME}/.dotfiles
+read-only ${HOME}/.elinks
 read-only ${HOME}/.emacs
 read-only ${HOME}/.emacs.d
 read-only ${HOME}/.exrc
+read-only ${HOME}/.gnupg/gpg.conf
 read-only ${HOME}/.gvimrc
 read-only ${HOME}/.homesick
 read-only ${HOME}/.iscreenrc
@@ -380,17 +392,22 @@ read-only ${HOME}/.local/share/cool-retro-term
 read-only ${HOME}/.local/share/nvim
 read-only ${HOME}/.local/state/nvim
 read-only ${HOME}/.mailcap
+read-only ${HOME}/.mozilla/firefox/profiles.ini
 read-only ${HOME}/.msmtprc
 read-only ${HOME}/.mutt/muttrc
 read-only ${HOME}/.muttrc
 read-only ${HOME}/.nano
+read-only ${HOME}/.nanorc
 read-only ${HOME}/.npmrc
 read-only ${HOME}/.pythonrc.py
 read-only ${HOME}/.reportbugrc
+read-only ${HOME}/.ssh/config
+read-only ${HOME}/.ssh/config.d
 read-only ${HOME}/.tmux.conf
 read-only ${HOME}/.vim
 read-only ${HOME}/.viminfo
 read-only ${HOME}/.vimrc
+read-only ${HOME}/.w3m
 read-only ${HOME}/.xmonad
 read-only ${HOME}/.xscreensaver
 read-only ${HOME}/.yarnrc
@@ -398,6 +415,10 @@ read-only ${HOME}/_exrc
 read-only ${HOME}/_gvimrc
 read-only ${HOME}/_vimrc
 read-only ${HOME}/dotfiles
+
+# System package managers and AUR helpers
+blacklist ${HOME}/.config/cower
+read-only ${HOME}/.config/cower/config
 
 # Make directories commonly found in $PATH read-only
 read-only ${HOME}/.bin
@@ -424,20 +445,28 @@ read-only ${HOME}/.config/user-dirs.dirs
 read-only ${HOME}/.config/user-dirs.locale
 read-only ${HOME}/.local/share/mime
 
+# Configuration files that do not allow arbitrary command execution but that
+# are intended to be modified manually (in a text editor and/or by a program
+# dedicated to managing them)
+read-only ${HOME}/.config/MangoHud
+
 # Write-protection for thumbnailer dir
 read-only ${HOME}/.local/share/thumbnailers
 
 # prevent access to ssh-agent
+blacklist ${RUNUSER}/openssh_agent
 blacklist /tmp/ssh-*
 
 # top secret
 blacklist /.fscrypt
 blacklist /etc/davfs2/secrets
+blacklist /etc/doas.conf
 blacklist /etc/group+
 blacklist /etc/group-
 blacklist /etc/gshadow
 blacklist /etc/gshadow+
 blacklist /etc/gshadow-
+blacklist /etc/msmtprc
 blacklist /etc/passwd+
 blacklist /etc/passwd-
 blacklist /etc/shadow
@@ -445,6 +474,8 @@ blacklist /etc/shadow+
 blacklist /etc/shadow-
 blacklist /etc/ssh
 blacklist /etc/ssh/*
+blacklist /etc/sudo*.conf
+blacklist /etc/sudoers*
 blacklist /home/.ecryptfs
 blacklist /home/.fscrypt
 blacklist ${HOME}/*.kdb
@@ -458,6 +489,7 @@ blacklist ${HOME}/.cargo/credentials.toml
 blacklist ${HOME}/.cert
 blacklist ${HOME}/.config/hub
 blacklist ${HOME}/.config/keybase
+blacklist ${HOME}/.config/msmtp
 blacklist ${HOME}/.davfs2/secrets
 blacklist ${HOME}/.ecryptfs
 blacklist ${HOME}/.fetchmailrc
@@ -484,6 +516,9 @@ blacklist ${HOME}/.ssh
 blacklist ${HOME}/.vaults
 blacklist /run/timeshift
 blacklist /var/backup
+
+# dm-crypt / LUKS
+blacklist /crypto_keyfile.bin
 
 # Remove environment variables with auth tokens.
 # Note however that the sandbox might still have access to the
@@ -513,6 +548,7 @@ blacklist /usr/sbin
 
 # system management and various SUID executables
 blacklist ${PATH}/at
+blacklist ${PATH}/bmon
 blacklist ${PATH}/busybox
 blacklist ${PATH}/chage
 blacklist ${PATH}/chfn
@@ -521,71 +557,99 @@ blacklist ${PATH}/crontab
 blacklist ${PATH}/doas
 blacklist ${PATH}/evtest
 blacklist ${PATH}/expiry
-blacklist ${PATH}/fusermount
+blacklist ${PATH}/fping
+blacklist ${PATH}/fping6
+blacklist ${PATH}/fusermount*
 blacklist ${PATH}/gksu
 blacklist ${PATH}/gksudo
 blacklist ${PATH}/gpasswd
+blacklist ${PATH}/groupmems
+blacklist ${PATH}/hostname
+#blacklist ${PATH}/ip # breaks --ip=dhcp
 blacklist ${PATH}/kdesudo
 blacklist ${PATH}/ksu
 blacklist ${PATH}/mount
-blacklist ${PATH}/mount.ecryptfs_private
+blacklist ${PATH}/mount.*
+blacklist ${PATH}/mountpoint
+blacklist ${PATH}/mtr
+blacklist ${PATH}/mtr-packet
 blacklist ${PATH}/nc
+blacklist ${PATH}/nc.openbsd
+blacklist ${PATH}/nc.traditional
 blacklist ${PATH}/ncat
-blacklist ${PATH}/nmap
+blacklist ${PATH}/netstat
+blacklist ${PATH}/networkctl
 blacklist ${PATH}/newgidmap
 blacklist ${PATH}/newgrp
 blacklist ${PATH}/newuidmap
-blacklist ${PATH}/ntfs-3g
-blacklist ${PATH}/pkexec
-blacklist ${PATH}/procmail
-blacklist ${PATH}/sg
-blacklist ${PATH}/strace
-blacklist ${PATH}/su
-blacklist ${PATH}/sudo
-blacklist ${PATH}/tcpdump
-blacklist ${PATH}/umount
-blacklist ${PATH}/unix_chkpwd
-blacklist ${PATH}/xev
-blacklist ${PATH}/xinput
-# from 0.9.67
-blacklist /usr/lib/openssh
-blacklist /usr/lib/ssh
-blacklist /usr/libexec/openssh
-blacklist ${PATH}/passwd
-blacklist /usr/lib/xorg/Xorg.wrap
-blacklist /usr/lib/policykit-1/polkit-agent-helper-1
-blacklist /usr/lib/dbus-1.0/dbus-daemon-launch-helper
-blacklist /usr/lib/eject/dmcrypt-get-device
-blacklist /usr/lib/chromium/chrome-sandbox
-blacklist /usr/lib/opera/opera_sandbox
-blacklist /usr/lib/vmware
-blacklist ${PATH}/suexec
-blacklist /usr/lib/squid/basic_pam_auth
-blacklist ${PATH}/slock
-blacklist ${PATH}/physlock
-blacklist ${PATH}/schroot
-blacklist ${PATH}/wshowkeys
-blacklist ${PATH}/pmount
-blacklist ${PATH}/pumount
-blacklist ${PATH}/bmon
-blacklist ${PATH}/fping
-blacklist ${PATH}/fping6
-blacklist ${PATH}/hostname
-# blacklist ${PATH}/ip - breaks --ip=dhcp
-blacklist ${PATH}/mtr
-blacklist ${PATH}/mtr-packet
-blacklist ${PATH}/netstat
 blacklist ${PATH}/nm-online
+blacklist ${PATH}/nmap
 blacklist ${PATH}/nmcli
 blacklist ${PATH}/nmtui
 blacklist ${PATH}/nmtui-connect
 blacklist ${PATH}/nmtui-edit
 blacklist ${PATH}/nmtui-hostname
-blacklist ${PATH}/networkctl
+blacklist ${PATH}/ntfs-3g
+blacklist ${PATH}/passwd
+blacklist ${PATH}/physlock
+blacklist ${PATH}/pkexec
+blacklist ${PATH}/plocate
+blacklist ${PATH}/pmount
+blacklist ${PATH}/procmail
+blacklist ${PATH}/pumount
+blacklist ${PATH}/schroot
+blacklist ${PATH}/sg
+blacklist ${PATH}/slock
 blacklist ${PATH}/ss
+blacklist ${PATH}/ssmtp
+blacklist ${PATH}/strace
+blacklist ${PATH}/su
+blacklist ${PATH}/sudo
+blacklist ${PATH}/suexec
+blacklist ${PATH}/tcpdump
 blacklist ${PATH}/traceroute
+blacklist ${PATH}/umount
+blacklist ${PATH}/unix_chkpwd
+blacklist ${PATH}/wall
+blacklist ${PATH}/write
+blacklist ${PATH}/wshowkeys
+blacklist ${PATH}/xev
+blacklist ${PATH}/xinput
+blacklist /usr/lib/chromium/chrome-sandbox
+blacklist /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+blacklist /usr/lib/eject/dmcrypt-get-device
+blacklist /usr/lib/openssh
+blacklist /usr/lib/opera/opera_sandbox
+blacklist /usr/lib/policykit-1/polkit-agent-helper-1
+blacklist /usr/lib/squid/basic_pam_auth
+blacklist /usr/lib/ssh
+blacklist /usr/lib/vmware
+blacklist /usr/lib/xorg/Xorg.wrap
+blacklist /usr/libexec/openssh
+# since firejail version 0.9.73
+blacklist ${PATH}/dpkg*
+blacklist ${PATH}/apt*
+blacklist ${PATH}/dumpcap
+blacklist ${PATH}/efibootdump
+blacklist ${PATH}/efibootmgr
+blacklist ${PATH}/passmass
+blacklist ${PATH}/proxy
+blacklist ${PATH}/aa-*
+blacklist ${PATH}/airscan-discover
+blacklist ${PATH}/avahi*
+blacklist ${PATH}/dbus-*
+blacklist ${PATH}/debconf*
+blacklist ${PATH}/grub-*
+blacklist ${PATH}/kernel-install  # from systemd package
+
+# binaries installed by firejail
+blacklist ${PATH}/firemon
+blacklist ${PATH}/firecfg
+blacklist ${PATH}/jailcheck
+blacklist ${PATH}/firetools
 
 # other SUID binaries
+blacklist /opt/microsoft/msedge*/msedge-sandbox
 blacklist /usr/lib/virtualbox
 blacklist /usr/lib64/virtualbox
 
@@ -595,11 +659,13 @@ blacklist /tmp/.lxterminal-socket*
 blacklist /tmp/tmux-*
 
 # disable terminals running as server resulting in sandbox escape
+blacklist ${PATH}/foot
+blacklist ${PATH}/footserver
 blacklist ${PATH}/gnome-terminal
 blacklist ${PATH}/gnome-terminal.wrapper
 blacklist ${PATH}/kgx
-# blacklist ${PATH}/konsole
 # konsole doesn't seem to have this problem - last tested on Ubuntu 16.04
+#blacklist ${PATH}/konsole
 blacklist ${PATH}/lilyterm
 blacklist ${PATH}/lxterminal
 blacklist ${PATH}/mate-terminal
@@ -629,7 +695,7 @@ read-only ${HOME}/.local/share/flatpak/exports
 blacklist ${HOME}/.local/share/flatpak/*
 blacklist ${HOME}/.var
 # most of the time bwrap is SUID binary
-blacklist ${PATH}/bwrap
+#blacklist ${PATH}/bwrap
 blacklist ${RUNUSER}/.dbus-proxy
 blacklist ${RUNUSER}/.flatpak
 blacklist ${RUNUSER}/.flatpak-cache
@@ -650,6 +716,10 @@ blacklist /usr/lib/snapd
 blacklist /var/lib/snapd
 blacklist /var/snap
 
+# bubblejail
+blacklist ${HOME}/.config/bubblejail
+blacklist ${HOME}/.local/share/bubblejail
+
 # mail directories used by mutt
 blacklist ${HOME}/.Mail
 blacklist ${HOME}/.mail
@@ -663,10 +733,13 @@ blacklist ${HOME}/sent
 blacklist /proc/config.gz
 
 # prevent DNS malware attempting to communicate with the server using regular DNS tools
+blacklist ${PATH}/delv
 blacklist ${PATH}/dig
 blacklist ${PATH}/dlint
 blacklist ${PATH}/dns2tcp
 blacklist ${PATH}/dnssec-*
+blacklist ${PATH}/dnstap-read
+blacklist ${PATH}/mdig
 blacklist ${PATH}/dnswalk
 blacklist ${PATH}/drill
 blacklist ${PATH}/host
@@ -677,12 +750,14 @@ blacklist ${PATH}/knsupdate
 blacklist ${PATH}/ldns-*
 blacklist ${PATH}/ldnsd
 blacklist ${PATH}/nslookup
+blacklist ${PATH}/nsupdate
+blacklist ${PATH}/nstat
 blacklist ${PATH}/resolvectl
 blacklist ${PATH}/unbound-host
 
 # prevent an intruder to guess passwords using regular network tools
 blacklist ${PATH}/ftp
-blacklist ${PATH}/ssh
+blacklist ${PATH}/ssh*
 blacklist ${PATH}/telnet
 
 # rest of ${RUNUSER}
@@ -690,9 +765,6 @@ blacklist ${RUNUSER}/*.lock
 blacklist ${RUNUSER}/inaccessible
 blacklist ${RUNUSER}/pk-debconf-socket
 blacklist ${RUNUSER}/update-notifier.pid
-
-# tor-browser
-blacklist ${HOME}/.local/opt/tor-browser
 
 # pass utility (pass package in Debian etc.)
 blacklist ${HOME}/.password-store
@@ -703,32 +775,70 @@ blacklist ${HOME}/.password-store
 
 # development tools
 
+# autoconf/automake
+blacklist ${PATH}/aclocal*
+blacklist ${PATH}/autoconf
+blacklist ${PATH}/autoheader
+blacklist ${PATH}/autom4te
+blacklist ${PATH}/automake*
+blacklist ${PATH}/autoreconf
+blacklist ${PATH}/autoscan
+blacklist ${PATH}/autoupdate
+blacklist ${PATH}/ifnames
+blacklist ${PATH}/m4
+
+# patch
+blacklist ${PATH}/elfedit
+blacklist ${PATH}/espdiff
+blacklist ${PATH}/patch
+blacklist ${PATH}/patchview
+
+# packaging
+blacklist ${PATH}/dh_*
+blacklist ${PATH}/fakeroot*
+blacklist ${PATH}/lintian
+
+# expect
+blacklist ${PATH}/autoexpect
+blacklist ${PATH}/expect*
+
 # clang/llvm
+blacklist ${PATH}/analyze-build*
+blacklist ${PATH}/asan_symbolize*
+blacklist ${PATH}/bugpoint*
+blacklist ${PATH}/c-index-test*
 blacklist ${PATH}/clang*
+blacklist ${PATH}/llc*
 blacklist ${PATH}/lldb*
+blacklist ${PATH}/lli*
 blacklist ${PATH}/llvm*
+blacklist ${PATH}/scan-build
 # see issue #2106 - it disables hardware acceleration in Firefox on Radeon GPU
-# blacklist /usr/lib/llvm*
+#blacklist /usr/lib/llvm*
 
 # GCC
+blacklist ${PATH}/*-g++*
+blacklist ${PATH}/*-gcc*
 blacklist ${PATH}/as
-blacklist ${PATH}/cc
 blacklist ${PATH}/c++*
 blacklist ${PATH}/c8*
 blacklist ${PATH}/c9*
+blacklist ${PATH}/cc
 blacklist ${PATH}/cpp*
+blacklist ${PATH}/elfedit
 blacklist ${PATH}/g++*
 blacklist ${PATH}/gcc*
+blacklist ${PATH}/gcov*
 blacklist ${PATH}/gdb
+blacklist ${PATH}/gmake
 blacklist ${PATH}/ld
-blacklist ${PATH}/*-gcc*
-blacklist ${PATH}/*-g++*
-blacklist ${PATH}/*-gcc*
-blacklist ${PATH}/*-g++*
+blacklist ${PATH}/make
+blacklist ${PATH}/make-first-existing-target
+blacklist ${PATH}/x86_64-linux-gnu-*
 # seems to create problems on Gentoo
 #blacklist /usr/lib/gcc
 
-#Go
+# Go
 blacklist ${PATH}/gccgo
 blacklist ${PATH}/go
 blacklist ${PATH}/gofmt
@@ -747,15 +857,14 @@ blacklist ${PATH}/scala3-compiler
 blacklist ${PATH}/scala3-repl
 blacklist ${PATH}/scalac
 
-#OpenSSL
+# OpenSSL
 blacklist ${PATH}/openssl
 blacklist ${PATH}/openssl-1.0
 
-#Rust
+# Rust
 blacklist ${PATH}/rust-gdb
 blacklist ${PATH}/rust-lldb
 blacklist ${PATH}/rustc
-blacklist ${HOME}/.rustup
 
 # tcc - Tiny C Compiler
 blacklist ${PATH}/tcc
@@ -767,10 +876,10 @@ blacklist ${PATH}/valgrind*
 blacklist /usr/lib/valgrind
 
 # Source-Code
-blacklist /usr/src
-blacklist /usr/local/src
 blacklist /usr/include
 blacklist /usr/local/include
+blacklist /usr/local/src
+blacklist /usr/src
 #endregion: @bundler [/etc/firejail/disable-devel.inc] END
 #region: @bundler [/etc/firejail/disable-exec.inc] BEGIN
 # This file is overwritten during software install.
@@ -832,8 +941,7 @@ blacklist /usr/share/perl*
 # it is needed so that Firefox can run applications with Terminal=true in
 # their .desktop file (depending on what is installed). The reason is that
 # this is done via glib, which currently uses a hardcoded list of terminal
-# emulators:
-#   https://gitlab.gnome.org/GNOME/glib/-/issues/338
+# emulators: https://gitlab.gnome.org/GNOME/glib/-/issues/338.
 # And in this list, rxvt comes before xterm.
 blacklist ${PATH}/rxvt
 
@@ -849,6 +957,7 @@ blacklist /usr/lib64/ruby
 
 # Programs using python: deluge, firefox addons, filezilla, cherrytree, xchat, hexchat, libreoffice, scribus
 # Python 2
+blacklist ${HOME}/.local/lib/python2*
 blacklist ${PATH}/python2*
 blacklist /usr/include/python2*
 blacklist /usr/lib/python2*
@@ -858,6 +967,7 @@ blacklist /usr/share/python2*
 # You will want to add noblacklist for python3 stuff in the firefox and/or chromium profiles if you use the Gnome connector (see Issue #2026)
 
 # Python 3
+blacklist ${HOME}/.local/lib/python3*
 blacklist ${PATH}/python3*
 blacklist /usr/include/python3*
 blacklist /usr/lib/python3*
@@ -889,13 +999,14 @@ blacklist ${HOME}/.Steampid
 blacklist ${HOME}/.TelegramDesktop
 blacklist ${HOME}/.VSCodium
 blacklist ${HOME}/.ViberPC
-blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/.WebStorm*
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.ZAP
 blacklist ${HOME}/.aMule
 blacklist ${HOME}/.abook
 blacklist ${HOME}/.addressbook
+blacklist ${HOME}/.alienblaster
+blacklist ${HOME}/.alienblaster_highscore
 blacklist ${HOME}/.alpine-smime
 blacklist ${HOME}/.ammonite
 blacklist ${HOME}/.android
@@ -911,6 +1022,7 @@ blacklist ${HOME}/.attic
 blacklist ${HOME}/.audacity-data
 blacklist ${HOME}/.avidemux3
 blacklist ${HOME}/.avidemux6
+blacklist ${HOME}/.axelrc
 blacklist ${HOME}/.ballbuster.hs
 blacklist ${HOME}/.balsa
 blacklist ${HOME}/.bcast5
@@ -918,6 +1030,7 @@ blacklist ${HOME}/.bibletime
 blacklist ${HOME}/.bitcoin
 blacklist ${HOME}/.blobby
 blacklist ${HOME}/.bogofilter
+blacklist ${HOME}/.bsfilter
 blacklist ${HOME}/.bundle
 blacklist ${HOME}/.bzf
 blacklist ${HOME}/.cache/0ad
@@ -945,11 +1058,14 @@ blacklist ${HOME}/.cache/PawelStolowski
 blacklist ${HOME}/.cache/Psi
 blacklist ${HOME}/.cache/QuiteRss
 blacklist ${HOME}/.cache/Quotient/quaternion
+blacklist ${HOME}/.cache/RawTherapee
 blacklist ${HOME}/.cache/Shortwave
 blacklist ${HOME}/.cache/Tox
 blacklist ${HOME}/.cache/Zeal
 blacklist ${HOME}/.cache/agenda
 blacklist ${HOME}/.cache/akonadi*
+blacklist ${HOME}/.cache/ani-cli
+blacklist ${HOME}/.cache/ansel
 blacklist ${HOME}/.cache/atril
 blacklist ${HOME}/.cache/attic
 blacklist ${HOME}/.cache/audacity
@@ -962,6 +1078,7 @@ blacklist ${HOME}/.cache/cantata
 blacklist ${HOME}/.cache/champlain
 blacklist ${HOME}/.cache/chromium
 blacklist ${HOME}/.cache/chromium-dev
+blacklist ${HOME}/.cache/claws-mail
 blacklist ${HOME}/.cache/cliqz
 blacklist ${HOME}/.cache/com.github.johnfactotum.Foliate
 blacklist ${HOME}/.cache/darktable
@@ -977,6 +1094,7 @@ blacklist ${HOME}/.cache/falkon
 blacklist ${HOME}/.cache/feedreader
 blacklist ${HOME}/.cache/firedragon
 blacklist ${HOME}/.cache/flaska.net/trojita
+blacklist ${HOME}/.cache/floorp
 blacklist ${HOME}/.cache/folks
 blacklist ${HOME}/.cache/font-manager
 blacklist ${HOME}/.cache/fossamail
@@ -989,7 +1107,6 @@ blacklist ${HOME}/.cache/geeqie
 blacklist ${HOME}/.cache/gegl-0.4
 blacklist ${HOME}/.cache/gfeeds
 blacklist ${HOME}/.cache/gimp
-blacklist ${HOME}/.cache/gnome-boxes
 blacklist ${HOME}/.cache/gnome-builder
 blacklist ${HOME}/.cache/gnome-control-center
 blacklist ${HOME}/.cache/gnome-recipes
@@ -1002,17 +1119,20 @@ blacklist ${HOME}/.cache/google-chrome-beta
 blacklist ${HOME}/.cache/google-chrome-unstable
 blacklist ${HOME}/.cache/gradio
 blacklist ${HOME}/.cache/gummi
+blacklist ${HOME}/.cache/hashcat
 blacklist ${HOME}/.cache/icedove
 blacklist ${HOME}/.cache/inkscape
 blacklist ${HOME}/.cache/inox
 blacklist ${HOME}/.cache/io.github.lainsce.Notejot
 blacklist ${HOME}/.cache/iridium
+blacklist ${HOME}/.cache/journal-viewer
 blacklist ${HOME}/.cache/kcmshell5
 blacklist ${HOME}/.cache/kdenlive
 blacklist ${HOME}/.cache/keepassxc
 blacklist ${HOME}/.cache/kfind
 blacklist ${HOME}/.cache/kinfocenter
 blacklist ${HOME}/.cache/kmail2
+blacklist ${HOME}/.cache/kontact
 blacklist ${HOME}/.cache/krunner
 blacklist ${HOME}/.cache/krunnerbookmarkrunnerfirefoxdbfile.sqlite*
 blacklist ${HOME}/.cache/kscreenlocker_greet
@@ -1021,6 +1141,7 @@ blacklist ${HOME}/.cache/ksplashqml
 blacklist ${HOME}/.cache/kube
 blacklist ${HOME}/.cache/kwin
 blacklist ${HOME}/.cache/lbry-viewer
+blacklist ${HOME}/.cache/lettura
 blacklist ${HOME}/.cache/libgweather
 blacklist ${HOME}/.cache/librewolf
 blacklist ${HOME}/.cache/liferea
@@ -1036,6 +1157,7 @@ blacklist ${HOME}/.cache/mirage
 blacklist ${HOME}/.cache/moonchild productions/basilisk
 blacklist ${HOME}/.cache/moonchild productions/pale moon
 blacklist ${HOME}/.cache/mozilla
+blacklist ${HOME}/.cache/mpv
 blacklist ${HOME}/.cache/ms-excel-online
 blacklist ${HOME}/.cache/ms-office-online
 blacklist ${HOME}/.cache/ms-onenote-online
@@ -1043,10 +1165,13 @@ blacklist ${HOME}/.cache/ms-outlook-online
 blacklist ${HOME}/.cache/ms-powerpoint-online
 blacklist ${HOME}/.cache/ms-skype-online
 blacklist ${HOME}/.cache/ms-word-online
+blacklist ${HOME}/.cache/mullvad/mullvadbrowser
 blacklist ${HOME}/.cache/mutt
 blacklist ${HOME}/.cache/mypaint
 blacklist ${HOME}/.cache/netsurf
 blacklist ${HOME}/.cache/nheko
+blacklist ${HOME}/.cache/nhex
+blacklist ${HOME}/.cache/nsxiv
 blacklist ${HOME}/.cache/nvim
 blacklist ${HOME}/.cache/ocenaudio
 blacklist ${HOME}/.cache/okular
@@ -1063,6 +1188,7 @@ blacklist ${HOME}/.cache/pipe-viewer
 blacklist ${HOME}/.cache/plasmashell
 blacklist ${HOME}/.cache/plasmashellbookmarkrunnerfirefoxdbfile.sqlite*
 blacklist ${HOME}/.cache/psi
+blacklist ${HOME}/.cache/pyradio
 blacklist ${HOME}/.cache/qBittorrent
 blacklist ${HOME}/.cache/quodlibet
 blacklist ${HOME}/.cache/qupzilla
@@ -1083,9 +1209,13 @@ blacklist ${HOME}/.cache/supertuxkart
 blacklist ${HOME}/.cache/systemsettings
 blacklist ${HOME}/.cache/telepathy
 blacklist ${HOME}/.cache/thunderbird
+blacklist ${HOME}/.cache/tiny-rdm
 blacklist ${HOME}/.cache/torbrowser
 blacklist ${HOME}/.cache/transmission
+blacklist ${HOME}/.cache/trivalent
+blacklist ${HOME}/.cache/ueberzugpp
 blacklist ${HOME}/.cache/ungoogled-chromium
+blacklist ${HOME}/.cache/virt-manager
 blacklist ${HOME}/.cache/vivaldi
 blacklist ${HOME}/.cache/vivaldi-snapshot
 blacklist ${HOME}/.cache/vlc
@@ -1113,6 +1243,7 @@ blacklist ${HOME}/.clonk
 blacklist ${HOME}/.config/0ad
 blacklist ${HOME}/.config/1Password
 blacklist ${HOME}/.config/2048-qt
+blacklist ${HOME}/.config/ArmCord
 blacklist ${HOME}/.config/Atom
 blacklist ${HOME}/.config/Audaciousrc
 blacklist ${HOME}/.config/Authenticator
@@ -1185,6 +1316,7 @@ blacklist ${HOME}/.config/PacmanLogViewer
 blacklist ${HOME}/.config/PawelStolowski
 blacklist ${HOME}/.config/Philipp Schmieder
 blacklist ${HOME}/.config/Pinta
+blacklist ${HOME}/.config/Postman
 blacklist ${HOME}/.config/QGIS
 blacklist ${HOME}/.config/QMediathekView
 blacklist ${HOME}/.config/QQ
@@ -1192,22 +1324,26 @@ blacklist ${HOME}/.config/Qlipper
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc
 blacklist ${HOME}/.config/Quotient
+blacklist ${HOME}/.config/RSS Guard 4
 blacklist ${HOME}/.config/Rambox
+blacklist ${HOME}/.config/RawTherapee
 blacklist ${HOME}/.config/Riot
 blacklist ${HOME}/.config/Rocket.Chat
 blacklist ${HOME}/.config/RogueLegacy
 blacklist ${HOME}/.config/RogueLegacyStorageContainer
 blacklist ${HOME}/.config/Seafile
+blacklist ${HOME}/.config/Session
 blacklist ${HOME}/.config/Signal
 blacklist ${HOME}/.config/Sinew Software Systems
 blacklist ${HOME}/.config/Slack
 blacklist ${HOME}/.config/Standard Notes
 blacklist ${HOME}/.config/SubDownloader
 blacklist ${HOME}/.config/Thunar
+blacklist ${HOME}/.config/TinyRDM
 blacklist ${HOME}/.config/Twitch
+blacklist ${HOME}/.config/UNDERTALE
 blacklist ${HOME}/.config/Unknown Organization
 blacklist ${HOME}/.config/VSCodium
-blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Whalebird
 blacklist ${HOME}/.config/Wire
 blacklist ${HOME}/.config/Youtube
@@ -1220,6 +1356,7 @@ blacklist ${HOME}/.config/agenda
 blacklist ${HOME}/.config/akonadi*
 blacklist ${HOME}/.config/akregatorrc
 blacklist ${HOME}/.config/alacritty
+blacklist ${HOME}/.config/ansel
 blacklist ${HOME}/.config/ardour4
 blacklist ${HOME}/.config/ardour5
 blacklist ${HOME}/.config/aria2
@@ -1244,6 +1381,7 @@ blacklist ${HOME}/.config/borg
 blacklist ${HOME}/.config/brasero
 blacklist ${HOME}/.config/brave
 blacklist ${HOME}/.config/brave-flags.conf
+blacklist ${HOME}/.config/breezy
 blacklist ${HOME}/.config/caja
 blacklist ${HOME}/.config/calibre
 blacklist ${HOME}/.config/cantata
@@ -1265,18 +1403,21 @@ blacklist ${HOME}/.config/cliqz
 blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/cointop
 blacklist ${HOME}/.config/com.github.bleakgrey.tootle
+blacklist ${HOME}/.config/com.lettura.dev
 blacklist ${HOME}/.config/corebird
-blacklist ${HOME}/.config/cower
 blacklist ${HOME}/.config/coyim
+blacklist ${HOME}/.config/curlrc
 blacklist ${HOME}/.config/d-feet
 blacklist ${HOME}/.config/darktable
 blacklist ${HOME}/.config/deadbeef
+blacklist ${HOME}/.config/deadlink
 blacklist ${HOME}/.config/deluge
 blacklist ${HOME}/.config/devilspie2
 blacklist ${HOME}/.config/digikam
 blacklist ${HOME}/.config/digikamrc
 blacklist ${HOME}/.config/discord
 blacklist ${HOME}/.config/discordcanary
+blacklist ${HOME}/.config/discordptb
 blacklist ${HOME}/.config/dkl
 blacklist ${HOME}/.config/dnox
 blacklist ${HOME}/.config/dolphin-emu
@@ -1295,12 +1436,14 @@ blacklist ${HOME}/.config/equalx
 blacklist ${HOME}/.config/evince
 blacklist ${HOME}/.config/evolution
 blacklist ${HOME}/.config/falkon
+blacklist ${HOME}/.config/feh
 blacklist ${HOME}/.config/filezilla
 blacklist ${HOME}/.config/flameshot
 blacklist ${HOME}/.config/flaska.net
 blacklist ${HOME}/.config/flowblade
 blacklist ${HOME}/.config/font-manager
 blacklist ${HOME}/.config/freecol
+blacklist ${HOME}/.config/fyne
 blacklist ${HOME}/.config/gajim
 blacklist ${HOME}/.config/galculator
 blacklist ${HOME}/.config/gallery-dl
@@ -1310,6 +1453,7 @@ blacklist ${HOME}/.config/geany
 blacklist ${HOME}/.config/geary
 blacklist ${HOME}/.config/gedit
 blacklist ${HOME}/.config/geeqie
+blacklist ${HOME}/.config/gh
 blacklist ${HOME}/.config/ghb
 blacklist ${HOME}/.config/ghostwriter
 blacklist ${HOME}/.config/git
@@ -1332,10 +1476,13 @@ blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta
 blacklist ${HOME}/.config/google-chrome-unstable
 blacklist ${HOME}/.config/gpicview
+blacklist ${HOME}/.config/gramps
+blacklist ${HOME}/.config/green-recorder
 blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/gummi
 blacklist ${HOME}/.config/guvcview2
 blacklist ${HOME}/.config/gwenviewrc
+blacklist ${HOME}/.config/gzdoom
 blacklist ${HOME}/.config/hexchat
 blacklist ${HOME}/.config/homebank
 blacklist ${HOME}/.config/i2p
@@ -1344,6 +1491,7 @@ blacklist ${HOME}/.config/inox
 blacklist ${HOME}/.config/iridium
 blacklist ${HOME}/.config/itch
 blacklist ${HOME}/.config/jami
+blacklist ${HOME}/.config/jami.net
 blacklist ${HOME}/.config/jd-gui.cfg
 blacklist ${HOME}/.config/jgit
 blacklist ${HOME}/.config/k3brc
@@ -1372,8 +1520,11 @@ blacklist ${HOME}/.config/kmail2rc
 blacklist ${HOME}/.config/kmailsearchindexingrc
 blacklist ${HOME}/.config/kmplayerrc
 blacklist ${HOME}/.config/knotesrc
+blacklist ${HOME}/.config/kontact_summaryrc
+blacklist ${HOME}/.config/kontactrc
 blacklist ${HOME}/.config/konversation.notifyrc
 blacklist ${HOME}/.config/konversationrc
+blacklist ${HOME}/.config/koreader
 blacklist ${HOME}/.config/kritarc
 blacklist ${HOME}/.config/ktorrentrc
 blacklist ${HOME}/.config/ktouch2rc
@@ -1384,9 +1535,11 @@ blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/liferea
 blacklist ${HOME}/.config/linphone
+blacklist ${HOME}/.config/lobster
 blacklist ${HOME}/.config/lugaru
 blacklist ${HOME}/.config/lutris
 blacklist ${HOME}/.config/lximage-qt
+blacklist ${HOME}/.config/lzdoom
 blacklist ${HOME}/.config/mailtransports
 blacklist ${HOME}/.config/mana
 blacklist ${HOME}/.config/mate-calc
@@ -1405,16 +1558,19 @@ blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mirage
 blacklist ${HOME}/.config/monero-project
 blacklist ${HOME}/.config/mono
+blacklist ${HOME}/.config/mov-cli
 blacklist ${HOME}/.config/mpDris2
 blacklist ${HOME}/.config/mpd
 blacklist ${HOME}/.config/mps-youtube
 blacklist ${HOME}/.config/mpv
+blacklist ${HOME}/.config/mullvad-browser-flags.conf
 blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/mutt
 blacklist ${HOME}/.config/mutter
 blacklist ${HOME}/.config/mypaint
 blacklist ${HOME}/.config/nano
 blacklist ${HOME}/.config/nautilus
+blacklist ${HOME}/.config/ncmpcpp
 blacklist ${HOME}/.config/nemo
 blacklist ${HOME}/.config/neochat.notifyrc
 blacklist ${HOME}/.config/neochatrc
@@ -1425,15 +1581,18 @@ blacklist ${HOME}/.config/newsboat
 blacklist ${HOME}/.config/newsflash
 blacklist ${HOME}/.config/nheko
 blacklist ${HOME}/.config/nomacs
+blacklist ${HOME}/.config/nsxiv
 blacklist ${HOME}/.config/nuclear
 blacklist ${HOME}/.config/nvim
 blacklist ${HOME}/.config/obs-studio
+blacklist ${HOME}/.config/obsidian
 blacklist ${HOME}/.config/okularpartrc
 blacklist ${HOME}/.config/okularrc
 blacklist ${HOME}/.config/onboard
 blacklist ${HOME}/.config/onionshare
 blacklist ${HOME}/.config/onlyoffice
 blacklist ${HOME}/.config/openmw
+blacklist ${HOME}/.config/openra
 blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/opera-developer
@@ -1455,6 +1614,7 @@ blacklist ${HOME}/.config/pragha
 blacklist ${HOME}/.config/profanity
 blacklist ${HOME}/.config/psi
 blacklist ${HOME}/.config/psi+
+blacklist ${HOME}/.config/pyradio
 blacklist ${HOME}/.config/qBittorrent
 blacklist ${HOME}/.config/qBittorrentrc
 blacklist ${HOME}/.config/qnapi.ini
@@ -1472,13 +1632,16 @@ blacklist ${HOME}/.config/rpcs3
 blacklist ${HOME}/.config/rtv
 blacklist ${HOME}/.config/scribus
 blacklist ${HOME}/.config/scribusrc
+blacklist ${HOME}/.config/sendgmail
 blacklist ${HOME}/.config/sinew.in
+blacklist ${HOME}/.config/singularity
 blacklist ${HOME}/.config/sink
 blacklist ${HOME}/.config/skypeforlinux
 blacklist ${HOME}/.config/slimjet
 blacklist ${HOME}/.config/smplayer
 blacklist ${HOME}/.config/smtube
 blacklist ${HOME}/.config/smuxi
+blacklist ${HOME}/.config/sniffnet
 blacklist ${HOME}/.config/snox
 blacklist ${HOME}/.config/sound-juicer
 blacklist ${HOME}/.config/specialmailcollectionsrc
@@ -1494,19 +1657,25 @@ blacklist ${HOME}/.config/synfig
 blacklist ${HOME}/.config/teams
 blacklist ${HOME}/.config/teams-for-linux
 blacklist ${HOME}/.config/telepathy-account-widgets
+blacklist ${HOME}/.config/textroom
 blacklist ${HOME}/.config/torbrowser
 blacklist ${HOME}/.config/totem
 blacklist ${HOME}/.config/tox
 blacklist ${HOME}/.config/transgui
 blacklist ${HOME}/.config/transmission
+blacklist ${HOME}/.config/trivalent
 blacklist ${HOME}/.config/truecraft
 blacklist ${HOME}/.config/tuir
 blacklist ${HOME}/.config/tuta_integration
 blacklist ${HOME}/.config/tutanota-desktop
 blacklist ${HOME}/.config/tvbrowser
+blacklist ${HOME}/.config/tvnamer
 blacklist ${HOME}/.config/uGet
+blacklist ${HOME}/.config/ueberzugpp
 blacklist ${HOME}/.config/ungoogled-chromium
 blacklist ${HOME}/.config/uzbl
+blacklist ${HOME}/.config/uzdoom
+blacklist ${HOME}/.config/vesktop
 blacklist ${HOME}/.config/viewnior
 blacklist ${HOME}/.config/vivaldi
 blacklist ${HOME}/.config/vivaldi-snapshot
@@ -1515,6 +1684,7 @@ blacklist ${HOME}/.config/wesnoth
 blacklist ${HOME}/.config/wget
 blacklist ${HOME}/.config/wireshark
 blacklist ${HOME}/.config/wormux
+blacklist ${HOME}/.config/xarchiver
 blacklist ${HOME}/.config/xchat
 blacklist ${HOME}/.config/xed
 blacklist ${HOME}/.config/xfburn
@@ -1541,6 +1711,7 @@ blacklist ${HOME}/.config/yt-dlp
 blacklist ${HOME}/.config/yt-dlp.conf
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/zim
+blacklist ${HOME}/.config/zoom.conf
 blacklist ${HOME}/.config/zoomus.conf
 blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.crawl
@@ -1555,8 +1726,10 @@ blacklist ${HOME}/.dillo
 blacklist ${HOME}/.dooble
 blacklist ${HOME}/.dosbox
 blacklist ${HOME}/.dropbox*
+blacklist ${HOME}/.dvdcss
 blacklist ${HOME}/.easystroke
 blacklist ${HOME}/.electron-cache
+blacklist ${HOME}/.electron-cash
 blacklist ${HOME}/.electrum*
 blacklist ${HOME}/.elinks
 blacklist ${HOME}/.emacs
@@ -1564,8 +1737,10 @@ blacklist ${HOME}/.emacs.d
 blacklist ${HOME}/.equalx
 blacklist ${HOME}/.ethereum
 blacklist ${HOME}/.etr
+blacklist ${HOME}/.factorio
 blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.firedragon
+blacklist ${HOME}/.floorp
 blacklist ${HOME}/.flowblade
 blacklist ${HOME}/.fltk
 blacklist ${HOME}/.fossamail
@@ -1594,11 +1769,13 @@ blacklist ${HOME}/.guayadeque
 blacklist ${HOME}/.hashcat
 blacklist ${HOME}/.hedgewars
 blacklist ${HOME}/.hex-a-hop
+blacklist ${HOME}/.hledger.journal
 blacklist ${HOME}/.hugin
 blacklist ${HOME}/.i2p
 blacklist ${HOME}/.icedove
 blacklist ${HOME}/.imagej
 blacklist ${HOME}/.inkscape
+blacklist ${HOME}/.irssi
 blacklist ${HOME}/.itch
 blacklist ${HOME}/.ivy2
 blacklist ${HOME}/.jack-server
@@ -1681,6 +1858,8 @@ blacklist ${HOME}/.klatexformula
 blacklist ${HOME}/.klei
 blacklist ${HOME}/.kodi
 blacklist ${HOME}/.lastpass
+blacklist ${HOME}/.lbreakouthd
+blacklist ${HOME}/.lettura
 blacklist ${HOME}/.librewolf
 blacklist ${HOME}/.lincity-ng
 blacklist ${HOME}/.links
@@ -1689,9 +1868,11 @@ blacklist ${HOME}/.linphone-history.db
 blacklist ${HOME}/.linphonerc
 blacklist ${HOME}/.lmmsrc.xml
 blacklist ${HOME}/.local/lib/vivaldi
+blacklist ${HOME}/.local/opt/tor-browser
 blacklist ${HOME}/.local/share/0ad
 blacklist ${HOME}/.local/share/3909/PapersPlease
 blacklist ${HOME}/.local/share/Anki2
+blacklist ${HOME}/.local/share/Baba_Is_You
 blacklist ${HOME}/.local/share/Colossal Order
 blacklist ${HOME}/.local/share/Dredmor
 blacklist ${HOME}/.local/share/Empathy
@@ -1732,6 +1913,7 @@ blacklist ${HOME}/.local/share/Zeal
 blacklist ${HOME}/.local/share/agenda
 blacklist ${HOME}/.local/share/akonadi*
 blacklist ${HOME}/.local/share/akregator
+blacklist ${HOME}/.local/share/applications/lobster
 blacklist ${HOME}/.local/share/apps/korganizer
 blacklist ${HOME}/.local/share/aspyr-media
 blacklist ${HOME}/.local/share/audacity
@@ -1750,6 +1932,8 @@ blacklist ${HOME}/.local/share/cdprojektred
 blacklist ${HOME}/.local/share/chatterino
 blacklist ${HOME}/.local/share/clipit
 blacklist ${HOME}/.local/share/com.github.johnfactotum.Foliate
+blacklist ${HOME}/.local/share/com.lettura.dev
+blacklist ${HOME}/.local/share/com.vmingueza.journal-viewer
 blacklist ${HOME}/.local/share/contacts
 blacklist ${HOME}/.local/share/cor-games
 blacklist ${HOME}/.local/share/data/Mendeley Ltd.
@@ -1758,24 +1942,31 @@ blacklist ${HOME}/.local/share/data/MusE
 blacklist ${HOME}/.local/share/data/MuseScore
 blacklist ${HOME}/.local/share/data/nomacs
 blacklist ${HOME}/.local/share/data/qBittorrent
+blacklist ${HOME}/.local/share/dev.nhex
 blacklist ${HOME}/.local/share/dino
 blacklist ${HOME}/.local/share/dolphin
 blacklist ${HOME}/.local/share/dolphin-emu
+blacklist ${HOME}/.local/share/doublefine
 blacklist ${HOME}/.local/share/emailidentities
 blacklist ${HOME}/.local/share/epiphany
 blacklist ${HOME}/.local/share/evolution
 blacklist ${HOME}/.local/share/feedreader
 blacklist ${HOME}/.local/share/feral-interactive
 blacklist ${HOME}/.local/share/five-or-more
+blacklist ${HOME}/.local/share/fluffychat
+blacklist ${HOME}/.local/share/fractal
 blacklist ${HOME}/.local/share/freecol
 blacklist ${HOME}/.local/share/gajim
+blacklist ${HOME}/.local/share/games/doom
+blacklist ${HOME}/.local/share/games/gzdoom
+blacklist ${HOME}/.local/share/games/lzdoom
+blacklist ${HOME}/.local/share/games/uzdoom
 blacklist ${HOME}/.local/share/gdfuse
 blacklist ${HOME}/.local/share/geary
 blacklist ${HOME}/.local/share/geeqie
 blacklist ${HOME}/.local/share/ghostwriter
 blacklist ${HOME}/.local/share/gitg
 blacklist ${HOME}/.local/share/gnome-2048
-blacklist ${HOME}/.local/share/gnome-boxes
 blacklist ${HOME}/.local/share/gnome-builder
 blacklist ${HOME}/.local/share/gnome-chess
 blacklist ${HOME}/.local/share/gnome-klotski
@@ -1793,6 +1984,7 @@ blacklist ${HOME}/.local/share/gnote
 blacklist ${HOME}/.local/share/godot
 blacklist ${HOME}/.local/share/gradio
 blacklist ${HOME}/.local/share/gwenview
+blacklist ${HOME}/.local/share/hashcat
 blacklist ${HOME}/.local/share/i2p
 blacklist ${HOME}/.local/share/io.github.lainsce.Notejot
 blacklist ${HOME}/.local/share/jami
@@ -1808,6 +2000,7 @@ blacklist ${HOME}/.local/share/klavaro
 blacklist ${HOME}/.local/share/kmail2
 blacklist ${HOME}/.local/share/kmplayer
 blacklist ${HOME}/.local/share/knotes
+blacklist ${HOME}/.local/share/kontact
 blacklist ${HOME}/.local/share/krita
 blacklist ${HOME}/.local/share/ktorrent
 blacklist ${HOME}/.local/share/ktorrentrc
@@ -1817,7 +2010,9 @@ blacklist ${HOME}/.local/share/kwrite
 blacklist ${HOME}/.local/share/kxmlgui5/*
 blacklist ${HOME}/.local/share/liferea
 blacklist ${HOME}/.local/share/linphone
+blacklist ${HOME}/.local/share/lobster
 blacklist ${HOME}/.local/share/local-mail
+blacklist ${HOME}/.local/share/localsend_app
 blacklist ${HOME}/.local/share/lollypop
 blacklist ${HOME}/.local/share/love
 blacklist ${HOME}/.local/share/lugaru
@@ -1831,6 +2026,7 @@ blacklist ${HOME}/.local/share/meld
 blacklist ${HOME}/.local/share/midori
 blacklist ${HOME}/.local/share/minder
 blacklist ${HOME}/.local/share/mirage
+blacklist ${HOME}/.local/share/mullvad-browser
 blacklist ${HOME}/.local/share/multimc
 blacklist ${HOME}/.local/share/multimc5
 blacklist ${HOME}/.local/share/mupen64plus
@@ -1853,9 +2049,11 @@ blacklist ${HOME}/.local/share/orage
 blacklist ${HOME}/.local/share/org.kde.gwenview
 blacklist ${HOME}/.local/share/pix
 blacklist ${HOME}/.local/share/plasma_notes
+blacklist ${HOME}/.local/share/pnpm
 blacklist ${HOME}/.local/share/profanity
 blacklist ${HOME}/.local/share/psi
 blacklist ${HOME}/.local/share/psi+
+blacklist ${HOME}/.local/share/pyradio
 blacklist ${HOME}/.local/share/qBittorrent
 blacklist ${HOME}/.local/share/qpdfview
 blacklist ${HOME}/.local/share/quadrapassel
@@ -1866,14 +2064,17 @@ blacklist ${HOME}/.local/share/rtv
 blacklist ${HOME}/.local/share/scribus
 blacklist ${HOME}/.local/share/shotwell
 blacklist ${HOME}/.local/share/signal-cli
+blacklist ${HOME}/.local/share/singularity
 blacklist ${HOME}/.local/share/sink
 blacklist ${HOME}/.local/share/smuxi
 blacklist ${HOME}/.local/share/spotify
+blacklist ${HOME}/.local/share/sqlitebrowser
 blacklist ${HOME}/.local/share/steam
 blacklist ${HOME}/.local/share/strawberry
 blacklist ${HOME}/.local/share/supertux2
 blacklist ${HOME}/.local/share/supertuxkart
 blacklist ${HOME}/.local/share/swell-foop
+blacklist ${HOME}/.local/share/telegram-desktop
 blacklist ${HOME}/.local/share/telepathy
 blacklist ${HOME}/.local/share/terasology
 blacklist ${HOME}/.local/share/torbrowser
@@ -1884,6 +2085,7 @@ blacklist ${HOME}/.local/share/vlc
 blacklist ${HOME}/.local/share/vpltd
 blacklist ${HOME}/.local/share/vulkan
 blacklist ${HOME}/.local/share/warsow-2.1
+blacklist ${HOME}/.local/share/warzone2100
 blacklist ${HOME}/.local/share/warzone2100-3.*
 blacklist ${HOME}/.local/share/wesnoth
 blacklist ${HOME}/.local/share/wget
@@ -1891,9 +2093,13 @@ blacklist ${HOME}/.local/share/wormux
 blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/xreader
 blacklist ${HOME}/.local/share/zathura
+blacklist ${HOME}/.local/state/ani-cli
 blacklist ${HOME}/.local/state/audacity
+blacklist ${HOME}/.local/state/mpv
 blacklist ${HOME}/.local/state/pipewire
+blacklist ${HOME}/.local/state/pyradio
 blacklist ${HOME}/.lv2
+blacklist ${HOME}/.lyrics
 blacklist ${HOME}/.lyx
 blacklist ${HOME}/.magicor
 blacklist ${HOME}/.masterpdfeditor
@@ -1913,7 +2119,7 @@ blacklist ${HOME}/.mp3splt-gtk
 blacklist ${HOME}/.mpd
 blacklist ${HOME}/.mpdconf
 blacklist ${HOME}/.mplayer
-blacklist ${HOME}/.msmtprc
+blacklist ${HOME}/.mullvad/mullvadbrowser
 blacklist ${HOME}/.multimc5
 blacklist ${HOME}/.nanorc
 blacklist ${HOME}/.netactview
@@ -1942,6 +2148,7 @@ blacklist ${HOME}/.ostrichriders
 blacklist ${HOME}/.paradoxinteractive
 blacklist ${HOME}/.paradoxlauncher
 blacklist ${HOME}/.parallelrealities/blobwars
+blacklist ${HOME}/.parsec
 blacklist ${HOME}/.pcsxr
 blacklist ${HOME}/.penguin-command
 blacklist ${HOME}/.pine-crash
@@ -1954,12 +2161,14 @@ blacklist ${HOME}/.pinerc
 blacklist ${HOME}/.pinercex
 blacklist ${HOME}/.pingus
 blacklist ${HOME}/.pioneer
+blacklist ${HOME}/.platformio
 blacklist ${HOME}/.prey
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.pylint.d
 blacklist ${HOME}/.qemu-launcher
 blacklist ${HOME}/.qgis2
 blacklist ${HOME}/.qmmp
+blacklist ${HOME}/.quakespasm
 blacklist ${HOME}/.quodlibet
 blacklist ${HOME}/.redeclipse
 blacklist ${HOME}/.rednotebook
@@ -1968,10 +2177,12 @@ blacklist ${HOME}/.repo_.gitconfig.json
 blacklist ${HOME}/.repoconfig
 blacklist ${HOME}/.retroshare
 blacklist ${HOME}/.ripperXrc
+blacklist ${HOME}/.rustup
 blacklist ${HOME}/.sbt
 blacklist ${HOME}/.scorched3d
 blacklist ${HOME}/.scribus
 blacklist ${HOME}/.scribusrc
+blacklist ${HOME}/.sendgmail.*
 blacklist ${HOME}/.simutrans
 blacklist ${HOME}/.smartgit/*/passwords
 blacklist ${HOME}/.ssr
@@ -1999,6 +2210,7 @@ blacklist ${HOME}/.torcs
 blacklist ${HOME}/.tremulous
 blacklist ${HOME}/.ts3client
 blacklist ${HOME}/.tuxguitar*
+blacklist ${HOME}/.tuxtype
 blacklist ${HOME}/.tvbrowser
 blacklist ${HOME}/.unknown-horizons
 blacklist ${HOME}/.viking
@@ -2039,30 +2251,91 @@ blacklist ${HOME}/Arduino
 blacklist ${HOME}/Monero/wallets
 blacklist ${HOME}/Nextcloud
 blacklist ${HOME}/Nextcloud/Notes
+blacklist ${HOME}/Postman
 blacklist ${HOME}/Seafile/.seafile-data
 blacklist ${HOME}/SoftMaker
 blacklist ${HOME}/Standard Notes Backups
 blacklist ${HOME}/TeamSpeak3-Client-linux_amd64
 blacklist ${HOME}/TeamSpeak3-Client-linux_x86
+blacklist ${HOME}/UpdateInfo
+blacklist ${HOME}/Zomboid
 blacklist ${HOME}/hyperrogue.ini
 blacklist ${HOME}/i2p
 blacklist ${HOME}/mps
 blacklist ${HOME}/openstego.ini
+blacklist ${HOME}/pyradio-recordings
 blacklist ${HOME}/wallet.dat
 blacklist ${HOME}/yt-dlp.conf
 blacklist ${HOME}/yt-dlp.conf.txt
 blacklist ${RUNUSER}/*firefox*
+blacklist ${RUNUSER}/*floorp*
 blacklist ${RUNUSER}/akonadi
+blacklist ${RUNUSER}/i3
 blacklist ${RUNUSER}/psd/*firefox*
+blacklist ${RUNUSER}/psd/*floorp*
+blacklist ${RUNUSER}/qutebrowser
+blacklist /etc/clamav
 blacklist /etc/ssmtp
 blacklist /tmp/.wine-*
 blacklist /tmp/akonadi-*
+blacklist /tmp/evolution-*
+blacklist /tmp/i3-*
+blacklist /tmp/lwjgl_*
 blacklist /var/games/nethack
 blacklist /var/games/slashem
 blacklist /var/games/vulturesclaw
 blacklist /var/games/vultureseye
 blacklist /var/lib/games/Maelstrom-Scores
+blacklist /var/lib/mpd
 #endregion: @bundler [/etc/firejail/disable-programs.inc] END
+#region: @bundler [/etc/firejail/disable-shell.inc] BEGIN
+# This file is overwritten during software install.
+# Persistent customizations should go in a .local file.
+
+blacklist ${PATH}/bash
+blacklist ${PATH}/csh
+blacklist ${PATH}/dash
+blacklist ${PATH}/fish
+blacklist ${PATH}/ksh
+blacklist ${PATH}/mksh
+blacklist ${PATH}/oksh
+blacklist ${PATH}/sh
+blacklist ${PATH}/tclsh
+blacklist ${PATH}/tcsh
+blacklist ${PATH}/zsh
+
+# Note: This list should be kept in sync with the one in ../ids.config.
+### shells global ###
+# all
+blacklist /etc/dircolors
+blacklist /etc/environment
+blacklist /etc/profile
+blacklist /etc/profile.d
+blacklist /etc/shells
+blacklist /etc/skel
+# bash
+blacklist /etc/bash
+blacklist /etc/bash.bashrc
+blacklist /etc/bash_completion*
+blacklist /etc/bashrc
+# fish
+blacklist /etc/fish
+# ksh
+blacklist /etc/ksh.kshrc
+blacklist /etc/suid_profile
+# tcsh
+blacklist /etc/complete.tcsh
+blacklist /etc/csh.cshrc
+blacklist /etc/csh.login
+blacklist /etc/csh.logout
+# zsh
+blacklist /etc/zlogin
+blacklist /etc/zlogout
+blacklist /etc/zprofile
+blacklist /etc/zsh
+blacklist /etc/zshenv
+blacklist /etc/zshrc
+#endregion: @bundler [/etc/firejail/disable-shell.inc] END
 #region: @bundler [/etc/firejail/disable-xdg.inc] BEGIN
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
@@ -2077,9 +2350,12 @@ blacklist ${VIDEOS}
 #blacklist ${DOWNLOADS}
 #endregion: @bundler [/etc/firejail/disable-xdg.inc] END
 
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.config/Electron
-whitelist ${HOME}/.config/electron*-flag*.conf
+mkdir ${HOME}/.cache/MAX
+mkdir ${HOME}/.config/MAX
+whitelist ${HOME}/.cache/MAX
+whitelist ${HOME}/.config/MAX
+whitelist /usr/share/max
+
 #region: @bundler [/etc/firejail/whitelist-common.inc] BEGIN
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
@@ -2087,21 +2363,19 @@ whitelist ${HOME}/.config/electron*-flag*.conf
 # common whitelist for all profiles
 
 whitelist ${HOME}/.XCompose
+whitelist ${HOME}/.Xdefaults
+whitelist ${HOME}/.Xdefaults-*
 whitelist ${HOME}/.alsaequal.bin
 whitelist ${HOME}/.asoundrc
 whitelist ${HOME}/.config/ibus
 whitelist ${HOME}/.config/mimeapps.list
 whitelist ${HOME}/.config/pkcs11
-read-only ${HOME}/.config/pkcs11
 whitelist ${HOME}/.config/user-dirs.dirs
-read-only ${HOME}/.config/user-dirs.dirs
 whitelist ${HOME}/.config/user-dirs.locale
-read-only ${HOME}/.config/user-dirs.locale
 whitelist ${HOME}/.drirc
 whitelist ${HOME}/.icons
 ?HAS_APPIMAGE: whitelist ${HOME}/.local/share/appimagekit
 whitelist ${HOME}/.local/share/applications
-read-only ${HOME}/.local/share/applications
 whitelist ${HOME}/.local/share/icons
 whitelist ${HOME}/.local/share/mime
 whitelist ${HOME}/.mime.types
@@ -2150,6 +2424,7 @@ whitelist ${HOME}/.config/kdeglobals
 whitelist ${HOME}/.config/kio_httprc
 whitelist ${HOME}/.config/kioslaverc
 whitelist ${HOME}/.config/ksslcablacklist
+whitelist ${HOME}/.config/lxqt
 whitelist ${HOME}/.config/qt5ct
 whitelist ${HOME}/.config/qt6ct
 whitelist ${HOME}/.config/qtcurve
@@ -2172,23 +2447,25 @@ whitelist ${HOME}/.local/share/qt6ct
 # user environment
 whitelist ${HOME}/.nix-profile
 #endregion: @bundler [/etc/firejail/whitelist-common.inc] END
-#region: @bundler [/etc/firejail/whitelist-runuser-common.inc] BEGIN
+#region: @bundler [/etc/firejail/whitelist-run-common.inc] BEGIN
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
 
-# common ${RUNUSER} (=/run/user/$UID) whitelist for all profiles
-
-whitelist ${RUNUSER}/bus
-whitelist ${RUNUSER}/dconf
-whitelist ${RUNUSER}/gdm/Xauthority
-whitelist ${RUNUSER}/ICEauthority
-whitelist ${RUNUSER}/.mutter-Xwaylandauth.*
-whitelist ${RUNUSER}/pulse/native
-whitelist ${RUNUSER}/pipewire-?
-whitelist ${RUNUSER}/wayland-?
-whitelist ${RUNUSER}/xauth_*
-whitelist ${RUNUSER}/[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]
-#endregion: @bundler [/etc/firejail/whitelist-runuser-common.inc] END
+whitelist /run/NetworkManager/resolv.conf
+whitelist /run/avahi-daemon/socket
+whitelist /run/cups/cups.sock
+whitelist /run/dbus/system_bus_socket
+whitelist /run/media
+whitelist /run/resolvconf/resolv.conf
+whitelist /run/netconfig/resolv.conf	# openSUSE Leap
+whitelist /run/shm
+whitelist /run/systemd/journal/dev-log
+whitelist /run/systemd/journal/socket
+whitelist /run/systemd/resolve/resolv.conf
+whitelist /run/systemd/resolve/stub-resolv.conf
+whitelist /run/udev/data
+whitelist /run/opengl-driver	# NixOS
+#endregion: @bundler [/etc/firejail/whitelist-run-common.inc] END
 #region: @bundler [/etc/firejail/whitelist-usr-share-common.inc] BEGIN
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
@@ -2214,12 +2491,16 @@ whitelist /usr/share/gir-1.0
 whitelist /usr/share/gjs-1.0
 whitelist /usr/share/glib-2.0
 whitelist /usr/share/glvnd
+whitelist /usr/share/glycin-loaders
 whitelist /usr/share/gtk-2.0
 whitelist /usr/share/gtk-3.0
+whitelist /usr/share/gtk-4.0
 whitelist /usr/share/gtk-engines
 whitelist /usr/share/gtksourceview-3.0
 whitelist /usr/share/gtksourceview-4
+whitelist /usr/share/gtksourceview-5
 whitelist /usr/share/hunspell
+whitelist /usr/share/hyphen
 whitelist /usr/share/hwdata
 whitelist /usr/share/icons
 whitelist /usr/share/icu
@@ -2230,6 +2511,7 @@ whitelist /usr/share/kxmlgui5
 whitelist /usr/share/libdrm
 whitelist /usr/share/libthai
 whitelist /usr/share/locale
+whitelist /usr/share/locale-langpack
 whitelist /usr/share/mime
 whitelist /usr/share/misc
 whitelist /usr/share/Modules
@@ -2259,6 +2541,7 @@ whitelist /usr/share/thumbnail.so
 whitelist /usr/share/uim
 whitelist /usr/share/vulkan
 whitelist /usr/share/X11
+whitelist /usr/share/xkeyboard-config-2
 whitelist /usr/share/xml
 whitelist /usr/share/zenity
 whitelist /usr/share/zoneinfo
@@ -2278,29 +2561,42 @@ whitelist /var/cache/fontconfig
 whitelist /var/tmp
 whitelist /var/run
 whitelist /var/lock
+whitelist /var/games
 #endregion: @bundler [/etc/firejail/whitelist-var-common.inc] END
 
-# Add the next line to your electron.local if your kernel allows unprivileged userns clone.
-#include electron-hardened.inc.profile
-
 apparmor
-caps.keep sys_admin,sys_chroot
+caps.drop all
+ipc-namespace
 netfilter
+#no3d
 nodvd
-nogroups
+#nogroups
 noinput
+nonewprivs
+noroot
 notv
-nou2f
-novideo
+#nou2f
+#novideo
+protocol unix,inet,inet6,netlink
+seccomp
+seccomp.block-secondary
 
 disable-mnt
+private-bin max,bash,sh,xdg-open,grep,gdbus
 private-cache
 private-dev
-private-tmp
+#private-etc @tls-ca,@x11,os-release
+#private-tmp
 
-dbus-user none
+dbus-user filter
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.portal.Desktop
+# system tray
+dbus-user.talk org.kde.StatusNotifierWatcher
+dbus-user.talk org.a11y.Bus
+dbus-user.talk org.freedesktop.secrets
+
 dbus-system none
-#endregion: @bundler [/etc/firejail/electron.profile] END
-# for firejail >= 0.9.74
-# include electron-common.profile
-#endregion: @bundler [aides-max.profile] END
+
+restrict-namespaces
+#endregion: @bundler [firejail/aides-max.profile] END

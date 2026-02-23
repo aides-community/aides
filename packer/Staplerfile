@@ -1,13 +1,19 @@
+sfe_249_new_extractor=1
+
 name=packer
-version=1.14.3
-release=1
+version=1.15.0
+release=2
 summary="Packer is a tool for creating identical machine images for multiple platforms from a single source configuration"
+summary_ru="Packer — это инструмент для создания идентичных образов машин для различных платформ из единой конфигурации"
 group="Development/Tools"
 desc="$summary."
+desc_ru="$summary_ru."
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://developer.hashicorp.com/packer"
 license=("BUSL-1.1")
+
+appstream_app_id='com.hashicorp.Packer'
 
 nonfree=1
 nonfree_msgfile="LICENSE-packer"
@@ -17,11 +23,11 @@ provides=()
 conflicts=()
 
 sources=(
-	"https://hashicorp-releases.yandexcloud.net/packer/1.14.3/packer_1.14.3_linux_amd64.zip"
+	"https://hashicorp-releases.yandexcloud.net/packer/${version}/packer_${version}_linux_amd64.zip"
 )
 
 checksums=(
-	sha256:95041cc0a30f05d5583be26a7c0b715f488e461418ce0c5d88ba204cb092bef1
+	sha256:2fd1149c5c6c7604ced64d7b56638af05f6b7ed3f6835182bc913ddaba1f16b8
 )
 
 auto_reqprov_method=dirty

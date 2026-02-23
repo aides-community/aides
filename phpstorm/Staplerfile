@@ -1,0 +1,82 @@
+name=phpstorm
+version=2025.3.3
+release=1
+summary="PHP IDE for Professional Development"
+group="Development/Tools"
+desc="This is a community package of WebStorm and not officially supported
+by JetBrains s.r.o.
+
+PhpStorm is a PHP IDE that actually 'gets' your code.
+It supports PHP 5.3-8.2, provides on-the-fly error prevention,
+the best autocompletion and code refactoring, zero-configuration debugging,
+and an extended HTML, CSS, and JavaScript editor.
+
+PhpStorm is available for a free 30-day evaluation.
+
+Monthly and yearly subscription options are available for companies
+and individual users.
+Find out more on https://www.jetbrains.com/phpstorm/buy/"
+maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://www.jetbrains.com/$name/"
+license=("custom")
+appstream_app_id="com.jetbrains.PhpStorm"
+nonfree=1
+nonfree_url="https://www.jetbrains.com/legal/docs/toolbox/user/"
+sfe_249_new_extractor=1
+
+provides=()
+conflicts=(
+	"phpstorm"
+)
+
+_jb_name=$name
+_jb_code="webide/PhpStorm"
+
+sources=(
+	"https://download-cdn.jetbrains.com/$_jb_code-$version.tar.gz"
+	"local:///phpstorm.desktop"
+)
+
+checksums=(
+	sha256:097ecb81e58b2801587031ee6d7a90b7d4a1cf9115b1c972fdd3301e6cfa86de
+	sha256:5b884d6b6805297c9bd5df44d9bf88222e5adc06dad8630e7b4a50eac638634f
+)
+
+auto_req_filter=(
+	"ld-linux-aarch64\.so\.1"
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+prepare() {
+	mv PhpStorm-* $_jb_name
+}
+
+package() {
+	mkdir -p "$pkgdir/opt/$_jb_name"
+	cp -r "$srcdir/$_jb_name"* "$pkgdir/opt/"
+
+	install -dm 755 "$pkgdir/usr/bin/"
+	ln -s "/opt/$_jb_name/bin/$_jb_name" "$pkgdir/usr/bin/$_jb_name"
+
+	install-desktop "$_jb_name.desktop"
+	install -Dm644 "$pkgdir/opt/$_jb_name/bin/$_jb_name.png" "$pkgdir/usr/share/pixmaps/$_jb_name.png"
+}
+
+files() {
+	files-find \
+		"/opt/$_jb_name" \
+		"/opt/$_jb_name/**/*" \
+		"/usr/share/pixmaps/$_jb_name.png"
+
+	files-find-binary \
+		"$_jb_name"
+
+	files-find-desktop \
+		"$_jb_name.desktop"
+}

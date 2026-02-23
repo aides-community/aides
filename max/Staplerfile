@@ -1,5 +1,8 @@
+sfe_249_new_extractor=1
+
 name=max
-version=25.12.0
+_upstream_version=26.5.1.48203
+version=${_upstream_version%.*}
 release=1
 summary="Russian messenger released by VK"
 group="Networking/Instant messaging"
@@ -12,11 +15,11 @@ nonfree_url="https://legal.max.ru/ps"
 appstream_app_id='ru.max.MAX'
 
 sources=(
-	"https://download.max.ru/electron/MAX.deb?~name=$name-$version.deb"
+	"https://download.max.ru/linux/rpm/el/9/x86_64/MAX-$_upstream_version.rpm?~name=$name-$version.rpm"
 )
 
 checksums=(
-	sha256:1787587f78fe456642609a3ccc9c5485435d8ccfa9acdaeef1a6a3541ecd7727
+	sha256:d1c96bc02c1dc23bd3091f3d003f095d69af82de5213a751508d45eafb26bd6b
 )
 
 build_deps=(
@@ -36,24 +39,28 @@ firejail_profiles=(
 disable_network=1
 
 prepare() {
-	ar x "${name}-${version}.deb"
-	tar -xf data.tar.xz
+	if [ -f "$name-$version.rpm" ]; then
+		echo "Using rpm2cpio extraction"
+		rpm2cpio "$name-$version.rpm" | cpio -idm
+	else
+		echo "RPM already extracted"
+	fi
 }
 
 package() {
-	cp -dr opt usr "${pkgdir}"/
-	sed -i 's|Exec=/opt/MAX/MAX|Exec=/usr/bin/MAX|' "${pkgdir}/usr/share/applications/MAX.desktop"
+	cp -dr usr "${pkgdir}"/
+	sed -i 's|Exec=/usr/share/max/bin/max|Exec=/usr/bin/max|' "${pkgdir}/usr/share/applications/max.desktop"
 	mkdir -p $pkgdir/usr/bin
-	ln -sf /opt/MAX/MAX "${pkgdir}/usr/bin/MAX"
+	ln -sf /usr/share/max/bin/max "${pkgdir}/usr/bin/max"
 }
 
 files() {
+	files-find-binary max
+	files-find-desktop max.desktop
+	files-find-pixmap max.png
+
 	files-find \
-		"/usr/bin/MAX" \
-		"/opt/MAX" \
-		"/opt/MAX/**/*" \
-		"/usr/share/doc/max" \
-		"/usr/share/doc/max/**/*" \
-		"/usr/share/icons/hicolor/*/apps/MAX.png" \
-		"/usr/share/applications/MAX.desktop"
+		"/usr/share/max" \
+		"/usr/share/max/**/*" \
+		"/usr/share/icons/hicolor/*/apps/max.png"
 }

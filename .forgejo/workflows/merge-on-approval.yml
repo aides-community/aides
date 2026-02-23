@@ -7,7 +7,7 @@ on:
 jobs:
   auto-merge:
     if: github.event.pull_request.user.login == 'aides-helper-bot'
-    runs-on: alt-latest
+    runs-on: als-tiny
 
     steps:
       - name: Checkout repo

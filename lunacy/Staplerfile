@@ -1,6 +1,6 @@
 name=lunacy
-version=11.6
-release=2
+version=12.3
+release=1
 summary="Free graphic design tool for UX/UI"
 group="Graphics"
 desc="Lunacy is the ultimate graphic design editor for UX/UI, and Web.
@@ -30,6 +30,7 @@ license=("custom")
 appstream_app_id="com.icons8.Lunacy"
 nonfree=1
 nonfree_url="https://lunacy.docs.icons8.com/lunacy%20license/"
+sfe_249_new_extractor=1
 
 architectures=(
 	"amd64"
@@ -38,22 +39,22 @@ architectures=(
 
 sources=(
 	"https://lcdn.icons8.com/setup/${name^}_$version.deb"
-	"local:///lunacy-mimetype.xml"
+	"local:///lunacy-mimetype.xml?~archive=false"
 )
 
 sources_arm64=(
 	"https://lcdn.icons8.com/setup/${name^}.ARM.deb"
-	"local:///lunacy-mimetype.xml"
+	"local:///lunacy-mimetype.xml?~archive=false"
 
 )
 
 checksums=(
-	sha256:543776a813630b27cecb7bd915a55cdc123cce1426cc4231603370b3b0c86027
+	sha256:49ae8b9c1f981a41e93691138c61d850284216ee868a7cfe5503bc74f2954411
 	sha256:a977a0b9a89bc048bea4c6a747e83b1d1c7ce05cd0aac3d2d40a78dc005c0a8a
 )
 
 checksums_arm64=(
-	sha256:fb99c38cf55357679af93c38e87b008c87530bbaf708fa4a6b356d98e2287f3d 
+	sha256:bc9fbccbd8feb620cfc11b0db20e583c08cd99b153b604b951ba5bbd35c5ab7d
 	sha256:a977a0b9a89bc048bea4c6a747e83b1d1c7ce05cd0aac3d2d40a78dc005c0a8a
 )
 
@@ -68,8 +69,7 @@ auto_prov=0
 disable_network=1
 
 package() {
-	ar x ${name^}_$version.deb
-	tar -xf data.tar.xz -C "$pkgdir/"
+	tar -xf data.tar.zst -C "$pkgdir/"
 
 	install -d "$pkgdir/usr/bin"
 	ln -s /opt/icons8/$name/${name^} "$pkgdir"/usr/bin/$name

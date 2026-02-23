@@ -1,8 +1,13 @@
+sfe_249_new_extractor=1
+
 name=obsidian
-version=1.11.5
+version=1.11.7
 release=1
 summary="A powerful knowledge base that works on top of a local folder of plain text Markdown files"
+summary_ru="Мощная база знаний, работающая поверх локальной папки с обычными текстовыми файлами Markdown"
 group="Office"
+desc="$summary."
+desc_ru="$summary_ru."
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 architectures=("amd64")
 homepage="https://obsidian.md"
@@ -13,11 +18,11 @@ nonfree_url=https://obsidian.md/license
 
 sources=(
 	"https://github.com/obsidianmd/obsidian-releases/releases/download/v${version}/obsidian-${version}.tar.gz"
-	"local:///obsidian.desktop"
+	"local:///obsidian.desktop?~archive=false"
 )
 
 checksums=(
-	sha256:8f584c11ecb967480790e65319674340bfcd2a34fb4b7a95bb70a96fcf19abaf
+	sha256:1eba9e149d82e6e670d0806d0fdcbad3b57ad34edf3b09c0d0a9c0f377305a38
 	sha256:d6aa7b3e8d6673cf0d7559104b4a5fc6cb54a5b55d48651b3c3ad69ccc68225d
 )
 
@@ -47,9 +52,11 @@ package() {
 }
 
 files() {
+	files-find-binary ${name}
+	files-find-desktop ${name}.desktop
+	files-find-pixmap ${name}.png
+
 	files-find \
-		"/opt/${name}/**/*" \
-		"/usr/bin/${name}" \
-		"/usr/share/applications/${name}.desktop" \
-		"/usr/share/pixmaps/${name}.png"
+		"/opt/${name}" \
+		"/opt/${name}/**/*"
 }

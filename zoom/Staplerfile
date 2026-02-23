@@ -1,5 +1,7 @@
+sfe_249_new_extractor=1
+
 name=zoom
-version=6.7.2.6498
+version=6.7.5.6891
 release=1
 summary="Video Conferencing and Web Conferencing Service"
 summary_ru="Сервис видеоконференций и веб-конференций"
@@ -29,7 +31,7 @@ sources=(
 )
 
 checksums=(
-	sha256:7ef64c2a3cd016420a9774d438c60747be520c74a190a8e4e7da6ce79a3d424b
+	sha256:432e28def6e08808ca50658c162f2b36ac83028846ed38305faf6329559359e6
 )
 
 auto_reqprov_method=dirty

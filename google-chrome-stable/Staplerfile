@@ -1,5 +1,7 @@
+sfe_249_new_extractor=1
+
 name=google-chrome-stable
-version=144.0.7559.96
+version=145.0.7632.109
 release=1
 group="Networking/WWW"
 summary="The popular web browser by Google (Stable Channel)"
@@ -8,16 +10,18 @@ homepage="https://www.google.com/chrome"
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
 license=('Multiple, see https://chrome.google.com/')
 appstream_app_id='com.google.Chrome'
+nonfree=1
+nonfree_url="https://www.google.com/chrome/terms/"
 
 _channel=stable
 
 sources=(
 	"https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-${_channel}/google-chrome-${_channel}_${version}-1_amd64.deb"
-	"local:///eula_text.html"
+	"local:///eula_text.html?~archive=false"
 )
 
 checksums=(
-	sha256:b4f33e6db4f702b78e3d975e1df3b692d057bc51a2707d7ea33fdad91f8c6c41
+	sha256:54dbf1ff79778338fc1e379e2b7bff1e3d3913db763efb223fca6720eab50040
 	sha256:e93c01576427cad9099f2cf0df0be70d0a2cc0a3a66c743318b2138aa7c4ed93
 )
 
@@ -32,10 +36,17 @@ auto_prov=1
 
 disable_network=1
 
-package() {
-	ar x google-chrome-${_channel}_${version}-1_amd64.deb
+prepare() {
+	if [ -f "google-chrome-${_channel}_${version}-1_amd64.deb" ]; then
+		echo "Using ar extraction"
+		ar x google-chrome-${_channel}_${version}-1_amd64.deb
+	else
+		echo "deb already extracted"
+	fi
 	bsdtar -xf data.tar.xz -C "$pkgdir/"
+}
 
+package() {
 	# Icons
 	for i in 16x16 24x24 32x32 48x48 64x64 128x128 256x256; do
 		install -Dm644 "$pkgdir"/opt/google/chrome/product_logo_${i/x*/}.png \
@@ -51,7 +62,10 @@ package() {
 	sed -i \
 		-e "/Exec=/i\StartupWMClass=Google-chrome" \
 		-e "s/x-scheme-handler\/ftp;\?//g" \
-		"$pkgdir"/usr/share/applications/google-chrome.desktop
+		"$pkgdir"/usr/share/applications/com.google.Chrome.desktop
+
+	# removes legacy duplicate
+	rm -f "$pkgdir"/usr/share/applications/google-chrome.desktop
 
 	# Remove the Debian Cron job, duplicate product logos and menu directory
 	rm -r \
@@ -61,15 +75,15 @@ package() {
 }
 
 files() {
+	files-find-binary google-chrome-$_channel
+	files-find-desktop com.google.Chrome.desktop
+	files-find-doc google-chrome-$_channel
+
 	files-find \
 		"/opt/google/**/*" \
 		"/usr/share/appdata/*" \
-		"/usr/share/applications/*" \
 		"/usr/share/gnome-control-center/default-apps/*" \
 		"/usr/share/icons/hicolor/*/apps/*" \
 		"/usr/share/licenses/**/*" \
-		"/usr/share/man/man1/*" \
-		"/usr/bin/*"
-
-	files-find-doc google-chrome-$_channel
+		"/usr/share/man/man1/*"
 }

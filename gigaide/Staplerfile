@@ -1,0 +1,63 @@
+name=gigaide
+version=251.26927.53
+release=1
+summary="IDE based on IDEA/PyCharm Community and 70 more tools"
+summary_ru="IDE на базе IDEA/PyCharm Community и еще 70 инструментов"
+group="Development/Tools"
+desc="$summary."
+desc_ru="$summary_ru."
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://gitverse.ru/features/gigaide/"
+license=("custom")
+appstream_app_id="ru.gitverse.GigaIDE"
+
+nonfree=1
+
+provides=()
+conflicts=()
+
+sources=(
+	"https://gigaide.ru/downloadlast/gigaideCE-${version}.tar.gz"
+	"local:///gigaide.desktop"
+)
+
+checksums=(
+	sha256:2517c28ec1c5cef802114bcc89b47463de49d7c3a992caf9bc0df365fda4ec10
+	sha256:69087b4826dfbe2a0747f46f8273359ad3f00c8f903b5f3f98c536e2a5e52587
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+_jb_name=gigaide
+
+prepare() {
+	mv gigaide-CE-$version $_jb_name-$version
+	cd $_jb_name-$version/bin
+	mv idea $_jb_name
+	mv idea.png $_jb_name.png
+}
+
+package() {
+	mkdir -p "$pkgdir/opt/$_jb_name"
+	cp -r "$srcdir/$_jb_name-$version/"* "$pkgdir/opt/$_jb_name"
+
+	install -dm 755 "$pkgdir/usr/bin/"
+	ln -s "/opt/$_jb_name/bin/$_jb_name" "$pkgdir/usr/bin/$_jb_name"
+
+	install-desktop "$_jb_name.desktop"
+	install -Dm644 "$pkgdir/opt/$_jb_name/bin/$_jb_name.png" "$pkgdir/usr/share/pixmaps/$_jb_name.png"
+}
+
+files() {
+	files-find \
+		"/opt/$_jb_name" \
+		"/opt/$_jb_name/**/*" \
+		"/usr/bin/$_jb_name" \
+		"/usr/share/applications/$_jb_name.desktop" \
+		"/usr/share/pixmaps/$_jb_name.png"
+}

@@ -1,0 +1,5 @@
+[gigaide]
+source = 'regex'
+url = 'https://gitverse.ru/features/gigaide/desktop/download/'
+encoding = 'utf8'
+regex = 'https://gigaide.ru/downloadlast/gigaideCE-([\d.]+).tar.gz'

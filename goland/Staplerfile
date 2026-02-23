@@ -1,0 +1,80 @@
+name=goland
+version=2025.3.3
+release=1
+summary="Capable and Ergonomic Go IDE"
+group="Development/Tools"
+desc="This is a community package of GoLand and not officially supported
+by JetBrains s.r.o
+
+GoLand is a cross-platform IDE built specially for Go developers
+
+GoLand is available for a free 30-day evaluation. Monthly and yearly
+subscription options are available for companies and individual users.
+
+If you want to use the Go installation of your system, flatpak mounts your
+root directory into /var/run/host .You can set your GOROOT accordingly
+(e.g. /var/run/host/usr/lib/go)."
+maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
+architectures=("amd64")
+homepage="http://www.jetbrains.com/go/"
+license=("custom")
+appstream_app_id="com.jetbrains.GoLand"
+nonfree=1
+nonfree_url="https://www.jetbrains.com/legal/docs/toolbox/user/"
+sfe_249_new_extractor=1
+
+provides=(
+	"goland"
+)
+conflicts=()
+
+_jb_name=$name
+_jb_code="go/goland"
+
+sources=(
+	"https://download-cdn.jetbrains.com/$_jb_code-$version.tar.gz"
+	"local:///$name.desktop"
+)
+
+checksums=(
+	sha256:87241a6489f5d366255d5218803bbb0f2a1f5a48e3d6cbcaeea0e10bb847aa56
+	sha256:838399e169d34a9b4c8bf596be1f4bd767283c3bdc9be00debf0616cf104a2ce
+)
+
+auto_req_filter=(
+	"ld-linux-aarch64\.so\.1"
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+prepare() {
+	mv GoLand-* $_jb_name
+}
+
+package() {
+	mkdir -p "$pkgdir/opt/$_jb_name"
+	cp -r "$srcdir/$_jb_name"* "$pkgdir/opt/"
+
+	install -dm 755 "$pkgdir/usr/bin/"
+	ln -s "/opt/$_jb_name/bin/$_jb_name" "$pkgdir/usr/bin/$_jb_name"
+
+	install-desktop "$_jb_name.desktop"
+	install -Dm644 "$pkgdir/opt/$_jb_name/bin/$_jb_name.png" "$pkgdir/usr/share/pixmaps/$_jb_name.png"
+}
+
+files() {
+	files-find \
+		"/opt/$_jb_name" \
+		"/opt/$_jb_name/**/*" \
+		"/usr/share/pixmaps/$_jb_name.png"
+
+	files-find-binary \
+		"$_jb_name"
+
+	files-find-desktop \
+		"$_jb_name.desktop"
+}

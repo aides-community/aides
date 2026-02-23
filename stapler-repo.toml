@@ -1,8 +1,13 @@
 [repo]
-minVersion = "v0.0.28"
-url = "https://altlinux.space/aides-community/aides.git"
+minVersion = 'v0.0.29'
+url = 'https://altlinux.space/aides-community/aides.git'
 mirrors = [
-    "https://github.com/aides-community/aides.git",
-    "https://codeberg.org/aides-community/aides.git"
+    'https://git.sourcecraft.dev/aides-community/aides.git',
+    'https://github.com/aides-community/aides.git',
+    'https://codeberg.org/aides-community/aides.git'
 ]
 report_url = 'https://altlinux.space/aides-pkgs/{{ .BasePackageName }}/issues'
+
+title = 'Aides'
+homepage = 'https://aides.space'
+icon = 'https://aides.space/logo.svg'

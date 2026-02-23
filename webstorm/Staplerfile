@@ -1,0 +1,95 @@
+name=webstorm
+version=2025.3.3
+release=1
+summary="JavaScript and TypeScript IDE"
+group="Development/Tools"
+desc="This is a community package of WebStorm and not officially supported
+by JetBrains s.r.o.
+Integrated development environment for JavaScript, TypeScript, and related
+technologies, is one of the most popular software development tools
+from JetBrains. It lets you get straight to coding and makes it easy
+to tackle the most challenging tasks, like Git merge conflict resolution
+or renaming a symbol across multiple files.
+
+Here are some key features you get with WebStorm:
+
+* Out-of-the-box support for JavaScript, TypeScript, React, Vue, Angular,
+Node.js, HTML, style sheets, and others.
+* Smart editor with code completion, on-the-fly error detection, safe code
+refactorings.
+* Navigation and search across the entire codebase helps you save time moving
+around as your projects grow in size and complexity.
+* Integrated developer tools that allow you to debug and test your client-side
+and Node.js apps as well as to work with version control, linters, build
+tools, terminal, and HTTP client.
+* AI Assistant provides context-aware support and AI-powered features to help
+you streamline time-consuming tasks. It can generate documentation and tests,
+explain parts of the code, and generate commit messages.
+* Collaborative and remote development, including a service for real time
+collaborative development and pair programming.
+* Customize your workspace the way you like with different themes,
+customizable shortcuts, and plugins."
+maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://www.jetbrains.com/$name/"
+license=("custom")
+appstream_app_id="com.jetbrains.WebStorm"
+nonfree=1
+nonfree_url="https://www.jetbrains.com/legal/docs/toolbox/user/"
+sfe_249_new_extractor=1
+
+provides=(
+	"webstorm"
+)
+conflicts=()
+
+_jb_name=$name
+_jb_code="webstorm/WebStorm"
+
+sources=(
+	"https://download-cdn.jetbrains.com/$_jb_code-$version.tar.gz"
+	"local:///webstorm.desktop"
+)
+
+checksums=(
+	sha256:4fc1eb0af1bd2816fe76081e7edc5b0aed43c942aca96c28b73af52a6a5dcdae
+	sha256:b46bc4f44f0a5f058f4c42c804052b8394c6a1cf31239ff1c181c119e44df57f
+)
+
+auto_req_filter=(
+	"ld-linux-aarch64\.so\.1"
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+prepare() {
+	mv WebStorm-* $_jb_name
+}
+
+package() {
+	mkdir -p "$pkgdir/opt/$_jb_name"
+	cp -r "$srcdir/$_jb_name"* "$pkgdir/opt/"
+
+	install -dm 755 "$pkgdir/usr/bin/"
+	ln -s "/opt/$_jb_name/bin/$_jb_name" "$pkgdir/usr/bin/$_jb_name"
+
+	install-desktop "$_jb_name.desktop"
+	install -Dm644 "$pkgdir/opt/$_jb_name/bin/$_jb_name.png" "$pkgdir/usr/share/pixmaps/$_jb_name.png"
+}
+
+files() {
+	files-find \
+		"/opt/$_jb_name" \
+		"/opt/$_jb_name/**/*" \
+		"/usr/share/pixmaps/$_jb_name.png"
+
+	files-find-binary \
+		"$_jb_name"
+
+	files-find-desktop \
+		"$_jb_name.desktop"
+}

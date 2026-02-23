@@ -1,0 +1,5 @@
+[phpstorm]
+source = 'regex'
+url = 'https://data.services.jetbrains.com/products/releases?code=PS&latest=true&type=release'
+encoding = 'utf8'
+regex = 'PhpStorm-([\d.]+).tar.gz'
