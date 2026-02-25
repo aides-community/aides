@@ -17,7 +17,7 @@ _channel=stable
 
 sources=(
 	"https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-${_channel}/google-chrome-${_channel}_${version}-1_amd64.deb"
-	"local:///eula_text.html?~archive=false"
+	"local:///eula_text.html"
 )
 
 checksums=(
@@ -37,12 +37,6 @@ auto_prov=1
 disable_network=1
 
 prepare() {
-	if [ -f "google-chrome-${_channel}_${version}-1_amd64.deb" ]; then
-		echo "Using ar extraction"
-		ar x google-chrome-${_channel}_${version}-1_amd64.deb
-	else
-		echo "deb already extracted"
-	fi
 	bsdtar -xf data.tar.xz -C "$pkgdir/"
 }
 
@@ -64,9 +58,6 @@ package() {
 		-e "s/x-scheme-handler\/ftp;\?//g" \
 		"$pkgdir"/usr/share/applications/com.google.Chrome.desktop
 
-	# removes legacy duplicate
-	rm -f "$pkgdir"/usr/share/applications/google-chrome.desktop
-
 	# Remove the Debian Cron job, duplicate product logos and menu directory
 	rm -r \
 		"$pkgdir"/etc/cron.daily/ \
@@ -76,7 +67,11 @@ package() {
 
 files() {
 	files-find-binary google-chrome-$_channel
-	files-find-desktop com.google.Chrome.desktop
+
+	files-find-desktop \
+		com.google.Chrome.desktop \
+		google-chrome.desktop
+
 	files-find-doc google-chrome-$_channel
 
 	files-find \
