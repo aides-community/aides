@@ -1,0 +1,73 @@
+sfe_249_new_extractor=1
+
+_pkgver='6.20'
+_dl='8/0100007658/47'
+_suffix1='m17n'
+_suffix2='20'
+
+name=cnrdrvcups-ufr2
+version="${_pkgver}.1.${_suffix2}"
+release=1
+summary="Canon UFR II Printer Driver for Linux"
+group="System/Configuration/Hardware"
+desc="Canon UFR II Printer Driver for Linux.
+This UFR II printer driver provides printing functions for Canon LBP/iR
+printers operating under the CUPS (Common UNIX Printing System) environment."
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://www.canon.ru/support/consumer/products/printers/i-sensys/"
+license=("custom")
+
+nonfree=1
+nonfree_msgfile=agreement.txt
+nonfree_msgfile_ru=agreement_ru.txt
+
+provides=()
+conflicts=(
+	# from epm play
+	cnrdrvcups-ufr2-uk
+)
+
+sources=(
+	"http://gdlp01.c-wss.com/gds/${_dl}/linux-UFRII-drv-v${_pkgver//\./}-${_suffix1}-${_suffix2}.tar.gz"
+)
+
+checksums=(
+	sha256:e9025a68006e6c46844692717d51b182107cc886f6a4269067af95a2a8e662b9
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+prepare() {
+	rpm2cpio "${srcdir}/linux-UFRII-drv-v${_pkgver//\./}-${_suffix1}/x64/RPM/cnrdrvcups-ufr2-uk-${_pkgver}-1.${_suffix2}.x86_64.rpm" | cpio -idm
+}
+
+package() {
+	cp -R usr etc "$pkgdir/"
+}
+
+files() {
+	files-find-binary
+	files-find-lang
+
+	files-find \
+		"/usr/lib64/*" \
+		"/usr/lib/cups/backend/*" \
+		"/usr/lib/cups/filter/*"
+
+	files-find \
+		"/etc/cngplp2/*"
+
+	files-find \
+		"/usr/share/caepcm/ufr2/*" \
+		"/usr/share/cngplp2/*" \
+		"/usr/share/cnpkbidir/*" \
+		"/usr/share/cnsetuputil2/*" \
+		"/usr/share/cups/model/*" \
+		"/usr/share/cups/usb/*" \
+		"/usr/share/ufr2filterr/*"
+}

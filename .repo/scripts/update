@@ -50,7 +50,7 @@ def clone_or_update_repo(pkg, repo_url, clone_path, local_commit):
         if os.path.exists(git_folder):
             shutil.rmtree(git_folder)
         os.chdir("..")
-        return True
+        return cloned_commit
     except subprocess.CalledProcessError as e:
         print(f"Ошибка при клонировании/обновлении {pkg}: {e}")
         return False
