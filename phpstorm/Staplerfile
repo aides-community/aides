@@ -1,6 +1,6 @@
 name=phpstorm
 version=2025.3.3
-release=1
+release=2
 summary="PHP IDE for Professional Development"
 group="Development/Tools"
 desc="This is a community package of WebStorm and not officially supported
@@ -40,7 +40,7 @@ sources=(
 
 checksums=(
 	sha256:097ecb81e58b2801587031ee6d7a90b7d4a1cf9115b1c972fdd3301e6cfa86de
-	sha256:5b884d6b6805297c9bd5df44d9bf88222e5adc06dad8630e7b4a50eac638634f
+	sha256:aa9f39fbadfd561b502cc4cb2d916851c853a04b5c509a5de5a58b1f33ccdafe
 )
 
 auto_req_filter=(

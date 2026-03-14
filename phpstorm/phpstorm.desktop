@@ -7,4 +7,4 @@ Exec="/opt/phpstorm/bin/phpstorm" %f
 Comment=Lightning-smart PHP IDE
 Categories=Development;IDE;
 Terminal=false
-StartupWMClass=phpstorm
+StartupWMClass=jetbrains-phpstorm
