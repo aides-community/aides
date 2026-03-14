@@ -7,4 +7,4 @@ Exec="/opt/webstorm/bin/webstorm" %f
 Comment=The smartest JavaScript IDE
 Categories=Development;IDE;
 Terminal=false
-StartupWMClass=webstorm
+StartupWMClass=jetbrains-webstorm
