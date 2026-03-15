@@ -1,7 +1,7 @@
 sfe_249_new_extractor=1
 
 name=anydesk
-version=7.1.4
+version=8.0.0
 release=1
 summary="The Fast Remote Desktop Application"
 summary_ru="Приложение для быстрого удаленного доступа"
@@ -34,7 +34,7 @@ sources=(
 )
 
 checksums=(
-	'sha256:ebbae6e5ba20d962dad36461d795b926cf05115ae002d09b2b0698a0deeda101'
+	'sha256:1a1ae83cb260b19a7570a68f08bd0d5a085e85d2cf970dec23ed57299de31e62'
 )
 
 auto_reqprov_method=dirty
