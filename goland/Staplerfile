@@ -1,6 +1,6 @@
 name=goland
 version=2025.3.3
-release=1
+release=2
 summary="Capable and Ergonomic Go IDE"
 group="Development/Tools"
 desc="This is a community package of GoLand and not officially supported
@@ -38,7 +38,7 @@ sources=(
 
 checksums=(
 	sha256:87241a6489f5d366255d5218803bbb0f2a1f5a48e3d6cbcaeea0e10bb847aa56
-	sha256:838399e169d34a9b4c8bf596be1f4bd767283c3bdc9be00debf0616cf104a2ce
+	sha256:3d701a99f799353becb88a052bc8ff211a3f85c3cc8376ff45df6d5e161ff3cf
 )
 
 auto_req_filter=(

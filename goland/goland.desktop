@@ -7,4 +7,4 @@ Exec="/opt/goland/bin/goland" %f
 Comment=The Drive to Develop
 Categories=Development;IDE;
 Terminal=false
-StartupWMClass=goland
+StartupWMClass=jetbrains-goland
