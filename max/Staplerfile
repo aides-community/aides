@@ -1,7 +1,7 @@
 sfe_249_new_extractor=1
 
 name=max
-_upstream_version=26.7.0.49753
+_upstream_version=26.8.0.51302
 version=${_upstream_version%.*}
 release=1
 summary="Russian messenger released by VK"
@@ -19,7 +19,7 @@ sources=(
 )
 
 checksums=(
-	sha256:75c22da51625d4eaba9259643c32bfb756008015159abd85817ca5b32cd27936
+	sha256:5144daab2acff018c116a8baf56745f96ec1e96ebc70e17684526457b17d962f
 )
 
 build_deps=(
