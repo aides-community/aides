@@ -1,7 +1,7 @@
 sfe_249_new_extractor=1
 
 name=yandex-browser-stable
-version=25.12.1.1319
+version=26.3.1.961
 release=1
 summary="The web browser from Yandex"
 group="Networking/WWW"
@@ -55,7 +55,7 @@ sources=(
 	"https://repo.yandex.ru/yandex-browser/deb/pool/main/y/yandex-${_pkgname}/yandex-${_pkgname}_${_pkgver}_amd64.deb?~name=${name}-${_pkgver}.deb"
 )
 checksums=(
-	sha256:1b2dad6476a22ae473ce61da1edac0839d4125b5f0a704b8de959a333e0fc2a5
+	sha256:47c2d50366e3cb5b344966f0fc408080d5efe5c00de0189da7ac3f3113081493
 )
 
 prepare() {
