@@ -16,10 +16,8 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.cache/MAX
-mkdir ${HOME}/.config/MAX
-whitelist ${HOME}/.cache/MAX
-whitelist ${HOME}/.config/MAX
+mkdir ${HOME}/.local/share/ONEME
+whitelist ${HOME}/.local/share/ONEME
 whitelist /usr/share/max
 
 include whitelist-common.inc
