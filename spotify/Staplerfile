@@ -1,0 +1,66 @@
+sfe_249_new_extractor=1
+
+_stapler_update_preset=snap
+_snap_name='spotify'
+_snap_channel='stable'
+_snap_url='https://api.snapcraft.io/api/v1/snaps/download/pOBIoZ2LrCB3rDohMxoYGnbN14EHOgD7_92.snap'
+_snap_version='1.2.82.428.g0ac8be2b'
+
+name='spotify'
+version=${_snap_version%.*}
+release=1
+architectures=(
+	'amd64'
+)
+summary='Spotify client for Linux'
+desc="$summary."
+group="Sound"
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+homepage="https://spotify.com"
+license='Proprietary'
+nonfree=1
+nonfree_url='https://www.spotify.com/uk/legal/end-user-agreement/'
+appstream_app_id='com.spotify.Client'
+
+sources=(
+	"$_snap_url"
+)
+checksums=(
+	sha256:a4cfdb3f19af623ef51057623b3fd67459c58f24f727538a83d6e4bdf3212f8e
+)
+
+auto_reqprov_method=dirty 
+auto_req=1
+auto_prov=1
+
+build_deps=(
+    squashfs-tools
+)
+
+prepare() {
+	unsquashfs "${srcdir}"/*.snap
+}
+
+package() {
+	cp -R "$srcdir/squashfs-root/usr" "$pkgdir"
+
+    for i in 16 22 24 32 48 64 128 256 ; do
+        install -Dm 0644 "${pkgdir}/usr/share/spotify/icons/spotify-linux-${i}.png" \
+            "${pkgdir}/usr/share/icons/hicolor/${i}x${i}/apps/spotify.png"
+    done
+
+    sed -i 's|Icon=.*|Icon=spotify|' "$srcdir/squashfs-root/meta/gui/spotify.desktop"
+    install-desktop "$srcdir/squashfs-root/meta/gui/spotify.desktop"
+}
+
+files() {
+    files-find-binary spotify
+    files-find-desktop spotify.desktop
+
+    files-find \
+        "/usr/share/icons/hicolor/*/apps/spotify.png"
+
+    files-find \
+        "/usr/share/spotify" \
+        "/usr/share/spotify/**/*"
+}
