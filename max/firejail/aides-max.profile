@@ -27,7 +27,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-ipc-namespace
+#ipc-namespace
 netfilter
 #no3d
 nodvd

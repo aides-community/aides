@@ -1,4 +1,5 @@
 #!/bin/bash
 
 stplr-spec set-field _upstream_version $1
+stplr-spec set-field release 1
 stplr-spec update-checksums

@@ -3,7 +3,7 @@ sfe_249_new_extractor=1
 name=max
 _upstream_version=26.10.0.53307
 version=${_upstream_version%.*}
-release=2
+release=3
 summary="Russian messenger released by VK"
 group="Networking/Instant messaging"
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
@@ -22,11 +22,6 @@ checksums=(
 	sha256:6e6b46440c30e8aea8a223fead21ae498af53401f24f6c8e4e1c6a2f1a91365f
 )
 
-build_deps=(
-	binutils
-	tar
-)
-
 auto_reqprov_method=dirty
 auto_req=1
 auto_prov=1
@@ -37,15 +32,6 @@ firejail_profiles=(
 )
 
 disable_network=1
-
-prepare() {
-	if [ -f "$name-$version.rpm" ]; then
-		echo "Using rpm2cpio extraction"
-		rpm2cpio "$name-$version.rpm" | cpio -idm
-	else
-		echo "RPM already extracted"
-	fi
-}
 
 package() {
 	cp -dr usr "${pkgdir}"/

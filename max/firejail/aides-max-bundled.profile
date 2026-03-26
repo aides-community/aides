@@ -1,5 +1,5 @@
 #
-# bundled via firejail-bundler 0.2.0 (firejail version: 0.9.72)
+# bundled via firejail-bundler 0.2.0 (firejail version: 0.9.78)
 #
 include aides-max.local
 include globals.local
@@ -2564,7 +2564,7 @@ whitelist /var/games
 
 apparmor
 caps.drop all
-ipc-namespace
+#ipc-namespace
 netfilter
 #no3d
 nodvd
