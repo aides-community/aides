@@ -1,6 +1,6 @@
 name=webstorm
-version=2025.3.3
-release=2
+version=2025.3.4
+release=1
 summary="JavaScript and TypeScript IDE"
 group="Development/Tools"
 desc="This is a community package of WebStorm and not officially supported
@@ -52,7 +52,7 @@ sources=(
 )
 
 checksums=(
-	sha256:4fc1eb0af1bd2816fe76081e7edc5b0aed43c942aca96c28b73af52a6a5dcdae
+	sha256:7bbdadf9f70f56667b99aa01c91f34d05fee993f1359e062e4043608ca7b6dbb
 	sha256:3f75ddf3e4c75e8a38d042a5bd7c1bad451c469ac63b0f17552c4e2693f7c94d
 )
 
