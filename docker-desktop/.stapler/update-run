@@ -1,0 +1,5 @@
+#!/bin/bash
+parts=(${1//|/ })
+stplr-spec set-field version "${parts[0]}"
+stplr-spec set-field _revision "${parts[1]}"
+stplr-spec update-checksums

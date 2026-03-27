@@ -1,7 +1,7 @@
 name=docker-desktop
-version=4.61.0
+version=4.65.0
 release=1
-_revision=219004
+_revision=221669
 summary="Docker Desktop is an easy-to-install application that enables you to locally build and share containerized applications and microservices"
 group="Other"
 desc="$summary."
@@ -22,7 +22,7 @@ sources=(
 )
 
 checksums=(
-	sha256:089d60908c3be5b64addb8bca07c22b9e5a3038c116cb16b7a6627b6b5a035ed
+	sha256:90ab0baf949952fd2cd7693fd2a72c56348b1e4569e0bf318947a5bbc66c74c4
 )
 
 build_deps=(
