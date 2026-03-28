@@ -1,0 +1,89 @@
+name=antigravity
+version=1.18.4
+release=1
+summary="An agentic development platform from Google, evolving the IDE into the agent-first era."
+group="Other"
+desc="Google Antigravity - Experience liftoff"
+maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://antigravity.google/"
+license=("custom")
+appstream_app_id="google.antigravity.antigravity"
+nonfree=1
+nonfree_msgfile="LICENSE.txt"
+sfe_249_new_extractor=1
+
+provides=()
+conflicts=()
+
+_ag_amd64_build=1771638098
+_ag_amd64_checksums="72f97454beb720380cfbdd654ab03301"
+
+sources=(
+	"https://us-central1-apt.pkg.dev/projects/$name-auto-updater-dev/pool/$name-debian/${name}_${version}-${_ag_amd64_build}_amd64_${_ag_amd64_checksums}.deb"
+)
+
+checksums=(
+	sha256:e0d380717480b45247e8cb40a37c314bc42d0e71c34de7810ae45bbede4db140
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+prepare() {
+	tar -xpf data.tar.xz --no-same-owner
+}
+
+package() {
+	install -dm755 "$pkgdir/opt/$name"
+	install -dm755 "$pkgdir/usr/bin"
+	install -dm755 "$pkgdir/usr/share"
+
+	cp -a usr/share/$name/. "$pkgdir/opt/$name/"
+	ln -sf "/opt/$name/bin/$name" "$pkgdir/usr/bin/$name"
+	ln -sf "/opt/$name" "$pkgdir/usr/share/$name"
+
+	install -dm755 "$pkgdir/usr/share/applications"
+	install -Dm644 usr/share/applications/$name.desktop \
+        "$pkgdir/usr/share/applications/$name.desktop"
+	install -Dm644 usr/share/applications/$name-url-handler.desktop \
+        "$pkgdir/usr/share/applications/$name-url-handler.desktop"
+
+	install -Dm644 usr/share/appdata/$name.appdata.xml \
+        "$pkgdir/usr/share/appdata/$name.appdata.xml"
+
+	install -Dm644 usr/share/pixmaps/$name.png \
+        "$pkgdir/usr/share/pixmaps/$name.png"
+
+	install -Dm644 usr/share/pixmaps/$name.png \
+	"$pkgdir/usr/share/icons/hicolor/128x128/apps/$name.png"
+
+	install -Dm644 usr/share/mime/packages/$name-workspace.xml \
+        "$pkgdir/usr/share/mime/packages/$name-workspace.xml"
+
+	install -Dm644 usr/share/bash-completion/completions/$name \
+        "$pkgdir/usr/share/bash-completion/completions/$name"
+	install -Dm644 usr/share/zsh/vendor-completions/_$name \
+        "$pkgdir/usr/share/zsh/vendor-completions/_$name"
+}
+
+files() {
+	files-find \
+		"/opt/$name/**/*" \
+		"/usr/share/$name" \
+		"/usr/share/appdata/$name.appdata.xml" \
+        	"/usr/share/pixmaps/$name.png" \
+		"/usr/share/icons/hicolor/128x128/apps/$name.png" \
+        	"/usr/share/mime/packages/$name-workspace.xml" \
+        	"/usr/share/bash-completion/completions/$name" \
+        	"/usr/share/zsh/vendor-completions/_$name"
+	files-find-binary \
+		"$name"
+	files-find-desktop \
+		"$name.desktop" \
+		"$name-url-handler.desktop"
+
+}
