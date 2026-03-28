@@ -1,0 +1,55 @@
+name=lens-k8s-ide
+_name=lens
+version=2026.2.20807
+release=1
+summary="The Kubernetes IDE"
+group="Development/Other"
+desc="Lens K8S IDE brings clarity and control to Kubernetes. 
+With built-in Prism AI, it's like having an SRE by your side - always ready to help."
+maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
+architectures=("amd64")
+homepage="lenshq.io"
+license=("custom")
+sfe_249_new_extractor=1
+appstream_app_id="io.lenshq.LensK8sIde"
+nonfree=1
+nonfree_url="https://lenshq.io/legal/tos"
+
+sources=(
+	"https://api.k8slens.dev/binaries/${_name^}-$version-latest.x86_64.rpm"
+)
+
+checksums=(
+	sha256:fa8630365fbcae38ffacac9cb603d967f626830bc0c5d8cfb478ccc91213c296
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+package() {
+	install -dm755 "$pkgdir/opt/${_name^}"
+	cp -a opt/${_name^}/* "$pkgdir/opt/${_name^}/"
+
+	install -Dm644 usr/share/applications/$_name-desktop.desktop \
+        "$pkgdir/usr/share/applications/${_name}.desktop"
+
+	install -Dm644 usr/share/icons/hicolor/512x512/apps/$_name-desktop.png \
+        "$pkgdir/usr/share/icons/hicolor/512x512/apps/$_name-desktop.png"
+
+	install -dm755 "$pkgdir/usr/bin"
+    	ln -sf "/opt/${_name^}/${_name}-desktop" "$pkgdir/usr/bin/${_name}-desktop"
+
+}
+
+files() {
+	files-find \
+		"/opt/${_name^}/**/*" \
+		"/usr/share/icons/hicolor/512x512/apps/${_name}-desktop.png"
+	files-find-binary \
+		"${_name}-desktop"
+	files-find-desktop \
+		"${_name}.desktop"
+}
