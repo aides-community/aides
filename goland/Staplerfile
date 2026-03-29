@@ -1,5 +1,5 @@
 name=goland
-version=2025.3.4
+version=2026.1
 release=1
 summary="Capable and Ergonomic Go IDE"
 group="Development/Tools"
@@ -37,7 +37,7 @@ sources=(
 )
 
 checksums=(
-	sha256:4bc21159efaf891c6d2eb9c28103d1d09f10ace4abe72bed70ea70b2392af436
+	sha256:f933919c3b28df4ee3f96c05b29a10459f083764c5cb2e6e52f2f28e23611e26
 	sha256:3d701a99f799353becb88a052bc8ff211a3f85c3cc8376ff45df6d5e161ff3cf
 )
 

@@ -1,5 +1,5 @@
 name=clion
-version=2025.3.3
+version=2026.1
 release=1
 summary="Cross-platform IDE for C and C++ from JetBrains"
 group="Development/Tools"
@@ -19,7 +19,7 @@ provides=(
 
 checksums=(
 	'sha256:e7319a1bb60e3e33a3d760c54aca631c75845f9aab6d6d1709cd17c3d6d52282'
-	'sha256:d091faaede323477bb7e2afa10ddeebbe546055ca1b1d64a4b6ad02701a1f15f'
+	'sha256:af97e5636bba682908f2aed97065982cbc717165a9de0b5391d05d2a869c201d'
 )
 
 _jb_name=$name

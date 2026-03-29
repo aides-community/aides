@@ -1,7 +1,7 @@
 sfe_249_new_extractor=1
 
 name=obsidian
-version=1.12.4
+version=1.12.7
 release=1
 summary="A powerful knowledge base that works on top of a local folder of plain text Markdown files"
 summary_ru="Мощная база знаний, работающая поверх локальной папки с обычными текстовыми файлами Markdown"
@@ -22,7 +22,7 @@ sources=(
 )
 
 checksums=(
-	sha256:72eb26dfcf123f8e07be8083f74fa045f400c71ec1fe64e58ab91d9cc084c8de
+	sha256:fcbe08b111d9c1fdb09b9c08952b06e1c829c62163eba2584c4b4ec859be079d
 	sha256:d6aa7b3e8d6673cf0d7559104b4a5fc6cb54a5b55d48651b3c3ad69ccc68225d
 )
 
