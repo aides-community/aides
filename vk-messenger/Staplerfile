@@ -1,5 +1,7 @@
+sfe_249_new_extractor=1
+
 name=vk-messenger
-version=6.0.55
+version=6.0.57
 release=1
 summary="VK Messenger"
 group="Networking/Instant messaging"
@@ -16,9 +18,9 @@ provides=()
 conflicts=()
 
 _source_url=https://upload.object2.vk-apps.com/vk-me-desktop-dev-5837a06d-5f28-484a-ac22-045903cb1b1a/latest/vk-messenger.rpm
-_source_checksum=sha256:6188a936f8165fdb60b470319e7166404c949b212bd648339555331074baff43
-_source_etag=7abdf2592a08146ded9587e094fac724
-_source_last_modified='Fri, 07 Nov 2025 16:53:25 GMT'
+_source_checksum=sha256:5d4e9d5f8e329843e6738a43f3741859628df16b701d0aef461320091b718904
+_source_etag=9905b727ffde093f91f3c49b425351ce
+_source_last_modified='Mon, 30 Mar 2026 11:47:54 GMT'
 
 sources=($_source_url)
 checksums=($_source_checksum)
@@ -30,8 +32,7 @@ auto_req=1
 auto_prov=1
 
 package() {
-	cd $pkgdir
-	rpm2cpio $srcdir/vk-messenger.rpm | cpio -idmv
+	cp -R opt usr "$pkgdir/"
 }
 
 files() {
