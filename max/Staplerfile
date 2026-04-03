@@ -1,9 +1,9 @@
 sfe_249_new_extractor=1
 
 name=max
-_upstream_version=26.10.0.53307
+_upstream_version=26.11.0.54111
 version=${_upstream_version%.*}
-release=3
+release=1
 summary="Russian messenger released by VK"
 group="Networking/Instant messaging"
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
@@ -19,7 +19,7 @@ sources=(
 )
 
 checksums=(
-	sha256:6e6b46440c30e8aea8a223fead21ae498af53401f24f6c8e4e1c6a2f1a91365f
+	sha256:26bb0cd5e3bd13f8637dc0e3bcc092ce740aa294fc2288e606efd066582b3e72
 )
 
 auto_reqprov_method=dirty
