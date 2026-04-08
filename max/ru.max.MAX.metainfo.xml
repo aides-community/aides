@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright MAX © 2026 -->
+<component type="desktop-application">
+  <id>ru.max.MAX</id>
+  <launchable type="desktop-id">ru.max.MAX.desktop</launchable>
+  <name>MAX</name>
+  <developer id="ru.max">
+    <name>max.ru</name>
+  </developer>
+  <summary>Fast and lightweight app for communication and everyday tasks</summary>
+  <summary xml:lang="ru">Быстрое и лёгкое приложение для общения и решения повседневных задач</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>LicenseRef-proprietary=https://legal.max.ru/ps</project_license>
+  <url type="homepage">https://max.ru/</url>
+  <url type="help">https://help.max.ru/</url>
+  <update_contact>help@max.ru</update_contact>
+  <description>
+    <p>**This wrapper is not verified by, affiliated with, or supported by max.ru.**</p>
+    <p>**To sign up for the messaging app, you need a valid mobile phone number from one of the supported countries.**</p>
+    <p>Messenger with a built-in mini-app platform, chatbot builders, and a payment system.</p>
+    <p xml:lang="ru">**Данная обертка над официальной версией для компьютера не проверена, не связана и не поддерживается max.ru.**</p>
+    <p xml:lang="ru">**Для регистрации в мессенджере необходим действующий номер мобильного телефона одной из поддерживаемых стран.**</p>
+    <p xml:lang="ru">MAX — это быстрое и лёгкое приложение для обмена сообщениями, которое работает на любых устройствах — смартфонах и компьютерах. В него также встроена платформа мини-приложений, конструкторы чат-ботов и платежная система.</p>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/flathub/flathub/9dab43d5b07b7691c72e79e2a9738626d880a73d/screenshot.png</image>
+    </screenshot>
+  </screenshots>
+  <content_rating type="oars-1.1">
+    <content_attribute id="social-chat">moderate</content_attribute>
+    <content_attribute id="social-info">intense</content_attribute>
+    <content_attribute id="social-audio">moderate</content_attribute>
+  </content_rating>
+  <requires>
+    <internet>always</internet>
+  </requires>
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </recommends>
+</component>

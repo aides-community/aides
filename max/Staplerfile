@@ -3,7 +3,7 @@ sfe_249_new_extractor=1
 name=max
 _upstream_version=26.11.0.54111
 version=${_upstream_version%.*}
-release=1
+release=2
 summary="Russian messenger released by VK"
 group="Networking/Instant messaging"
 maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
@@ -32,6 +32,11 @@ firejail_profiles=(
 )
 
 disable_network=1
+
+deps=(
+	# https://bugzilla.altlinux.org/58582
+	"libxcbutil-cursor"
+)
 
 package() {
 	cp -dr usr "${pkgdir}"/
