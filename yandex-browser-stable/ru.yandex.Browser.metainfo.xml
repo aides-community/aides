@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>ru.yandex.Browser</id>
+  <launchable type="desktop-id">ru.yandex.Browser.desktop</launchable>
+  <name>Yandex Browser</name>
+  <name xml:lang="ru">Яндекс.Браузер</name>
+  <developer id="ru.yandex">
+    <name>Yandex</name>
+    <name xml:lang="ru">Яндекс  </name>
+  </developer>
+  <summary>Web browser from Yandex</summary>
+  <summary xml:lang="ru">Веб-браузер от компании Яндекс</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>LicenseRef-proprietary=https://yandex.ru/legal/browser_agreement</project_license>
+  <description>
+    <p>New Yandex Browser with AI search and Alisa voice assistant is a modern fast web browser with familiar user interface.</p>
+      <p xml:lang="ru">Новый Яндекс.Браузер с нейросилами и встроенной Алисой предлагает современный дизайн и высокое
+    быстродействие при работе с веб-сайтами.</p>
+  </description>
+  <content_rating type="oars-1.1"/>
+  <screenshots>
+    <screenshot type="default">
+      <image>http://download.yandex.ru/browser/installer/nix/yandex_browser.png</image>
+      <caption>New tab page</caption>
+    </screenshot>
+  </screenshots>
+  <branding>
+    <color type="primary" scheme_preference="light">#faf5f2</color>
+    <color type="primary" scheme_preference="dark">#561b51</color>
+  </branding>
+  <releases>
+  </releases>
+  <url type="homepage">https://browser.yandex.ru</url>
+  <url type="bugtracker">https://browser.yandex.ru/feedback/</url>
+</component>

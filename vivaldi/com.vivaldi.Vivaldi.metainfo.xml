@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 the Chromium authors, with modifications -->
+<component type="desktop-application">
+  <id>com.vivaldi.Vivaldi</id>
+  <launchable type="desktop-id">com.vivaldi.Vivaldi.desktop</launchable>
+  <name>Vivaldi</name>
+  <developer_name>Vivaldi Technologies</developer_name>
+  <summary>Feature-packed web browser</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>LicenseRef-proprietary</project_license>
+  <url type="homepage">https://vivaldi.com/</url>
+  <url type="help">https://help.vivaldi.com/desktop/</url>
+  <url type="bugtracker">https://help.vivaldi.com/desktop/troubleshoot/reporting-a-bug-in-vivaldi/</url>
+  <keywords>
+    <keyword>web browser</keyword>
+    <keyword>mail client</keyword>
+  </keywords>
+  <categories>
+    <category>Network</category>
+    <category>WebBrowser</category>
+    <category>Email</category>
+    <category>Feed</category>
+    <category>Office</category>
+    <category>Calendar</category>
+    <category>ContactManagement</category>
+    <category>Viewer</category>
+  </categories>
+  <description>
+    <p>
+      The web browser for techies and people who need a browser that helps them get things done.
+      The user interface is fully customizable, including keyboard shortcuts, mouse gestures, and programmable macros.
+    </p>
+    <ul>
+      <li>Seize back control of your tabs with features like Workspaces, Tab Stacks, and Tab Tiling.</li>
+      <li>Stay on top of all your emails, appointments, to-dos, and news with Mail, Calendar, Tasks, and Feed Reader. (Compatible with IMAP, POP3, CalDAV, and Atom/RSS.)</li>
+      <li>Jot down ideas and inspiration with the integrated Notes manager.</li>
+      <li>End-to-end encrypted (E2EE) sync of bookmarks, passwords, notes, and more with Vivaldi for desktop, iOS, and Android.</li>
+      <li>Efficient built-in Tracker and Ad Blocker.</li>
+      <li>Proton VPN.</li>
+      <li>Compatible with most browser extensions from the Google Chrome Web Store.</li>
+    </ul>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://vivaldi.com/wp-content/uploads/Vivaldi_7-1.png</image>
+      <caption>Customizable Dashboard start page with widgets for date, tasks, news, travel, and notes.</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://vivaldi.com/wp-content/uploads/Feed-Folder.png</image>
+      <caption>Integrated RSS/Atom feed reader with folders, message previews, and article content.</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://vivaldi.com/wp-content/uploads/1920w_New-themes_Human.png</image>
+      <caption>Theme with dark browns and orange accents, styled to match classic Ubuntu colors.</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://vivaldi.com/wp-content/uploads/1920w_New-themes_Soft-Pink.png</image>
+      <caption>Start page with a pastel lilac theme, featuring the speed dial with integrated search.</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://vivaldi.com/wp-content/uploads/1920w_New-default-theme_Settings.png</image>
+      <caption>Settings page showing bundled themes, with options to install or customize additional themes.</caption>
+    </screenshot>
+  </screenshots>
+  <content_rating type="oars-1.1"/>
+</component>

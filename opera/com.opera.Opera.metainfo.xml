@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.opera.Opera</id>
+  <launchable type="desktop-id">com.opera.Opera.desktop</launchable>
+  <name>Opera</name>
+  <developer_name>Opera</developer_name>
+  <summary>Your personal browser</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>LicenseRef-proprietary</project_license>
+  <url type="homepage">https://www.opera.com/</url>
+  <url type="faq">https://help.opera.com/en/faq/</url>
+  <url type="help">https://www.opera.com/help</url>
+  <description>
+    <p>**NOTE: This wrapper is not verified by, affiliated with, or supported by Opera.**</p>
+    <p>
+      Opera is a browser that offers features such as VPN, Ad Blocker, AI, Tab Islands, and more. It is chosen by millions of users for its superior performance and security, and it is also the first browser with mindfulness at its core.
+    </p>
+  </description>
+  <keywords>
+    <keyword>web browser</keyword>
+  </keywords>
+  <categories>
+    <category>Network</category>
+    <category>WebBrowser</category>
+    <category>InstantMessaging</category>
+    <category>Chat</category>
+    <category>Feed</category>
+  </categories>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/flathub/com.opera.Opera/master/screenshots/opera-newpage.png</image>
+      <caption>Speed dial page</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/flathub/com.opera.Opera/master/screenshots/opera-dark-newpage.png</image>
+      <caption>Speed dial page - dark theme</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/flathub/com.opera.Opera/master/screenshots/opera-dark-updated.png</image>
+      <caption>Client upgraded page - dark theme</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/flathub/com.opera.Opera/master/screenshots/opera-updated.png</image>
+      <caption>Client upgraded page</caption>
+    </screenshot>
+  </screenshots>
+  <content_rating type="oars-1.1"/>
+</component>
