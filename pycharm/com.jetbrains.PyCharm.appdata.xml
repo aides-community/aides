@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+	<id>com.jetbrains.PyCharm</id>
+	<metadata_license>CC-BY-SA</metadata_license>
+	<name>PyCharm</name>
+	<summary>The most intelligent Python IDE</summary>
+	<summary xml:lang="ru">Самая умная IDE для Python</summary>
+	<description>
+		<p>NOTE: This package is not verified by, affiliated with, or supported by JetBrains s.r.o.</p>
+		<p xml:lang="ru">ПРИМЕЧАНИЕ: Этот пакет не проверен, не связан и не поддерживается JetBrains s.r.o.</p>
+		<p>PyCharm is designed by programmers, for programmers, to provide all the tools you need for productive Python development.</p>
+		<p xml:lang="ru">PyCharm создан программистами для программистов и предоставляет все необходимые инструменты для продуктивной разработки на Python.</p>
+		<p>PyCharm provides smart code completion, code inspections, on-the-fly error highlighting and quick-fixes,
+			along with automated code refactorings and rich navigation capabilities.</p>
+		<p xml:lang="ru">PyCharm обеспечивает умное автодополнение кода, инспекции кода, мгновенное выделение ошибок и быстрые исправления,
+			а также автоматизированный рефакторинг и расширенные возможности навигации.</p>
+		<p>PyCharm offers great framework-specific support for modern web development frameworks such as Django, Flask,
+			Google App Engine, Pyramid, and web2py.</p>
+		<p xml:lang="ru">PyCharm предлагает отличную поддержку современных веб-фреймворков: Django, Flask,
+			Google App Engine, Pyramid и web2py.</p>
+		<p>PyCharm integrates with IPython Notebook, has an interactive Python console, and supports Anaconda as
+			well as multiple scientific packages including matplotlib and NumPy.</p>
+		<p xml:lang="ru">PyCharm интегрируется с IPython Notebook, имеет интерактивную консоль Python и поддерживает Anaconda,
+			а также множество научных пакетов, включая matplotlib и NumPy.</p>
+		<p>In addition to Python, PyCharm supports JavaScript, CoffeeScript, TypeScript, Cython, SQL,
+			HTML/CSS, template languages, AngularJS, Node.js, and more.</p>
+		<p xml:lang="ru">Помимо Python, PyCharm поддерживает JavaScript, CoffeeScript, TypeScript, Cython, SQL,
+			HTML/CSS, шаблонные языки, AngularJS, Node.js и многое другое.</p>
+		<p>A huge collection of tools out of the box: an integrated debugger and test runner;
+			Python profiler; a built-in terminal; and integration with major VCS and built-in Database Tools.</p>
+		<p xml:lang="ru">Большой набор инструментов из коробки: встроенный отладчик и средство запуска тестов;
+			профилировщик Python; встроенный терминал; интеграция с основными системами контроля версий и инструменты для работы с базами данных.</p>
+	</description>
+	<url type="homepage">https://www.jetbrains.com/pycharm/</url>
+	<url type="bugtracker">https://youtrack.jetbrains.com/</url>
+	<url type="help">https://www.jetbrains.com/help/pycharm/</url>
+	<launchable type="desktop-id">pycharm.desktop</launchable>
+	<project_license>LicenseRef-proprietary</project_license>
+	<developer id="com.jetbrains">
+		<name>JetBrains s.r.o.</name>
+	</developer>
+	<screenshots>
+		<screenshot type="default">
+			<image type="source">https://resources.jetbrains.com/help/img/idea/2026.1/py_new_ui_overview.png</image>
+			<caption>New tool window layout</caption>
+			<caption xml:lang="ru">Новый макет панели инструментов</caption>
+		</screenshot>
+		<screenshot>
+			<image type="source">https://resources.jetbrains.com/help/img/idea/2026.1/py_new_ui_dark_theme.png</image>
+			<caption>Themes, icons, fonts</caption>
+			<caption xml:lang="ru">Темы, иконки, шрифты</caption>
+		</screenshot>
+	</screenshots>
+	<content_rating type="oars-1.1"/>
+</component>
