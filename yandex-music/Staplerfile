@@ -1,7 +1,7 @@
 sfe_249_new_extractor=1
 
 name=yandex-music
-version=5.95.0
+version=5.96.3
 release=1
 summary='Linux client for Yandex Music'
 summary_ru='Linux-клиент для Яндекс Музыки'
@@ -28,7 +28,7 @@ sources=(
 )
 
 checksums=(
-	sha256:8719ac8c4c54b8566ad38f5fd53df1df4888706b8a6055738830cdc25112b75c
+	sha256:e43c1ae40686ba726618cf5b21949e24e8e77b5d13efb235e2eec579c352548d
 	sha256:6ffc89c0ecda4f2fd901ba949d2c7f812db64f73d154b3018f5764918b6ee5b2
 )
 
