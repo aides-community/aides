@@ -1,7 +1,7 @@
 sfe_249_new_extractor=1
 
 name=unityhub
-version=3.16.4
+version=3.17.2
 release=1
 summary="The Unity Hub is a standalone application that streamlines the way you find, download, and manage your Unity Projects and installations"
 group="Development/Tools"
