@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>com.singularityapp.SingularityApp</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>LicenseRef-proprietary</project_license>
+  <name>SingularityApp</name>
+  <launchable type="desktop-id">singularityapp.desktop</launchable>
+  <summary>Most powerful chaos management planner</summary>
+  <summary xml:lang="ru">Бесплатный планировщик задач</summary>
+  <url type="homepage">https://singularity-app.ru</url>
+  <url type="help">https://helpdesk.singularity-app.com</url>
+  <content_rating type="oars-1.1">
+    <content_attribute id="social-info">moderate</content_attribute>
+  </content_rating>
+  <categories>
+    <category>Utility</category>
+  </categories>
+  <keywords>
+    <keyword>tasks</keyword>
+    <keyword>todo</keyword>
+    <keyword>planner</keyword>
+    <keyword>calendar</keyword>
+    <keyword>productivity</keyword>
+    <keyword>habit</keyword>
+    <keyword>pomodoro</keyword>
+    <keyword>notes</keyword>
+    <keyword>reminders</keyword>
+  </keywords>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://dashboard.snapcraft.io/site_media/appmedia/2026/03/AS_1-1772710702.jpg</image>
+    </screenshot>
+    <screenshot>
+      <image>https://dashboard.snapcraft.io/site_media/appmedia/2026/03/AS_2-1772710702.jpg</image>
+    </screenshot>
+    <screenshot>
+      <image>https://dashboard.snapcraft.io/site_media/appmedia/2026/03/AS_3-1772710702.jpg</image>
+    </screenshot>
+    <screenshot>
+      <image>https://dashboard.snapcraft.io/site_media/appmedia/2026/03/AS_4-1772710702.jpg</image>
+    </screenshot>
+    <screenshot>
+      <image>https://dashboard.snapcraft.io/site_media/appmedia/2026/03/AS_5-1772710702.jpg</image>
+    </screenshot>
+  </screenshots>  
+  <description>
+    <p>This is a community package of SingularityApp and not officially supported by the developers.</p>
+    <p xml:lang="ru">Это сторонний пакет SingularityApp, официально не поддерживаемый разработчиками.</p>
+    <p>SingularityApp brings together everything you need to manage your tasks, projects, and daily schedule — a to-do list and calendar, daily planner and notepad, habit tracker, checklist, reminders, and Pomodoro timer — all in one free productivity app.</p>
+    <p xml:lang="ru">SingularityApp объединяет всё необходимое для управления задачами, проектами и расписанием — список дел и календарь, ежедневник и блокнот, трекер привычек, чеклисты, напоминания и таймер Pomodoro — всё в одном бесплатном приложении.</p>
+  </description>
+</component>

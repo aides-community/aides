@@ -1,7 +1,7 @@
 sfe_249_new_extractor=1
 
 name=zoom
-version=6.7.5.6891
+version=7.0.0.1666
 release=1
 summary="Video Conferencing and Web Conferencing Service"
 summary_ru="Сервис видеоконференций и веб-конференций"
@@ -31,11 +31,16 @@ sources=(
 )
 
 checksums=(
-	sha256:432e28def6e08808ca50658c162f2b36ac83028846ed38305faf6329559359e6
+	sha256:68f438e339d07f17231a752938de51463dfe486f880da05afecd248708ff008a
 )
 
 auto_reqprov_method=dirty
+
 auto_req=1
+auto_req_skiplist=(
+	"/opt/zoom/Qt/qml/**/*"
+)
+
 auto_prov=1
 
 disable_network=1
