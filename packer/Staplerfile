@@ -1,7 +1,7 @@
 sfe_249_new_extractor=1
 
 name=packer
-version=1.15.1
+version=1.15.2
 release=1
 summary="Packer is a tool for creating identical machine images for multiple platforms from a single source configuration"
 summary_ru="Packer — это инструмент для создания идентичных образов машин для различных платформ из единой конфигурации"
@@ -27,7 +27,7 @@ sources=(
 )
 
 checksums=(
-	sha256:648d704bec73805a5508ed612185a9e5858ca7d57b730b88b1a54c3af3a91f5f
+	sha256:8cc4bc94a7e6d8806dd754869945287918aaa3c55bebdfa5169e33cd1dcf35c6
 )
 
 auto_reqprov_method=dirty
