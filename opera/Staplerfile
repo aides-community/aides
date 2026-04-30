@@ -1,7 +1,7 @@
 sfe_249_new_extractor=1
 
 name=opera
-version=130.0.5847.92
+version=131.0.5877.5
 release=1
 summary="A fast and secure web browser"
 group="Networking/WWW"
@@ -23,7 +23,7 @@ sources=(
 )
 
 checksums=(
-	sha256:35e97de0498255ed8f1dd33534c7a82e4b8209cc81224fecb89b323f85159178
+	sha256:4142159021e4d01aa3c6284f3902c7b606f6006dd726d5497468637a6397c655
 )
 
 auto_reqprov_method=dirty
