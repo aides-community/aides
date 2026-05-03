@@ -1,7 +1,7 @@
 # Example of Staplerfile
 # Check stplr.dev/staplerfile for a documentation.
 name=reaper
-version=7.59
+version=7.71
 release=1
 summary="Digital Audio Workstation"
 group="Engineering"
@@ -49,10 +49,10 @@ sources_arm64=(
 )
 
 checksums=(
-	sha256:208d903afede1c3e09b44e567b5bae12e0ade516662ba545b591722c402b5127
+	sha256:3a8cc91ee77a3cc3a4154db032674e612d0f29fc9a015f871e144e25f4abd063
 )
 checksums_arm64=(
-	sha256:fe20d006761ffb5c5827e245153e629065839907617b62f5a3e959afca41f90d
+	sha256:e7d0e2be7afee0d56697db189454a52fb14b935b874558ab01384e0cb6de0239
 )
 
 opt_deps=(
