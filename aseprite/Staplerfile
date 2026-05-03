@@ -1,0 +1,167 @@
+name=aseprite
+version=1.3.17.2
+release=1
+summary="Animated sprite editor & pixel art tool"
+group="Graphics"
+desc="$summary."
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=(
+	"amd64"
+	"arm64"
+)
+homepage="https://www.aseprite.org"
+license=("custom")
+nonfree=1
+nonfree_msgfile="EULA.txt"
+nonfree_url="https://github.com/aseprite/aseprite/tree/v1.3.17.2#license"
+
+provides=()
+conflicts=()
+
+sources=(
+	"https://github.com/aseprite/aseprite/releases/download/v${version}/Aseprite-v${version}-Source.zip"
+	# from laf/misc/skia-url.sh
+	"https://github.com/aseprite/skia/releases/download/m124-08a5439a6b/Skia-Linux-Release-x64.zip?~archive=false"
+)
+
+checksums=(
+	sha256:3895afca60608e86ffbba20c32af95a6e59f8d7ebe6d2617236f159b42176bfe
+	sha256:a327e89b244f24cecaa34eb37544bae00d447b96c583d26ed29d6a3ad2e8a8b8
+)
+
+build_deps=(
+	'gcc-c++'
+	'clang'
+	'libcxx-devel'
+	'cmake'
+	'ninja-build'
+	'libX11-devel'
+	'libXcursor-devel'
+	'libXi-devel'
+	'libXrandr-devel'
+	'libGL-devel'
+	'fontconfig-devel'
+
+	'unzip'
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+prepare() {
+	mkdir -p "$HOME/deps/skia"
+	unzip -n -d "$HOME/deps/skia" "Skia-Linux-Release-x64.zip"
+}
+
+build() {
+	mkdir build
+	cd build
+	export CC=clang
+	export CXX=clang++
+	cmake \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_CXX_FLAGS:STRING=-stdlib=libstdc++ \
+		-DCMAKE_EXE_LINKER_FLAGS:STRING=-stdlib=libstdc++ \
+		-DLAF_BACKEND=skia \
+		-DSKIA_DIR="$HOME/deps/skia" \
+		-DSKIA_LIBRARY_DIR="$HOME/deps/skia/out/Release-x64" \
+		-DSKIA_LIBRARY="$HOME/deps/skia/out/Release-x64/libskia.a" \
+		-DENABLE_DESKTOP_INTEGRATION=on \
+		-DCMAKE_INSTALL_PREFIX="/opt/$name" \
+		-G Ninja \
+		..
+	ninja "$name"
+}
+
+package() {
+	cd "${srcdir}/build"
+	DESTDIR="${pkgdir}" ninja install
+
+	install -dm755 \
+		"$pkgdir/usr/bin" \
+		"$pkgdir/usr/share/applications" \
+		"$pkgdir/usr/share/mime/packages" \
+		"$pkgdir/usr/share/thumbnailers"
+
+	_optdir="/opt/$name"
+
+	ln -sf "$_optdir/bin/$name" "$pkgdir/usr/bin/$name"
+
+	_links=(
+		"applications/$name.desktop"
+		"thumbnailers/$name.thumbnailer"
+		"mime/packages/$name.xml"
+	)
+	for file in "${_links[@]}"; do
+		ln -sf "$_optdir/share/$file" "$pkgdir/usr/share/$file"
+	done
+
+	cd "$srcdir"
+
+	for i in {16,32,48,64,128,256}; do
+		install -Dm644 "data/icons/ase${i}.png" "${pkgdir}/usr/share/icons/hicolor/${i}x${i}/apps/${name}.png"
+		install -Dm644 "data/icons/doc${i}.png" "${pkgdir}/usr/share/icons/hicolor/${i}x${i}/mimetypes/image-x-${name}.png"
+	done
+	install-license EULA.txt "${name}/EULA"
+	install-license docs/LICENSES.md "${name}/LICENSES"
+
+	rm -f "${_optdir}"/usr/lib/pkgconfig/libarchive.pc
+
+	rm -f "${_optdir}"/usr/lib/libwebp*
+	rm -f "${_optdir}"/usr/lib/pkgconfig/libwebp*
+	rm -fr "${_optdir}"/usr/include/webp/
+	rm -fr "${_optdir}"/usr/share/WebP/
+
+	rm -f "${_optdir}"/usr/lib/libjson11.a
+	rm -f "${_optdir}"/usr/lib/pkgconfig/json11.pc
+	rm -f "${_optdir}"/usr/include/json11.hpp
+
+	rm -fr "${_optdir}"/usr/lib/cmake/cmark
+	rm -f "${_optdir}"/usr/lib/pkgconfig/libcmark.pc
+	rm -f "${_optdir}"/usr/lib/libcmark*
+	rm -f "${_optdir}"/usr/include/cmark*
+	rm -f "${_optdir}"/usr/share/man/man1/cmark.1
+	rm -f "${_optdir}"/usr/share/man/man3/cmark.3
+
+	rm -f "${_optdir}"/usr/lib/libtga-lib.a
+	rm -f "${_optdir}"/usr/include/tga.h
+
+	rm -f "${_optdir}"/usr/lib/libcurl.a
+	rm -f "${_optdir}"/usr/lib/pkgconfig/*
+	rm -f "${_optdir}"/usr/lib/cmake/CURL/*
+	rm -f "${_optdir}"/usr/include/curl/*
+	rm -f "${_optdir}"/usr/bin/curl-config
+
+	rm -f "${_optdir}"/usr/include/fmt/*
+	rm -f "${_optdir}"/usr/lib/cmake/fmt/*
+	rm -f "${_optdir}"/usr/lib/libfmt.a
+
+	rm -f "${_optdir}"/usr/include/tinyxml2.h
+	rm -f "${_optdir}"/usr/lib/cmake/tinyxml2/*
+
+	rm -rf "${_optdir}"/usr/share/man
+	rm -f "${_optdir}"/usr/lib/libarchive.a
+	rm -f "${_optdir}"/usr/lib/libTinyEXIF.a
+	rm -f "${_optdir}"/usr/lib/libtinyxml2.a
+	rm -f "${_optdir}"/usr/include/archive.h
+	rm -f "${_optdir}"/usr/include/archive_entry.h
+	rm -f "${_optdir}"/usr/include/TinyEXIF.h
+	rm -f "${_optdir}"/usr/bin/bsdunzip
+}
+
+files() {
+	files-find-binary aseprite
+	files-find-desktop aseprite.desktop
+	files-find-license "$name"
+
+	files-find \
+		"/usr/share/thumbnailers/$name.thumbnailer" \
+		"/usr/share/mime/packages/$name.xml" \
+		"/usr/share/icons/hicolor/**/apps/$name.png" \
+		"/usr/share/icons/hicolor/**/mimetypes/image-x-$name.png" \
+		"/opt/$name" \
+		"/opt/$name/**/*"
+}
