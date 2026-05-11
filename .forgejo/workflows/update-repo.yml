@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - main
-    
+
 
 jobs:
   update:
@@ -15,11 +15,18 @@ jobs:
     container:
       image: altlinux.space/actions/runner/python:sisyphus
     steps:
+      - name: Install gnupg2
+        run: |
+          apt-get update
+          apt-get install -y gnupg2
+
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Run update script
         run: |
           .repo/scripts/update
+
       - name: Check for changes
         id: check_changes
         run: |
@@ -29,12 +36,25 @@ jobs:
           else
             echo "::set-output name=has_changes::true"
           fi
-          
+
+      - name: Import GPG key
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+          GPG_KEY_ID=$(gpg --list-secret-keys --with-colons | awk -F: '/^sec/{print $5; exit}')
+          echo "GPG_KEY_ID=$GPG_KEY_ID" >> $GITHUB_ENV
+          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+          gpgconf --kill gpg-agent
+
       - name: Commit changes
         if: steps.check_changes.outputs.has_changes == 'true'
         run: |
           git config --global user.name "Automated Update"
           git config --global user.email "aides-helper-bot@noreply.altlinux.space"
+          git config --global user.signingkey "$GPG_KEY_ID"
+          git config --global commit.gpgsign true
+          git config --global gpg.program gpg2
           git add -A
           git commit -m "Automated update: $(date -u +'%Y-%m-%d %H:%M:%S')"
 
