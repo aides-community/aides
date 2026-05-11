@@ -1,7 +1,7 @@
 sfe_249_new_extractor=1
 
 name=unityhub
-version=3.17.3
+version=3.18.0
 release=1
 summary="The Unity Hub is a standalone application that streamlines the way you find, download, and manage your Unity Projects and installations"
 group="Development/Tools"
@@ -18,14 +18,13 @@ nonfree_url="https://unity.com/legal/terms-of-service"
 provides=()
 conflicts=()
 
-# "https://hub.unity3d.com/linux/repos/deb/pool/main/u/unity/unityhub_amd64/unityhub-amd64-${version}.deb?~name=${name}-${version}.deb"
 sources=(
-	"https://hub.unity3d.com/linux/repos/deb/pool/main/u/unity/unityhub_amd64/UnityHubSetup-amd64.deb?~name=${name}-${version}.deb"
+	"https://hub.unity3d.com/linux/repos/deb/pool/main/u/unity/unityhub_amd64/UnityHubSetup-${version}-amd64.deb?~name=${name}-${version}.deb"
 	"local:///services-config.json?~archive=false"
 )
 
 checksums=(
-	sha256:4557902db7d03a49f94b3a0f5ba6e3ae769135f94f7157f0fa0aeac4c5338206
+	sha256:24392617c00dbd6d23e4bfbdda9ad471516a0db5065e4c715193e3b4eab00e59
 	sha256:20b38d9caf81d580cc7f6bca624bc976fdeac4c408ada8ae4c69ecbd8cd44a89
 )
 
