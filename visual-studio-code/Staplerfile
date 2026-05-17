@@ -2,7 +2,7 @@ sfe_249_new_extractor=1
 
 name=visual-studio-code
 version=1.119.1
-release=1
+release=2
 summary='Visual Studio Code'
 group='Development/Tools'
 desc='Visual Studio Code (vscode): Editor for building and debugging modern web and cloud applications (official binary version)'
@@ -105,6 +105,9 @@ package() {
 	cp -r "${srcdir}/$(_pkg)/"* "${pkgdir}/opt/${name}"
 
 	install -m755 "${srcdir}/${name}.sh" "${pkgdir}/usr/bin/code"
+
+	# disable update check
+	sed -e "/updateUrl/d" -i "${pkgdir}/opt/${name}/resources/app/product.json"
 }
 
 files() {
