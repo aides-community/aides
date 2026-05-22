@@ -1,6 +1,6 @@
 name=vagrant
 version=2.4.9
-release=1
+release=2
 summary="Build and distribute virtualized development environments"
 group="Development/Tools"
 desc="Vagrant is a tool for building and distributing virtualized development
@@ -10,6 +10,7 @@ architectures=('amd64')
 homepage="https://vagrantup.com"
 license=('BUSL-1.1')
 
+auto_reqprov_method=dirty
 auto_req=1
 auto_req_skiplist=(
 	"/opt/vagrant/embedded/*"
@@ -34,16 +35,12 @@ build_deps=(
 	tar
 )
 
-prepare() {
-	cd "$srcdir"
-	ar x "$_deb_package"
-}
-
 package() {
 	tar -xf $srcdir/data.tar.gz -C "$pkgdir"
 }
 
 files() {
-	printf '"%s" ' ./opt/**/*
-	echo ./usr/bin/*
+	files-find-binary vagrant
+	files-find \
+		"/opt/**/*"
 }
