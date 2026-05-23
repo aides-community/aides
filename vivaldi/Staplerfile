@@ -1,7 +1,5 @@
-sfe_249_new_extractor=1
-
 name=vivaldi
-version=8.0.4033.26
+version=8.0.4033.28
 release=1
 summary="An advanced browser made with the power user in mind"
 group="Networking/WWW"
@@ -27,7 +25,7 @@ sources=(
 )
 
 checksums=(
-	sha256:e4395355f93ff0c8252564c90fffff038978038227085581cc4ae7001b5c8cda
+	sha256:d7cb52ed04b03ea497b6f57d881fff182335a51a916afd48bb956ef10f8b2beb
 )
 
 auto_reqprov_method=dirty
@@ -39,15 +37,6 @@ disable_network=1
 build_deps=(
 	/usr/bin/magick
 )
-
-prepare() {
-	if [ -f "$name-$version.amd64.rpm" ]; then
-		echo "Using rpm2cpio extraction"
-		rpm2cpio "$name-$version.amd64.rpm" | cpio -idm
-	else
-		echo "RPM already extracted"
-	fi
-}
 
 package() {
 	# Inspired by https://gitlab.archlinux.org/archlinux/packaging/packages/vivaldi/-/blob/main/PKGBUILD
