@@ -1,5 +1,5 @@
 name=rustrover
-version=2025.3.2
+version=2026.1.2
 release=1
 summary="Cross-platform IDE for Rust from JetBrains"
 group="Development/Tools"
@@ -25,7 +25,7 @@ appstream_app_id='com.jetbrains.RustRover'
 
 _jb_name=$name
 _jb_code="rustrover/RustRover"
-_jb_checksum=sha256:73a3e8bba6b6edcc0272f7292a78503add8499ffa2487c8e2102325d3101de11
+_jb_checksum=sha256:20d233ee719aaffa0787e0877f3e239b9b7dfc044f70c7e99ce97df59de48372
 
 checksums=(
 	sha256:d34f87d7af95a28530d3acc8b8c6b4f23bd31772d594e1eb0a4689f791919297
@@ -33,8 +33,8 @@ checksums=(
 )
 
 prepare() {
-    # RustRover-version -> rustrover-version
-    mv "RustRover-$version" "$_jb_name-$version"
+	# RustRover-version -> rustrover-version
+	mv "RustRover-$version" "$_jb_name-$version"
 }
 
 ##BEGIN:jb-template##

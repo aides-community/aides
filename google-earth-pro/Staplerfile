@@ -1,8 +1,8 @@
 sfe_249_new_extractor=1
 
 name=google-earth-pro
-version=7.3.6.10441
-release=3
+version=7.3.7.1155
+release=1
 summary="Virtual globe"
 group="Sciences/Geosciences"
 desc="3D interface to explore the globe, terrain, streets, buildings and other planets"
@@ -29,7 +29,7 @@ sources=(
 )
 
 checksums=(
-	sha256:93c4bd171da6eba9a3a0489cfcd40e66aaed4d912057ddaaa86426b32815df56
+	sha256:c51479a58ca200eb43f92f0abb691afe18229d163bbf7035b1a7964e7833accb
 )
 
 auto_reqprov_method=dirty

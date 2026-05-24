@@ -1,7 +1,6 @@
-sfe_249_new_extractor=1
-
 name=android-studio
-version=2025.2.3.9
+version=2025.3.4.7
+_vername="panda4-patch1"
 release=1
 summary="The official Android IDE (Stable branch)"
 group="Development/Tools"
@@ -18,13 +17,13 @@ provides=(android-studio)
 conflicts=()
 
 sources=(
-	"https://dl.google.com/dl/android/studio/ide-zips/$version/android-studio-$version-linux.tar.gz"
+	"https://dl.google.com/dl/android/studio/ide-zips/$version/android-studio-$_vername-linux.tar.gz"
 	"local:///android-studio.desktop"
 	"local:///license.html"
 )
 
 checksums=(
-	sha256:986ea6cacb36da723f2c8550cccd7d8cd3e8b8b7bb2446d3a8bf39bbaf91abc1
+	sha256:aae8f332f124afd23ca495dc770915a456da7480c8f859e01535ad42fcb4ca06
 	sha256:73cd2dde1d0f99aaba5baad1e2b91c834edd5db3c817f6fb78868d102360d3c4
 	sha256:9a7563f7fb88c9a83df6cee9731660dc73a039ab594747e9e774916275b2e23e
 )
@@ -58,11 +57,12 @@ package() {
 }
 
 files() {
+	files-find-binary "$name"
+	files-find-desktop "$name.desktop"
+
 	files-find \
 		"/opt/$name" \
 		"/opt/$name/**/*" \
-		"/usr/bin/$name" \
-		"/usr/share/applications/$name.desktop" \
 		"/usr/share/licenses/$name" \
 		"/usr/share/licenses/$name/*" \
 		"/usr/share/pixmaps/$name.png"
