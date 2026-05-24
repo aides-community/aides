@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.jetbrains.CLion</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>LicenseRef-proprietary</project_license>
+  <name>CLion</name>
+  <summary>A cross-platform IDE for C and C++</summary>
+  <summary xml:lang="ru">Кроссплатформенная среда разработки для C и C++</summary>
+  <developer_name>JetBrains s.r.o.</developer_name>
+  <launchable type="desktop-id">clion.desktop</launchable>
+  <description>
+    <p>Trust CLion to take care of the routine while you focus on the important things. Knowing your code through and through, it can boost your productivity with smart and relevant code completion, instant navigation and reliable refactorings.</p>
+    <p xml:lang="ru">Доверьте CLion рутинные задачи и сосредоточьтесь на главном. Глубоко понимая ваш код, CLion повышает продуктивность благодаря умному автодополнению, мгновенной навигации и надёжному рефакторингу.</p>
+    <p>CLion is more than just an editor as it offers a powerful debugger and dynamic analysis tools to investigate and solve problems with ease, built-in Google Test, Boost.Test and Catch for unit testing, many popular VCS supported out of the box and more.</p>
+    <p xml:lang="ru">CLion — это больше, чем редактор: он включает мощный отладчик и инструменты динамического анализа, встроенную поддержку Google Test, Boost.Test и Catch для модульного тестирования, а также интеграцию с популярными системами контроля версий.</p>
+    <p>CLion is designed for native cross-platform development in C and C++, as well as Kotlin/Native, Rust and Swift. It also provides essential support for CMake language, Python, popular web technologies (like JavaScript, XML, HTML, Markdown and others), and this also includes support for all the other languages that are available through bundled and repository plugins.</p>
+    <p xml:lang="ru">CLion предназначен для нативной кроссплатформенной разработки на C и C++, а также Kotlin/Native, Rust и Swift. Он также поддерживает язык CMake, Python, популярные веб-технологии (JavaScript, XML, HTML, Markdown и другие) и все языки, доступные через встроенные и сторонние плагины.</p>
+    <p>CLion is proprietary software by JetBrains. Use is subject to the JetBrains User Agreement. A free 30-day evaluation is available; monthly and yearly subscriptions are offered for companies and individual users.</p>
+    <p xml:lang="ru">CLion является проприетарным программным обеспечением JetBrains. Использование регулируется Пользовательским соглашением JetBrains. Доступна бесплатная 30-дневная пробная версия; для компаний и индивидуальных пользователей предлагается ежемесячная и годовая подписка.</p>
+  </description>
+  <categories>
+    <category>Development</category>
+    <category>IDE</category>
+  </categories>
+  <keywords>
+    <keyword>C</keyword>
+    <keyword>C++</keyword>
+    <keyword>IDE</keyword>
+    <keyword>CMake</keyword>
+    <keyword>JetBrains</keyword>
+    <keyword xml:lang="ru">среда разработки</keyword>
+    <keyword xml:lang="ru">редактор</keyword>
+  </keywords>
+  <url type="homepage">https://www.jetbrains.com/clion/</url>
+  <url type="bugtracker">https://youtrack.jetbrains.com/issues/CPP</url>
+  <url type="help">https://www.jetbrains.com/help/clion/</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://www.jetbrains.com/clion/img/clion_ide_overview.png</image>
+      <caption>CLion main window</caption>
+      <caption xml:lang="ru">Главное окно CLion</caption>
+    </screenshot>
+  </screenshots>
+  <content_rating type="oars-1.1"/>
+</component>
