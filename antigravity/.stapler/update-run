@@ -1,0 +1,14 @@
+#!/bin/bash
+parts=(${1//|/ })
+version="${parts[0]}"
+build="${parts[1]}"
+
+checksums=$(curl -s "https://artifactregistry.googleapis.com/v1/projects/antigravity-auto-updater-dev/locations/us-central1/repositories/antigravity-debian/files?page_size=20&order_by=update_time+desc" \
+  | grep -oE "pool%2Fantigravity_[0-9.]+-[0-9]+_amd64_[a-f0-9]+\.deb" \
+  | grep "${version}-${build}" \
+  | sed 's/.*_amd64_//;s/\.deb//')
+
+stplr-spec set-field version "$version"
+stplr-spec set-field _ag_amd64_build "$build"
+stplr-spec set-field _ag_amd64_checksums "$checksums"
+stplr-spec update-checksums

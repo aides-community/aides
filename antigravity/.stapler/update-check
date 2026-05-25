@@ -1,0 +1,5 @@
+#!/bin/bash
+old_version=$(stplr-spec get-field version)
+old_build=$(stplr-spec get-field _ag_amd64_build)
+new_full=$(nvchecker -c .nvchecker.toml --logger json | jq .version -r)
+echo "$old_version|$old_build" $new_full

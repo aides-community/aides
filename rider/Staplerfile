@@ -1,0 +1,88 @@
+name=rider
+version=2026.1.2
+release=1
+summary="A cross-platform .NET IDE by JetBrains"
+group="Development/Tools"
+desc="
+This wrapper is not verified by, affiliated with, or supported
+by JetBrains s.r.o.
+
+Rider supports .NET Framework, the new cross-platform .NET Core, and Mono based
+projects. This lets you develop a wide range of applications including
+.NET desktop applications, services and libraries, Unity games, Xamarin apps,
+ASP.NET, and ASP.NET Core web applications.
+
+Rider provides 2200+ live code inspections, hundreds of context actions and
+refactorings brought by ReSharper, and combines them with the IntelliJ
+platform's solid IDE features. Despite a heavy feature set, Rider is designed
+to be fast and responsive.
+
+As well as running and debugging multiple runtimes, Rider itself runs on
+multiple platforms: Windows, macOS, and Linux.
+"
+maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://www.jetbrains.com/$name/"
+license=("custom")
+appstream_app_id="com.jetbrains.Rider"
+nonfree=1
+nonfree_url="https://www.jetbrains.com/legal/docs/toolbox/user/"
+
+conflicts=(
+	"rider"
+)
+
+_jb_name=$name
+_jb_code="$name/JetBrains.${name^}"
+
+sources=(
+	"https://download-cdn.jetbrains.com/$_jb_code-$version.tar.gz"
+	"local:///rider.desktop"
+)
+
+checksums=(
+	sha256:3a6cac6865c6331c4001adaaac7bd7f325c8c092d4eed286f3f1011a1af9e440
+	sha256:9ee6e78fddb0689cb6a90717f3b28ac2089f20a35ac2399b2784d62bf6145d58
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+auto_req_filter=(
+	"libc\.musl-.*\.so"
+	"ld-linux-.*\.so"
+)
+
+disable_network=1
+
+prepare() {
+	mv "JetBrains Rider-$version" "$_jb_name"
+}
+
+package() {
+	mkdir -p "$pkgdir/opt/$_jb_name"
+	cp -r "$srcdir/$_jb_name" "$pkgdir/opt/"
+
+	install -dm 755 "$pkgdir/usr/bin/"
+	ln -s "/opt/$_jb_name/bin/$_jb_name" "$pkgdir/usr/bin/$_jb_name"
+
+	install-desktop "$_jb_name.desktop"
+	install -Dm644 "$pkgdir/opt/$_jb_name/bin/$_jb_name.png" \
+		"$pkgdir/usr/share/pixmaps/$_jb_name.png"
+
+	# RPM glob engine treats [...] as char classes - delete VSIX metadata
+	find "$pkgdir" -name "*Content_Types*.xml" -delete
+}
+
+files() {
+	files-find \
+		"/opt/$_jb_name" \
+		"/opt/$_jb_name/**/*" \
+		"/usr/share/pixmaps/$_jb_name.png"
+
+	files-find-binary \
+		"$_jb_name"
+
+	files-find-desktop \
+		"$_jb_name.desktop"
+}

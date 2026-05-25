@@ -24,31 +24,28 @@ And much more!
 Don't forget to join our growing designer community!
 "
 maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
-architectures=("amd64")
 homepage="https://icons8.com/lunacy"
 license=("custom")
 appstream_app_id="com.icons8.Lunacy"
 nonfree=1
 nonfree_url="https://lunacy.docs.icons8.com/lunacy%20license/"
-sfe_249_new_extractor=1
 
 architectures=(
 	"amd64"
 	"arm64"
 )
 
-sources=(
+sources_amd64=(
 	"https://lcdn.icons8.com/setup/${name^}_$version.deb"
-	"local:///lunacy-mimetype.xml?~archive=false"
+	"local:///lunacy-mimetype.xml"
 )
 
 sources_arm64=(
-	"https://lcdn.icons8.com/setup/${name^}.ARM.deb"
-	"local:///lunacy-mimetype.xml?~archive=false"
-
+	"https://lcdn.icons8.com/setup/${name}_${version}_arm64.deb"
+	"local:///lunacy-mimetype.xml"
 )
 
-checksums=(
+checksums_amd64=(
 	sha256:1e5d3c60a3fd5463cb5d6420af0fedf44f40c4d7a28e2058d9cff75f97cf8c4d
 	sha256:a977a0b9a89bc048bea4c6a747e83b1d1c7ce05cd0aac3d2d40a78dc005c0a8a
 )
