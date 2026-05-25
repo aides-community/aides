@@ -2,8 +2,9 @@
 # For more information, visit l.aides.space/nvchecker
 
 [lens-k8s-ide]
-source = "manual"
-version = "1.0.0"
+source = "regex"
+url = "https://downloads.k8slens.dev/ide/latest-linux.yml"
+regex = 'version: ([\d.]+)-latest'
 
 # Some examples are listed below:
 

@@ -1,11 +1,12 @@
 name=lens-k8s-ide
 _name=lens
-version=2026.2.20807
+version=2026.5.181248
 release=1
 summary="The Kubernetes IDE"
 group="Development/Other"
 desc="Lens K8S IDE brings clarity and control to Kubernetes. 
-With built-in Prism AI, it's like having an SRE by your side - always ready to help."
+With built-in Prism AI, it's like having an SRE by your side - always ready
+to help."
 maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
 architectures=("amd64")
 homepage="lenshq.io"
@@ -20,7 +21,7 @@ sources=(
 )
 
 checksums=(
-	sha256:fa8630365fbcae38ffacac9cb603d967f626830bc0c5d8cfb478ccc91213c296
+	sha256:7d36598db8a7daa0e4689a1c7ec89ed5b57ced7c26f130cc3701e9088bc396cc
 )
 
 auto_reqprov_method=dirty
@@ -34,13 +35,16 @@ package() {
 	cp -a opt/${_name^}/* "$pkgdir/opt/${_name^}/"
 
 	install -Dm644 usr/share/applications/$_name-desktop.desktop \
-        "$pkgdir/usr/share/applications/${_name}.desktop"
+		"$pkgdir/usr/share/applications/${_name}-desktop.desktop"
+	sed -i 's/^StartupWMClass=.*/StartupWMClass=lens/' \
+		"$pkgdir/usr/share/applications/${_name}-desktop.desktop"
 
 	install -Dm644 usr/share/icons/hicolor/512x512/apps/$_name-desktop.png \
-        "$pkgdir/usr/share/icons/hicolor/512x512/apps/$_name-desktop.png"
+		"$pkgdir/usr/share/icons/hicolor/512x512/apps/$_name-desktop.png"
 
 	install -dm755 "$pkgdir/usr/bin"
-    	ln -sf "/opt/${_name^}/${_name}-desktop" "$pkgdir/usr/bin/${_name}-desktop"
+	ln -sf "/opt/${_name^}/${_name}-desktop" \
+	"$pkgdir/usr/bin/${_name}-desktop"
 
 }
 
@@ -51,5 +55,5 @@ files() {
 	files-find-binary \
 		"${_name}-desktop"
 	files-find-desktop \
-		"${_name}.desktop"
+		"${_name}-desktop.desktop"
 }
