@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>ru.yandex.Music</id>
+
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>LicenseRef-proprietary</project_license>
+
+  <name>Yandex Music</name>
+  <name xml:lang="ru">Яндекс Музыка</name>
+
+  <summary>Linux client for Yandex Music</summary>
+  <summary xml:lang="ru">Linux-клиент для Яндекс Музыки</summary>
+
+  <description>
+    <p>Yandex Music is the native desktop client for the Yandex Music streaming service, providing access to a large catalog of tracks, albums, podcasts and audiobooks directly from the Linux desktop.</p>
+    <p xml:lang="ru">Яндекс Музыка — нативный настольный клиент стримингового сервиса Яндекс Музыки, предоставляющий доступ к большому каталогу треков, альбомов, подкастов и аудиокниг прямо с рабочего стола Linux.</p>
+    <p>The client offers personalized recommendations, curated playlists and the &quot;My Wave&quot; endless personal radio. Playback, library management and search are integrated into a single window without the need to open a browser.</p>
+    <p xml:lang="ru">Клиент предлагает персональные рекомендации, подборки и бесконечное персональное радио «Моя волна». Воспроизведение, управление коллекцией и поиск собраны в одном окне без необходимости открывать браузер.</p>
+    <ul>
+      <li>Streaming of music, podcasts and audiobooks</li>
+      <li xml:lang="ru">Стриминг музыки, подкастов и аудиокниг</li>
+      <li>Personal recommendations and the &quot;My Wave&quot; radio</li>
+      <li xml:lang="ru">Персональные рекомендации и радио «Моя волна»</li>
+      <li>Offline playback of downloaded tracks (with a subscription)</li>
+      <li xml:lang="ru">Офлайн-воспроизведение загруженных треков (с подпиской)</li>
+      <li>Lyrics, artist pages and curated playlists</li>
+      <li xml:lang="ru">Тексты песен, страницы исполнителей и подборки</li>
+      <li>Media keys and system tray integration</li>
+      <li xml:lang="ru">Поддержка медиаклавиш и интеграция с системным треем</li>
+    </ul>
+    <p>This package requires an active Yandex account; some features require a Yandex Plus subscription. The application is proprietary software distributed under the Yandex Music user agreement.</p>
+    <p xml:lang="ru">Для работы пакета требуется активный аккаунт Яндекса; часть функций доступна только при подписке Яндекс Плюс. Приложение является проприетарным программным обеспечением и распространяется по пользовательскому соглашению Яндекс Музыки.</p>
+  </description>
+
+  <launchable type="desktop-id">yandexmusic.desktop</launchable>
+
+  <icon type="stock">yandexmusic</icon>
+
+  <categories>
+    <category>AudioVideo</category>
+    <category>Audio</category>
+    <category>Music</category>
+    <category>Player</category>
+  </categories>
+
+  <keywords>
+    <keyword>music</keyword>
+    <keyword xml:lang="ru">музыка</keyword>
+    <keyword>streaming</keyword>
+    <keyword xml:lang="ru">стриминг</keyword>
+    <keyword>yandex</keyword>
+    <keyword xml:lang="ru">яндекс</keyword>
+    <keyword>podcast</keyword>
+    <keyword xml:lang="ru">подкаст</keyword>
+    <keyword>audiobook</keyword>
+    <keyword xml:lang="ru">аудиокнига</keyword>
+  </keywords>
+
+  <url type="homepage">https://music.yandex.ru/download/</url>
+  <url type="help">https://yandex.ru/support/music/</url>
+
+  <developer_name>Yandex</developer_name>
+
+  <provides>
+    <binary>yandexmusic</binary>
+  </provides>
+
+  <content_rating type="oars-1.1">
+    <content_attribute id="social-info">mild</content_attribute>
+    <content_attribute id="money-purchasing">mild</content_attribute>
+  </content_rating>
+
+  <releases></releases>
+</component>

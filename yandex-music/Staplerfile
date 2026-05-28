@@ -1,7 +1,5 @@
-sfe_249_new_extractor=1
-
 name=yandex-music
-version=5.103.2
+version=5.104.2
 release=1
 summary='Linux client for Yandex Music'
 summary_ru='Linux-клиент для Яндекс Музыки'
@@ -24,11 +22,11 @@ conflicts=()
 
 sources=(
 	"https://music-desktop-application.s3.yandex.net/stable/Yandex_Music_amd64_${version}.deb?~name=${name}-${version}.deb"
-	"local:///yandex-music.sh?~archive=false"
+	"local:///yandex-music.sh"
 )
 
 checksums=(
-	sha256:48a7c9c09aa5be8c6346ccdda73991ff0d97a354bedb89a46a4140543e6dbd7b
+	sha256:82f7cbb337692a08d66e5623a63d4d45653b14e7f933c62b7b14859e6b0b475e
 	sha256:6ffc89c0ecda4f2fd901ba949d2c7f812db64f73d154b3018f5764918b6ee5b2
 )
 
@@ -59,10 +57,13 @@ package() {
 }
 
 files() {
+	files-find-binary  yandexmusic
+	files-find-desktop yandexmusic.desktop
+
 	files-find \
-		"/usr/bin/yandexmusic" \
-		"/usr/share/applications/yandexmusic.desktop" \
-		"/usr/share/icons/hicolor/**/apps/yandexmusic.png" \
+		"/usr/share/icons/hicolor/**/apps/yandexmusic.png"
+
+	files-find \
 		"/opt/YandexMusic" \
 		"/opt/YandexMusic/**/*"
 }
