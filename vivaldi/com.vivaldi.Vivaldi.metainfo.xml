@@ -6,6 +6,7 @@
   <name>Vivaldi</name>
   <developer_name>Vivaldi Technologies</developer_name>
   <summary>Feature-packed web browser</summary>
+  <summary xml:lang="ru">Многофункциональный веб-браузер</summary>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>LicenseRef-proprietary</project_license>
   <url type="homepage">https://vivaldi.com/</url>
@@ -14,6 +15,8 @@
   <keywords>
     <keyword>web browser</keyword>
     <keyword>mail client</keyword>
+    <keyword xml:lang="ru">веб-браузер</keyword>
+    <keyword xml:lang="ru">почтовый клиент</keyword>
   </keywords>
   <categories>
     <category>Network</category>
@@ -30,36 +33,52 @@
       The web browser for techies and people who need a browser that helps them get things done.
       The user interface is fully customizable, including keyboard shortcuts, mouse gestures, and programmable macros.
     </p>
+    <p xml:lang="ru">
+      Веб-браузер для технических специалистов и всех, кому нужен инструмент, помогающий эффективно решать задачи.
+      Интерфейс полностью настраивается: горячие клавиши, жесты мыши и программируемые макросы.
+    </p>
     <ul>
       <li>Seize back control of your tabs with features like Workspaces, Tab Stacks, and Tab Tiling.</li>
+      <li xml:lang="ru">Верните контроль над вкладками с помощью рабочих пространств, стеков вкладок и мозаичного расположения вкладок.</li>
       <li>Stay on top of all your emails, appointments, to-dos, and news with Mail, Calendar, Tasks, and Feed Reader. (Compatible with IMAP, POP3, CalDAV, and Atom/RSS.)</li>
+      <li xml:lang="ru">Следите за почтой, встречами, задачами и новостями с помощью встроенных Почты, Календаря, Задач и читалки лент. (Поддерживаются IMAP, POP3, CalDAV, а также Atom/RSS.)</li>
       <li>Jot down ideas and inspiration with the integrated Notes manager.</li>
+      <li xml:lang="ru">Фиксируйте идеи и вдохновение во встроенном менеджере заметок.</li>
       <li>End-to-end encrypted (E2EE) sync of bookmarks, passwords, notes, and more with Vivaldi for desktop, iOS, and Android.</li>
+      <li xml:lang="ru">Сквозное шифрование (E2EE) при синхронизации закладок, паролей, заметок и многого другого между Vivaldi для компьютера, iOS и Android.</li>
       <li>Efficient built-in Tracker and Ad Blocker.</li>
+      <li xml:lang="ru">Эффективная встроенная блокировка трекеров и рекламы.</li>
       <li>Proton VPN.</li>
+      <li xml:lang="ru">Proton VPN.</li>
       <li>Compatible with most browser extensions from the Google Chrome Web Store.</li>
+      <li xml:lang="ru">Совместимость с большинством расширений из интернет-магазина Google Chrome.</li>
     </ul>
   </description>
   <screenshots>
     <screenshot type="default">
       <image>https://vivaldi.com/wp-content/uploads/Vivaldi_7-1.png</image>
       <caption>Customizable Dashboard start page with widgets for date, tasks, news, travel, and notes.</caption>
+      <caption xml:lang="ru">Настраиваемая стартовая страница «Панель» с виджетами даты, задач, новостей, путешествий и заметок.</caption>
     </screenshot>
     <screenshot>
       <image>https://vivaldi.com/wp-content/uploads/Feed-Folder.png</image>
       <caption>Integrated RSS/Atom feed reader with folders, message previews, and article content.</caption>
+      <caption xml:lang="ru">Встроенная читалка RSS/Atom-лент с папками, предпросмотром сообщений и содержимым статей.</caption>
     </screenshot>
     <screenshot>
       <image>https://vivaldi.com/wp-content/uploads/1920w_New-themes_Human.png</image>
       <caption>Theme with dark browns and orange accents, styled to match classic Ubuntu colors.</caption>
+      <caption xml:lang="ru">Тема с тёмно-коричневыми тонами и оранжевыми акцентами в стиле классической цветовой схемы Ubuntu.</caption>
     </screenshot>
     <screenshot>
       <image>https://vivaldi.com/wp-content/uploads/1920w_New-themes_Soft-Pink.png</image>
       <caption>Start page with a pastel lilac theme, featuring the speed dial with integrated search.</caption>
+      <caption xml:lang="ru">Стартовая страница в пастельно-сиреневой теме с экспресс-панелью и встроенным поиском.</caption>
     </screenshot>
     <screenshot>
       <image>https://vivaldi.com/wp-content/uploads/1920w_New-default-theme_Settings.png</image>
       <caption>Settings page showing bundled themes, with options to install or customize additional themes.</caption>
+      <caption xml:lang="ru">Страница настроек со встроенными темами и возможностью установить или создать дополнительные темы.</caption>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1"/>
