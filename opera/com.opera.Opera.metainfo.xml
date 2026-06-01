@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
   <id>com.opera.Opera</id>
-  <launchable type="desktop-id">com.opera.Opera.desktop</launchable>
+  <launchable type="desktop-id">opera.desktop</launchable>
   <name>Opera</name>
+  <name xml:lang="ru">Opera</name>
   <developer_name>Opera</developer_name>
+  <developer_name xml:lang="ru">Opera</developer_name>
   <summary>Your personal browser</summary>
+  <summary xml:lang="ru">Ваш личный браузер</summary>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>LicenseRef-proprietary</project_license>
   <url type="homepage">https://www.opera.com/</url>
@@ -12,12 +15,17 @@
   <url type="help">https://www.opera.com/help</url>
   <description>
     <p>**NOTE: This wrapper is not verified by, affiliated with, or supported by Opera.**</p>
+    <p xml:lang="ru">**ПРИМЕЧАНИЕ: Данная обёртка не проверена, не аффилирована и не поддерживается компанией Opera.**</p>
     <p>
       Opera is a browser that offers features such as VPN, Ad Blocker, AI, Tab Islands, and more. It is chosen by millions of users for its superior performance and security, and it is also the first browser with mindfulness at its core.
+    </p>
+    <p xml:lang="ru">
+      Opera — браузер, предлагающий такие возможности, как VPN, блокировщик рекламы, ИИ, группы вкладок и многое другое. Его выбирают миллионы пользователей за высокую производительность и безопасность, а также за то, что он стал первым браузером, в основе которого лежит забота о пользователе.
     </p>
   </description>
   <keywords>
     <keyword>web browser</keyword>
+    <keyword xml:lang="ru">веб-браузер</keyword>
   </keywords>
   <categories>
     <category>Network</category>
@@ -30,18 +38,22 @@
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/flathub/com.opera.Opera/master/screenshots/opera-newpage.png</image>
       <caption>Speed dial page</caption>
+      <caption xml:lang="ru">Страница экспресс-панели</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/flathub/com.opera.Opera/master/screenshots/opera-dark-newpage.png</image>
       <caption>Speed dial page - dark theme</caption>
+      <caption xml:lang="ru">Страница экспресс-панели — тёмная тема</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/flathub/com.opera.Opera/master/screenshots/opera-dark-updated.png</image>
       <caption>Client upgraded page - dark theme</caption>
+      <caption xml:lang="ru">Страница обновления клиента — тёмная тема</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/flathub/com.opera.Opera/master/screenshots/opera-updated.png</image>
       <caption>Client upgraded page</caption>
+      <caption xml:lang="ru">Страница обновления клиента</caption>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1"/>
