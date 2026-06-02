@@ -1,0 +1,8 @@
+# Проверка обновлений через nvchecker.
+# Подробнее: l.aides.space/nvchecker
+#
+# Версия берётся из манифеста electron-updater (latest-linux.yml).
+[mts-link]
+source = "regex"
+url = "https://apps.webinar.ru/weteams/latest-linux.yml"
+regex = 'version:\s*([\d.]+)'

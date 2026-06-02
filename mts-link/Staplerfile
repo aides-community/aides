@@ -1,0 +1,69 @@
+name=mts-link
+version=0.85.1
+release=1
+summary="MTS Link desktop client for video meetings and chats"
+group="Communications"
+desc="MTS Link (LinkChats) is the desktop application for video meetings,
+webinars and chats. Official proprietary Electron build."
+maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://mts-link.ru"
+license=("custom")
+nonfree=1
+nonfree_url="https://mts-link.ru/policy/"
+appstream_app_id="ru.Link.Mts"
+_appdir="linkchats-desktop-${version}-linux"
+
+provides=()
+conflicts=(
+	"mtslink"
+)
+
+sources=(
+	"https://apps.webinar.ru/weteams/${version}/${_appdir}.tar.gz"
+	"local:///mtslink.desktop"
+)
+
+checksums=(
+	sha256:208e2605138aaf6644c5020601f9b8c2bc337938b11c24f274305d729aaeae91
+	sha256:dde127530dbf0e9a65c337ab2fbf96fd29a3ba4fff9d54a1dac3cf886550684b
+)
+
+auto_reqprov_method=dirty
+
+auto_req_filter=(
+	"libffmpeg\.so"
+	"libEGL\.so"
+	"libGLESv2\.so"
+	"libvk_swiftshader\.so"
+	"libvulkan\.so\.1"
+)
+
+auto_req=1
+auto_prov=1
+disable_network=1
+
+package() {
+	install -dm755 "$pkgdir/opt/LinkChats"
+	cp -a "$_appdir/." "$pkgdir/opt/LinkChats/"
+
+	install -dm755 "$pkgdir/usr/bin"
+	ln -s "/opt/LinkChats/mtslink" "$pkgdir/usr/bin/mtslink"
+
+	install -Dm644 "mtslink.desktop" \
+		"$pkgdir/usr/share/applications/mtslink.desktop"
+
+	_icondir="$_appdir/resources/src/main/assets/icons/icon.png"
+	install -Dm644 "$_icondir" \
+		"$pkgdir/usr/share/icons/hicolor/512x512/apps/mtslink.png"
+	install -Dm644 "$_icondir" "$pkgdir/usr/share/pixmaps/mtslink.png"
+}
+
+files() {
+	files-find \
+		"/opt/LinkChats/**/*" \
+		"/usr/share/icons/hicolor/512x512/apps/mtslink.png" \
+		"/usr/share/pixmaps/mtslink.png"
+	files-find-binary "mtslink"
+	files-find-desktop "mtslink.desktop"
+}

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=МТС Линк
+Exec=/opt/LinkChats/mtslink %U
+Terminal=false
+Type=Application
+Icon=mtslink
+StartupWMClass=LinkChats
+Comment=MTS Link
+MimeType=x-scheme-handler/mtslinkchats;
+Categories=Office;Chat;
