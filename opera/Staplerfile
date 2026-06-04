@@ -1,5 +1,5 @@
 name=opera
-version=132.0.5905.19
+version=132.0.5905.22
 release=1
 summary="A fast and secure web browser"
 group="Networking/WWW"
@@ -21,7 +21,7 @@ sources=(
 )
 
 checksums=(
-	sha256:a7e9cca647cabd23f80c909ef62a8561490bbfc6d16219fa9fcc00b79ef6b87a
+	sha256:2b000108393fdf603f7aa1277304fe6c63546a15db18df07359486c5acf2f077
 )
 
 auto_reqprov_method=dirty
