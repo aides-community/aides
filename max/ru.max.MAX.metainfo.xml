@@ -2,7 +2,7 @@
 <!-- Copyright MAX © 2026 -->
 <component type="desktop-application">
   <id>ru.max.MAX</id>
-  <launchable type="desktop-id">ru.max.MAX.desktop</launchable>
+  <launchable type="desktop-id">max.desktop</launchable>
   <name>MAX</name>
   <developer id="ru.max">
     <name>max.ru</name>

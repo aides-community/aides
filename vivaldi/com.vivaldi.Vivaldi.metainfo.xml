@@ -2,7 +2,7 @@
 <!-- Copyright 2017 the Chromium authors, with modifications -->
 <component type="desktop-application">
   <id>com.vivaldi.Vivaldi</id>
-  <launchable type="desktop-id">com.vivaldi.Vivaldi.desktop</launchable>
+  <launchable type="desktop-id">vivaldi-stable.desktop</launchable>
   <name>Vivaldi</name>
   <developer_name>Vivaldi Technologies</developer_name>
   <summary>Feature-packed web browser</summary>
