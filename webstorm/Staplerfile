@@ -1,5 +1,5 @@
 name=webstorm
-version=2026.1.2
+version=2026.1.3
 release=1
 summary="JavaScript and TypeScript IDE"
 group="Development/Tools"
@@ -52,7 +52,7 @@ sources=(
 )
 
 checksums=(
-	sha256:c6830e2d84ae5aa59487944b2354383a702018ceada910d677556850b5f5ef21
+	sha256:96bc88a15c68cadc83c9f8239e86d0ddef78c0822886620a2fcf1fc1fd88e3dc
 	sha256:3f75ddf3e4c75e8a38d042a5bd7c1bad451c469ac63b0f17552c4e2693f7c94d
 )
 

@@ -1,5 +1,5 @@
 name=docker-desktop
-version=4.75.0
+version=Version
 release=1
 _revision=227598
 summary="Docker Desktop is an easy-to-install application that enables you to locally build and share containerized applications and microservices"

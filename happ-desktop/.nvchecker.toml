@@ -1,0 +1,4 @@
+[happ-desktop]
+source = "github"
+github = "Happ-proxy/happ-desktop"
+use_latest_release = true

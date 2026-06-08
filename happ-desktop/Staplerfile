@@ -1,0 +1,102 @@
+name=happ-desktop
+version=2.16.2
+release=1
+summary="Happ Proxy Client"
+group="Other"
+desc="Happ is a user-friendly GUI client for xray-core with advanced features:
+  
+   - Xray-core integration for proxy functionality
+   - TUN/VPN mode support via sing-box
+   - Anti-censorship tools (byedpi)
+   - QR code support for easy configuration sharing
+   - Subscription management
+"
+maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
+architectures=(
+	"amd64"
+	"arm64"
+)
+homepage="https://www.happ.su"
+appstream_app_id="su.happ.Happ"
+license=("custom")
+
+nonfree=1
+nonfree_url="https://www.happ.su/main/privacy-policy"
+
+provides=()
+conflicts=(
+	"happ"
+	)
+
+sources_amd64=(
+	"https://github.com/Happ-proxy/$name/releases/download/$version/Happ.linux.x64.deb"
+)
+
+sources_arm64=(
+	"https://github.com/Happ-proxy/$name/releases/download/$version/Happ.linux.arm64.deb"
+)
+
+checksums_amd64=(
+	sha256:51f7ce0429a4daf5ec0201a7758641054efdeafac776285a0788e506b38bfff5
+)
+
+checksums_arm64=(
+	sha256:c6c8db16bb42654e530859c6f3a3dee84f6a1bc630b785f1bb264f3f83d0c7c6
+)
+
+build_deps=(
+	"desktop-file-utils"
+)
+
+deps=(
+
+)
+
+# happd.service lifecycle: refresh systemd on install/remove and stop+disable
+# the daemon when the package is fully removed (handled inside the scripts).
+scripts=(
+	['postinstall']='postinstall.sh'
+	['preremove']='preremove.sh'
+	['postremove']='postremove.sh'
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+package() {
+	tar -xf data.tar.zst -C "$pkgdir/"
+
+	# The window's Wayland app_id / X11 WM_CLASS is "Happ", so GNOME needs
+	# StartupWMClass=Happ to match the running window to this launcher
+	# (otherwise a generic icon shows in the dash/taskbar).
+	# desktop-file-edit sets the key in the [Desktop Entry] group,
+	# overwrites any stale/wrong-case value, and rewrites the file with a
+	# proper trailing newline - the latter also keeps distrobox-export from
+	# merging its own appends into the last line.
+	desktop-file-edit --set-key=StartupWMClass --set-value=Happ \
+		"$pkgdir/usr/share/applications/Happ.desktop"
+
+	# The upstream .deb ships the unit in /etc/systemd/system, but
+	# package-owned units belong in /usr/lib/systemd/system - /etc is
+	# reserved for the admin and for "enable" symlinks. Relocate it so
+	# files-find-systemd picks it up.
+	install -Dm644 "$pkgdir/etc/systemd/system/happd.service" \
+		"$pkgdir/usr/lib/systemd/system/happd.service"
+	rm -f "$pkgdir/etc/systemd/system/happd.service"
+}
+
+files() {
+	files-find \
+		"/opt/happ/**/*" \
+		"/usr/share/mime/packages/happ-mime.xml" \
+		"/usr/share/icons/hicolor/256x256/apps/happ.png"
+	files-find-systemd
+	files-find-binary \
+		"happ"
+	files-find-desktop \
+		"Happ.desktop"
+
+}
