@@ -1,7 +1,7 @@
 sfe_249_new_extractor=1
 
 name=cursor
-version=3.7.36
+version=3.7.42
 release=1
 summary="The AI Code Editor"
 group="Development/Tools"
@@ -19,7 +19,7 @@ nonfree_url="https://cursor.com/terms-of-service"
 provides=()
 conflicts=()
 
-_commit=776d1f9d76df50a4e0aeca61819a88e7c1b861e2
+_commit=5702c9cfca656d8710fad58402fe37f14345e3ac
 
 sources_amd64=(
 	"https://downloads.cursor.com/production/${_commit}/linux/x64/rpm/x86_64/cursor-${version}.el8.x86_64.rpm?~name=${name}.rpm"
@@ -30,11 +30,11 @@ sources_arm64=(
 )
 
 checksums_amd64=(
-	sha256:2b789ec0dabc67554647ac27bdde722bbd5ce22ec85c2029ece463ff55fe2a11
+	sha256:fc5ec782e67ea535e6f409a09f0ded4bfc19155cacb3b8fbb820f31dfb02de14
 )
 
 checksums_arm64=(
-	sha256:deb0fe341186ee1e274764da813895cdf19a7818bf85ab6d0831fb1b915dac49
+	sha256:e7d0246b0175072871f22bdc78d5ff3e958d621e9adb57e3e9264a3abe8a8bbf
 )
 
 deps=(
