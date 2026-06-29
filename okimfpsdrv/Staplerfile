@@ -1,0 +1,72 @@
+name=okimfpsdrv
+version=1.7
+release=1
+summary="Scanner drivers OKI multifunctional printers"
+group="System/Configuration/Printing"
+desc="$summary.
+
+Upstream package targets Python 2. This build includes a patch
+to port all scripts to Python 3.
+"
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://www.oki.com/eu/printing/support/drivers-and-utilities/"
+license=("custom")
+
+nonfree=1
+nonfree_url="https://www.oki.com/eu/printing/support/drivers-and-utilities/software-license-agreement/index.html"
+
+_wayback='https://web.archive.org/web/20240702174256if_/'
+sources=(
+	"${_wayback}https://www.oki.com/printing/download/okimfpsdrv-1.7-0.x86_64_231228.rpm"
+
+	# prepare via make_py3_patch.sh
+	"local:///fix_py3.patch"
+)
+checksums=(
+	sha256:ab5a35d6025bc59687196f2e98a2b83ed239e92f90c7626c40f184218e0c1f25
+	sha256:ddba65e38434fc33a0cea98d18cad9002e50769b0793b91ebaa0879dcdf09b23
+)
+
+build_deps=(
+    /usr/bin/patch
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+deps=(
+	/usr/bin/python3
+)
+
+disable_network=1
+
+prepare() {
+	patch -Np1 -i fix_py3.patch
+}
+
+package() {
+	cp -a etc usr $pkgdir
+}
+
+files() {
+    files-find \
+        "/usr/sbin/*" \
+        "/usr/bin/*" \
+        "/usr/lib64/**/*" \
+        "/usr/libexec/**/*" \
+
+    files-find \
+        "/usr/share/locale/*/LC_MESSAGES/*"
+
+    files-find \
+        "/usr/share/doc/**/*"
+
+    files-find \
+        "/usr/share/sane/xsane/doc/sane-oki-doc.html" \
+        "/usr/share/sane/xsane/sane-oki-logo.xpm"
+
+    files-find \
+        "/etc/init.d/okiscand" \
+        "/etc/udev/rules.d/60-okimfpdrv.rules" \
+        "/etc/xdg/autostart/okimfp-assistant-applet.desktop"
+}

@@ -1,0 +1,1058 @@
+diff -urN orig/usr/libexec/okimfpdrv/pyscandsupp.py work/usr/libexec/okimfpdrv/pyscandsupp.py
+--- orig/usr/libexec/okimfpdrv/pyscandsupp.py	2018-09-03 07:47:53.000000000 +0300
++++ work/usr/libexec/okimfpdrv/pyscandsupp.py	2026-06-04 19:24:40.252032511 +0300
+@@ -40,7 +40,7 @@
+ 
+ 
+ def find_device(devicelist, devicename):
+-    for idx in xrange(len(devicelist)):
++    for idx in range(len(devicelist)):
+         devinf = devicelist[idx]
+         if devinf[0] == devicename:
+             return devinf
+diff -urN orig/usr/libexec/okimfpdrv/scanadm.py work/usr/libexec/okimfpdrv/scanadm.py
+--- orig/usr/libexec/okimfpdrv/scanadm.py	2018-09-03 07:47:53.000000000 +0300
++++ work/usr/libexec/okimfpdrv/scanadm.py	2026-06-04 19:24:40.306259591 +0300
+@@ -53,7 +53,7 @@
+ 
+ def __findchr(regex, defchr):
+   r = ""
+-  for c in xrange(ord('a'), ord('z')+1):
++  for c in range(ord('a'), ord('z')+1):
+     if regex.match(chr(c)):
+       r = r + chr(c)
+   if len(r) == 0:
+@@ -169,7 +169,7 @@
+   except:
+     pass
+ if b == False:
+-  print MSG_INSTALL_ERROR
++  print(MSG_INSTALL_ERROR)
+   sys.exit()
+ 
+ 
+@@ -183,9 +183,9 @@
+       lc = unicodedata.east_asian_width(uc)
+       l = l + dictlen[lc]
+       logging.debug("lc=%s, size=%d" % (lc, dictlen[lc]))
+-    except KeyError,e:
++    except KeyError as e:
+       l = l + 1
+-    except Exception,e:
++    except Exception as e:
+       logging.debug(e)
+       logging.debug("unistr=" + unistr + ", uc=" + uc)
+   logging.debug("unicode_dispsize('%s') => %d" % (unistr, l))
+@@ -240,7 +240,7 @@
+         if l <= lt:
+           l = lt
+       buf = buf + f[1]+("".ljust(l - lt, ' '))
+-    print "     " + buf
++    print("     " + buf)
+     for d in self.list:
+       n = n + 1
+       buf = ""
+@@ -255,12 +255,12 @@
+           if l <= lt:
+              l = lt
+           buf = buf + d[f[0]]+("".ljust(l - unicode_dispsize(d[f[0]]), ' '))
+-      print ("%2d)  " % n) + buf   
++      print(("%2d)  " % n) + buf)   
+ 
+   def selectList(self, fmt, msg):
+-        print
++        print()
+         self.printlist(fmt)
+-        print
++        print()
+         selno = input_int(msg, 1, len(self.list), None)
+         return self.list[selno - 1]
+ 
+@@ -289,7 +289,7 @@
+       m = m + PROMPT2N
+     else:
+       m = m + PROMPT2
+-    yn = raw_input(m)
++    yn = input(m)
+     yn = yn.strip()
+     if len(yn) > 0:
+       if not regexyes.match(yn) == None:
+@@ -310,7 +310,7 @@
+   m = m + PROMPT1
+   s = ""
+   while True:
+-    s = raw_input(m)
++    s = input(m)
+     s = s.strip()
+     l = len(s)
+     if l > 0:
+@@ -318,7 +318,7 @@
+           if l <= maxlen:
+             break
+           else:
+-            print MSG_STR_TOO_LONG % (maxlen)
++            print(MSG_STR_TOO_LONG % (maxlen))
+       else:
+         break
+     elif l == 0:
+@@ -333,7 +333,7 @@
+     m = m + "[%d]"%defval
+   m = m + PROMPT1
+   while True:
+-    s = raw_input(m)
++    s = input(m)
+     s = s.strip()
+     if len(s) > 0:
+       if s == "q":
+@@ -341,14 +341,14 @@
+       try:
+         v = int(s)
+         if range_min != None and range_min > v:
+-          print MSG_OUT_OF_RANGE
++          print(MSG_OUT_OF_RANGE)
+           continue
+         if range_max != None and range_max < v:
+-          print MSG_OUT_OF_RANGE
++          print(MSG_OUT_OF_RANGE)
+           continue
+         return v        
+       except ValueError:
+-        print MSG_INV_VAL
++        print(MSG_INV_VAL)
+     else:
+       if defval != None:
+         return defval
+@@ -388,7 +388,7 @@
+     m = m + "[" + defval + "]"
+   m = m + PROMPT1
+   while retry:
+-    s = raw_input(m)
++    s = input(m)
+     s = s.strip()
+     if s == "q":
+       raise Quit()
+@@ -399,7 +399,7 @@
+     if check_ipv4str(s):
+       return s
+     else:
+-      print MSG_INV_VAL
++      print(MSG_INV_VAL)
+   return None
+ 
+ 
+@@ -409,7 +409,7 @@
+     m = m + "[" + defval + "]"
+   m = m + PROMPT1
+   while retry:
+-    s = raw_input(m)
++    s = input(m)
+     s = s.strip()
+     if s == "q":
+       raise Quit()
+@@ -420,7 +420,7 @@
+     if check_macstr(s):
+       return s
+     else:
+-      print MSG_INV_VAL
++      print(MSG_INV_VAL)
+   return None
+ 
+ 
+@@ -431,24 +431,24 @@
+     return None
+   
+   # discover device
+-  print MSG_SEARCHING
++  print(MSG_SEARCHING)
+   g = GetListByCmd([CMD_LS, "-d", addr], "([^ ].+[^ ])[ ]+([0-9\.]+)[ ]+([0-9a-fA-F\:]+)") 
+   rc = g.collectList()
+   if rc == 0:
+-    print MSG_NOTFOUND
++    print(MSG_NOTFOUND)
+     return None
+   elif rc < 0:
+     rc = -rc
+     if rc == 252: # config file not exist
+-      print MSG_CONFFILE_NOEXT;
++      print(MSG_CONFFILE_NOEXT);
+     elif rc == 253: # permission denied
+-      print MSG_PERM_DENIED;
++      print(MSG_PERM_DENIED);
+     elif rc == 254: # unknown error
+-      print MSG_FAIL
++      print(MSG_FAIL)
+     elif rc == 255: # parameter error(usage)
+-      print MSG_FAIL
++      print(MSG_FAIL)
+     else:
+-      print MSG_FAIL
++      print(MSG_FAIL)
+     return None
+   # select device
+   listfmt = [
+@@ -481,20 +481,20 @@
+   g = GetListByCmd([CMD_LS, "-m"], "(.+)[ ]+([0-9a-fA-F]{4}:[0-9a-fA-F]{4})") 
+   rc = g.collectList()
+   if rc == 0:
+-    print MSG_MODELDATA_NOTFOUND
++    print(MSG_MODELDATA_NOTFOUND)
+     return None
+   elif rc < 0:
+     rc = -rc
+     if rc == 252: # config file not exist
+-      print MSG_CONFFILE_NOEXT;
++      print(MSG_CONFFILE_NOEXT);
+     elif rc == 253: # permission denied
+-      print MSG_PERM_DENIED;
++      print(MSG_PERM_DENIED);
+     elif rc == 254: # unknown error
+-      print MSG_FAIL
++      print(MSG_FAIL)
+     elif rc == 255: # parameter error(usage)
+-      print MSG_FAIL
++      print(MSG_FAIL)
+     else:
+-      print MSG_FAIL
++      print(MSG_FAIL)
+     return None
+   # select model
+   listfmt = [
+@@ -510,20 +510,20 @@
+   g = GetListByCmd([CMD_LS, "-r"], "([0-9\.]+)[ ]+[\"]([^ ].*[^ ])[\"][ ]+[\"](.+)[\"][ ]+([0-9a-fA-F\:]+)[ ]+([0-9]+)[ ]+([^ ]+)[ ]+([0-9\.]+)[ ]+([0-9]+)") 
+   rc = g.collectList()
+   if rc == 0:
+-    print MSG_NO_REGDEV
++    print(MSG_NO_REGDEV)
+     return None
+   elif rc < 0:
+     rc = -rc
+     if rc == 252: # config file not exist
+-      print MSG_CONFFILE_NOEXT;
++      print(MSG_CONFFILE_NOEXT);
+     elif rc == 253: # permission denied
+-      print MSG_PERM_DENIED;
++      print(MSG_PERM_DENIED);
+     elif rc == 254: # unknown error
+-      print MSG_FAIL
++      print(MSG_FAIL)
+     elif rc == 255: # parameter error(usage)
+-      print MSG_FAIL
++      print(MSG_FAIL)
+     else:
+-      print MSG_FAIL
++      print(MSG_FAIL)
+     return None
+   # select device
+   listfmt = [
+@@ -535,14 +535,14 @@
+ 
+ 
+ def print_op_list():
+-  print " 1)  "+MSG_OP_ADDDEV
+-  print " 2)  "+MSG_OP_DELDEV
++  print(" 1)  "+MSG_OP_ADDDEV)
++  print(" 2)  "+MSG_OP_DELDEV)
+ 
+ 
+ def select_op():
+-  print
++  print()
+   print_op_list()
+-  print
++  print()
+   while True:
+     selno = input_int(MSG_INPUT_OPE_NO, None, None, None)
+     if selno!=None and 1<=selno and selno<=2:
+@@ -602,56 +602,56 @@
+   dev = input_regster_device()
+   if dev != None:
+     # confirm
+-    print
+-    print MSG_CONFIRM_ADDDEV
+-    print 
+-    print "%s : %s" % (MSG_NAME_IP, dev[0])
+-    print "%s : %s" % (MSG_NAME_MAC, dev[1])
+-    print "%s : %s" % (MSG_NAME_MODEL, dev[2])
+-    print "%s : %s" % (MSG_NAME_SCANNERNAME, dev[3])
+-    print "%s : %d" % (MSG_NAME_SCANNERPORT, dev[4])
+-    print "%s : %s" % (MSG_NAME_PCNAME, dev[5])
+-    print "%s : %s" % (MSG_NAME_PCIP, dev[6])
+-    print "%s : %d" % (MSG_NAME_PCPORT, dev[7])
+-    print
++    print()
++    print(MSG_CONFIRM_ADDDEV)
++    print() 
++    print("%s : %s" % (MSG_NAME_IP, dev[0]))
++    print("%s : %s" % (MSG_NAME_MAC, dev[1]))
++    print("%s : %s" % (MSG_NAME_MODEL, dev[2]))
++    print("%s : %s" % (MSG_NAME_SCANNERNAME, dev[3]))
++    print("%s : %d" % (MSG_NAME_SCANNERPORT, dev[4]))
++    print("%s : %s" % (MSG_NAME_PCNAME, dev[5]))
++    print("%s : %s" % (MSG_NAME_PCIP, dev[6]))
++    print("%s : %d" % (MSG_NAME_PCPORT, dev[7]))
++    print()
+     yn = input_yn(MSG_CONFIRM, NO)
+     if yn == YES:
+-      print
++      print()
+       rc = execCmd([CMD_ADD, "-name", dev[3], "-model", dev[2], "-mac", dev[1], "-ip", dev[0], "-port", str(dev[4]), "-pc-name", dev[5], "-pc-ip", dev[6], "-pc-port", str(dev[7])])
+       if rc == 0:
+         os.system(CMD_SCAND_INITSCR + " reload")
+       else:
+         if rc == 250: # unknown model
+-          print MSG_FAIL
++          print(MSG_FAIL)
+         elif rc == 251: # already registered
+-          print MSG_ENT_EXIST;
++          print(MSG_ENT_EXIST);
+         elif rc == 252: # config file not exist
+-          print MSG_CONFFILE_NOEXT;
++          print(MSG_CONFFILE_NOEXT);
+         elif rc == 253: # permission denied
+-          print MSG_PERM_DENIED;
++          print(MSG_PERM_DENIED);
+         elif rc == 254: # unknown error
+-          print MSG_FAIL
++          print(MSG_FAIL)
+         elif rc == 255: # parameter error(usage)
+-          print MSG_FAIL
++          print(MSG_FAIL)
+         else:
+-          print MSG_FAIL
++          print(MSG_FAIL)
+         return
+-      print MSG_PROG_ADD_SUCCESS
++      print(MSG_PROG_ADD_SUCCESS)
+     
+       while True:
+         rc = execCmd([CMD_ADDABOOK, "-ip", dev[0], "-pc-name", dev[5], "-pc-ip", dev[6], "-pc-port", str(dev[7])])
+         if rc == 0:
+-          print MSG_PROG_ADD_MFP_SUCCESS
++          print(MSG_PROG_ADD_MFP_SUCCESS)
+           #print MSG_SUCCESS
+           break
+         else:
+-          print MSG_ADDABOOK_FAIL+" (code=%d)" % rc
++          print(MSG_ADDABOOK_FAIL+" (code=%d)" % rc)
+           yn = input_yn(MSG_RETRY, YES)
+           if yn == NO:
+               break
+         
+       return
+-  print
++  print()
+   #print MSG_LEAVE
+ 
+ 
+@@ -659,66 +659,66 @@
+   dev = select_regdev(MSG_INPUT_DELDEV_NO)
+   if dev != None:
+     # confirm
+-    print
+-    print MSG_CONFIRM_DELDEV
+-    print 
+-    print "%s : %s" % (MSG_NAME_IP, dev[0])
+-    print "%s : %s" % (MSG_NAME_MAC, dev[3])
+-    print "%s : %s" % (MSG_NAME_MODEL, dev[1])
+-    print "%s : %s" % (MSG_NAME_SCANNERNAME, dev[2])
+-    print "%s : %s" % (MSG_NAME_SCANNERPORT, dev[4])
+-    print "%s : %s" % (MSG_NAME_PCNAME, dev[5])
+-    print "%s : %s" % (MSG_NAME_PCIP, dev[6])
+-    print "%s : %s" % (MSG_NAME_PCPORT, dev[7])
+-    print
++    print()
++    print(MSG_CONFIRM_DELDEV)
++    print() 
++    print("%s : %s" % (MSG_NAME_IP, dev[0]))
++    print("%s : %s" % (MSG_NAME_MAC, dev[3]))
++    print("%s : %s" % (MSG_NAME_MODEL, dev[1]))
++    print("%s : %s" % (MSG_NAME_SCANNERNAME, dev[2]))
++    print("%s : %s" % (MSG_NAME_SCANNERPORT, dev[4]))
++    print("%s : %s" % (MSG_NAME_PCNAME, dev[5]))
++    print("%s : %s" % (MSG_NAME_PCIP, dev[6]))
++    print("%s : %s" % (MSG_NAME_PCPORT, dev[7]))
++    print()
+     yn = input_yn(MSG_CONFIRM, NO)
+     if yn == YES:
+-      print
++      print()
+       rc = execCmd([CMD_DEL, "-ip", dev[0]])
+       if rc == 0:
+         os.system(CMD_SCAND_INITSCR + " reload")
+       else:
+         if rc == 251: # IP not exist (リスト選択のため、基本的には発生しないので、単にエラーとする)
+-          print MSG_FAIL
++          print(MSG_FAIL)
+         elif rc == 252: # config file not exist
+-          print MSG_CONFFILE_NOEXT;
++          print(MSG_CONFFILE_NOEXT);
+         elif rc == 253: # permission denied
+-          print MSG_PERM_DENIED;
++          print(MSG_PERM_DENIED);
+         elif rc == 254: # unknown error
+-          print MSG_FAIL
++          print(MSG_FAIL)
+         elif rc == 255: # parameter error(usage)
+-          print MSG_FAIL
++          print(MSG_FAIL)
+         else:
+-          print MSG_FAIL
++          print(MSG_FAIL)
+         return
+-      print MSG_PROG_DEL_SUCCESS
++      print(MSG_PROG_DEL_SUCCESS)
+     
+       while True:
+         rc = execCmd([CMD_DELABOOK, "-ip", dev[0], "-pc-name", dev[5]])
+         if rc == 0:
+           # 0:Success
+-          print MSG_PROG_DEL_MFP_SUCCESS
++          print(MSG_PROG_DEL_MFP_SUCCESS)
+           #print MSG_SUCCESS
+           break
+         if rc == 251:
+           # 251: Not Found
+-          print MSG_PROG_DEL_MFP_SUCCESS
++          print(MSG_PROG_DEL_MFP_SUCCESS)
+           #print MSG_SUCCESS
+           break
+         else:
+-          print MSG_DELABOOK_FAIL+" (code=%d)" % rc
++          print(MSG_DELABOOK_FAIL+" (code=%d)" % rc)
+           yn = input_yn(MSG_RETRY, YES)
+           if yn == NO:
+               break
+         
+       return
+-  print
++  print()
+   #print MSG_LEAVE
+ 
+ 
+ 
+ def main():
+-  print TITLE
++  print(TITLE)
+   try:
+     opno = select_op()
+     if opno == 1:
+@@ -729,11 +729,11 @@
+       #print MSG_LEAVE
+       pass
+     #time.sleep(2)
+-  except KeyboardInterrupt, e:
+-    print ""
+-  except Quit, e:
++  except KeyboardInterrupt as e:
++    print("")
++  except Quit as e:
+     #print MSG_QUIT
+-    print ""
++    print("")
+ 
+ if __name__ == "__main__":
+   logging.basicConfig(format="%(asctime)s %(message)s")
+diff -urN orig/usr/libexec/okimfputl/appconfig.py work/usr/libexec/okimfputl/appconfig.py
+--- orig/usr/libexec/okimfputl/appconfig.py	2018-09-03 07:47:53.000000000 +0300
++++ work/usr/libexec/okimfputl/appconfig.py	2026-06-04 19:24:40.335489312 +0300
+@@ -119,7 +119,7 @@
+         
+         try:
+             os.stat(app) #check command exists
+-        except Exception, e:
++        except Exception as e:
+             do_warn_cne = True
+         
+         if do_check:
+@@ -267,7 +267,7 @@
+                 app = cmd.split()[0]
+                 try:
+                     os.stat(app)
+-                except Exception,e:
++                except Exception as e:
+                     warning_dialog(retrieve_window(self), TITLE_APPCONF_DLG, MSG_NOTEXIST_APPCMD, active)
+                 return
+         #illegal configuration
+diff -urN orig/usr/libexec/okimfputl/defs.py work/usr/libexec/okimfputl/defs.py
+--- orig/usr/libexec/okimfputl/defs.py	2018-09-03 07:47:53.000000000 +0300
++++ work/usr/libexec/okimfputl/defs.py	2026-06-04 19:24:40.363965096 +0300
+@@ -136,7 +136,7 @@
+         glib.USER_DIRECTORY_TEMPLATES : 'USER_DIRECTORY_TEMPLATES',
+         glib.USER_DIRECTORY_VIDEOS : 'USER_DIRECTORY_VIDEOS'
+     }
+-    for id in names.keys():
++    for id in list(names.keys()):
+         try:
+             d = glib.get_user_special_dir(id)
+             if not d == None:
+@@ -153,7 +153,7 @@
+     global USER_HOMEDIR
+     try:
+         return USER_DIRS[name]
+-    except KeyError, e:
++    except KeyError as e:
+         return USER_HOMEDIR
+     
+ 
+diff -urN orig/usr/libexec/okimfputl/genconfig.py work/usr/libexec/okimfputl/genconfig.py
+--- orig/usr/libexec/okimfputl/genconfig.py	2018-09-03 07:47:53.000000000 +0300
++++ work/usr/libexec/okimfputl/genconfig.py	2026-06-04 19:24:40.380983771 +0300
+@@ -87,7 +87,7 @@
+         self.use_webbrowser = gtk.CheckButton(LABEL_USE_WEBBROWSER)
+         f.pack_start(self.use_webbrowser, False, padding=0)
+         browsers = []
+-        for k in webbrowser._browsers.keys():
++        for k in list(webbrowser._browsers.keys()):
+             logging.debug(k)
+             if k in ("w3m", "www-browser"):
+                 continue#text browsers
+@@ -183,7 +183,7 @@
+                     set_use_notification(True)
+                 else:
+                     set_use_notification(False)
+-    except Exception,e:
++    except Exception as e:
+         logging.error(str(e))
+ 
+ 
+diff -urN orig/usr/libexec/okimfputl/guicom.py work/usr/libexec/okimfputl/guicom.py
+--- orig/usr/libexec/okimfputl/guicom.py	2018-09-03 07:47:53.000000000 +0300
++++ work/usr/libexec/okimfputl/guicom.py	2026-06-04 19:24:40.495152396 +0300
+@@ -142,11 +142,11 @@
+     if mt:
+         try:
+             gtk.gdk.threads_enter()
+-            rc = apply(func, args)
++            rc = func(*args)
+         finally:
+             gtk.gdk.threads_leave()
+     else:
+-        rc = apply(func, args)
++        rc = func(*args)
+     return rc
+ 
+ 
+@@ -228,7 +228,7 @@
+             logging.debug("webbrowser open(%s)" % (uri))
+             browser.open(uri)
+             return True
+-        except Exception,e:
++        except Exception as e:
+             logging.warn("webbrowser open(%s) error. %s" % (uri, e))
+             raise e
+     else:
+@@ -239,7 +239,7 @@
+                 cmd = "%s %s &" % (cmdpath, uri)
+                 check_call(cmd, shell=True)
+                 return True
+-            except Exception,e:
++            except Exception as e:
+                 logging.warn("gnome-open (%s) error. %s" % (uri, e))
+                 raise e
+         else:
+@@ -248,7 +248,7 @@
+                 logging.debug("default webbrowser open(%s)" % (uri))
+                 browser.open(uri)
+                 return True
+-            except Exception,e:
++            except Exception as e:
+                 logging.warn("default webbrowser open(%s) error. %s" % (uri, e))
+                 raise e
+     return False
+@@ -371,7 +371,7 @@
+ 
+ def set_active_ComboBox(combobox, actitem):
+     model = combobox.get_model()
+-    for idx in xrange(len(model)):
++    for idx in range(len(model)):
+         if model[idx][0] == actitem:
+             combobox.set_active(idx)
+             return True
+@@ -396,7 +396,7 @@
+     
+     def print_(self):
+         for w in self.__windows__:
+-            print w
++            print(w)
+     
+     def debug(self):
+         for w in self.__windows__:
+@@ -651,7 +651,7 @@
+         if __has_pynotify__:
+             try:
+                 self.notification = pynotify.Notification(self._notification_title, "-")
+-            except Exception, e:
++            except Exception as e:
+                 logging.error(str(e))
+         else:
+             logging.warn("pynotify not exists.")
+@@ -660,7 +660,7 @@
+         if __has_pynotify__:
+             try:
+                 return pynotify.get_server_info()['vendor']
+-            except Exception, e:
++            except Exception as e:
+                 logging.error(str(e))
+         return ""
+ 
+@@ -693,7 +693,7 @@
+                 try:
+                     self.__show_msg(msg, icon=self._icon_image, timeout=timeout)
+                     return
+-                except Exception, e:
++                except Exception as e:
+                     logging.warn(str(e))
+         toval = 4 #default 4 sec
+         if timeout is not None:
+@@ -706,7 +706,7 @@
+                 try:
+                     self.__show_msg(msg, status, self._icon_image_wrn, pynotify.URGENCY_CRITICAL, timeout)
+                     return
+-                except Exception, e:
++                except Exception as e:
+                     logging.warn(str(e))
+         s = None
+         if status is not 0:
+@@ -722,7 +722,7 @@
+                 try:
+                     self.__show_msg(msg, status, self._icon_image_err, pynotify.URGENCY_CRITICAL, timeout)
+                     return
+-                except Exception, e:
++                except Exception as e:
+                     logging.warn(str(e))
+         s = None
+         if status is not 0:
+@@ -779,8 +779,8 @@
+     def onShow(self):
+         if not self.__filter:
+             def __filter(event, data):
+-                print event.type, event.window
+-                print inspect.getmembers(event)
++                print(event.type, event.window)
++                print(inspect.getmembers(event))
+                 return gtk.gdk.FILTER_CONTINUE
+             self.get_window().add_filter(__filter, self)
+             self.__filter = True
+@@ -846,7 +846,7 @@
+             if self._buttons is not None:
+                 bnum = len(self._buttons)
+             if bnum >= 2:
+-                for i in xrange(0, bnum, 2):
++                for i in range(0, bnum, 2):
+                     bl = self._buttons[i]
+                     id = self._buttons[i+1]
+                     btn = gtk.Button(bl, )
+@@ -892,7 +892,7 @@
+             # show help
+             try:
+                 open_help(self.__helpuri)
+-            except Exception,e:
++            except Exception as e:
+                 error_dialog(self, self.get_title(), str(e))
+             return True
+         return False
+@@ -911,7 +911,7 @@
+         logging.debug("__response_proc, %s, %s, %s" % (dialog, response_id, str(args)))
+         logging.debug("RESPONSE: %s" % (response_id))
+         self.__response_code = response_id
+-        if self.__user_response_handler.has_key(response_id):
++        if response_id in self.__user_response_handler:
+             #print "has user handler"
+             self.__finished = self.__user_response_handler[response_id]()
+         else:
+@@ -999,9 +999,9 @@
+         try:
+             while not self.__finished:
+                 gtk.main_iteration_do(False)
+-        except Exception, e:
++        except Exception as e:
+             logging.warn("Exception - %s" % (e))
+-        except KeyboardInterrupt, e:
++        except KeyboardInterrupt as e:
+             logging.info("Abort")
+             interrupt = e
+         self.hide_all()
+@@ -1042,7 +1042,7 @@
+         self.show_all()
+         try:
+             gtk.main()
+-        except KeyboardInterrupt,e:
++        except KeyboardInterrupt as e:
+             logging.info("Abort")
+         
+     def quit(self):
+@@ -1171,7 +1171,7 @@
+         self.__current_page_num__ = page_num
+     
+     def saveall(self):
+-        for i in xrange(self.notebook.get_n_pages()):
++        for i in range(self.notebook.get_n_pages()):
+             p = self.notebook.get_nth_page(i)
+             if isinstance(p, AbstractConfigPanel):
+                 logging.debug("saving... [%s]" % (self.notebook.get_tab_label(p).get_text()))
+diff -urN orig/usr/libexec/okimfputl/imgfilecv.py work/usr/libexec/okimfputl/imgfilecv.py
+--- orig/usr/libexec/okimfputl/imgfilecv.py	2018-09-03 07:47:53.000000000 +0300
++++ work/usr/libexec/okimfputl/imgfilecv.py	2026-06-04 19:24:40.515377467 +0300
+@@ -136,7 +136,7 @@
+     if redirect is not None:
+         try:
+             os.remove(redirect)
+-        except Exception,e:
++        except Exception as e:
+             logging.warn(str(e))
+     exmsg = ""
+     try:
+@@ -166,7 +166,7 @@
+     for f in filelist:
+         try:
+             os.remove(f)
+-        except Exception, e:
++        except Exception as e:
+             logging.error(str(e))
+ 
+ 
+@@ -195,7 +195,7 @@
+         for f in filelist:
+             logging.info("Convert %s" % (f))
+             ss = os.path.splitext(f)
+-            out = unicode(ss[0] + "." + self._ext)
++            out = str(ss[0] + "." + self._ext)
+             logging.info("  output: "+out)
+             cmd = "%s %s" % (self._command, shesc(f))
+             execcmd(cmd, out)
+@@ -248,7 +248,7 @@
+         for f in filelist:
+             logging.info("Convert(PS) %s" % (f))
+             ss = os.path.splitext(f)
+-            out = unicode(ss[0] + "." + self._psext)
++            out = str(ss[0] + "." + self._psext)
+             cmd = "%s -setpage -dpi %d -width=%f -height=%f -equalpixels %s" % (self._command, dpi, w, h, shesc(f))
+             execcmd(cmd, out, [0, 1])
+             psflst.append(out)
+@@ -273,7 +273,7 @@
+             cmd = "sed -e 's/^\\/Title(\\(.*\\))\\(.*\\)$/\\2/g' %s | sed -e 's/^\\/Creator(\\(.*\\))\\(.*\\)$/\\/Creator(scantool)\\2/g'" % (shesc(tmp))
+             execcmd(cmd, pdf)
+             deletefiles([tmp])
+-        except Exception, e:
++        except Exception as e:
+             logging.error(str(e))
+             os.rename(tmp, pdf)
+         deletefiles(psflst)
+diff -urN orig/usr/libexec/okimfputl/mfpatray.py work/usr/libexec/okimfputl/mfpatray.py
+--- orig/usr/libexec/okimfputl/mfpatray.py	2018-09-03 07:47:53.000000000 +0300
++++ work/usr/libexec/okimfputl/mfpatray.py	2026-06-04 19:24:40.548523170 +0300
+@@ -241,7 +241,7 @@
+     def main(self):
+         try:
+             gtk.main()
+-        except KeyboardInterrupt,e:
++        except KeyboardInterrupt as e:
+             logging.info("Abort")
+     
+     def present_all_window(self):
+@@ -288,8 +288,8 @@
+         try:
+             dlg = scantool.ScanDialog(None, None, None)
+             dlg.show_all()
+-        except Exception, e:
+-            error_dialog(None, TITLE_SCAN, unicode(e))
++        except Exception as e:
++            error_dialog(None, TITLE_SCAN, str(e))
+     
+     def __exit_config(self):
+         self._config_dlg = None
+diff -urN orig/usr/libexec/okimfputl/mfpcfgfile.py work/usr/libexec/okimfputl/mfpcfgfile.py
+--- orig/usr/libexec/okimfputl/mfpcfgfile.py	2018-09-03 07:47:53.000000000 +0300
++++ work/usr/libexec/okimfputl/mfpcfgfile.py	2026-06-04 19:24:40.579750653 +0300
+@@ -44,7 +44,7 @@
+ import os.path
+ import signal
+ import time
+-import ConfigParser
++import configparser
+ import locale
+ import exceptions
+ import logging
+@@ -109,7 +109,7 @@
+     try:
+         value = dict[name]
+         return value
+-    except KeyError, e:
++    except KeyError as e:
+         return None
+     except:
+         return None
+@@ -130,7 +130,7 @@
+ class AbstractConfig:
+     def __init__(self, filename):
+         self._select_file(filename)
+-        self._parser = ConfigParser.SafeConfigParser()
++        self._parser = configparser.SafeConfigParser()
+     
+     def _select_file(self, filename):
+         self._filename = filename
+@@ -174,7 +174,7 @@
+     
+     def save(self):
+         self._mkuserdir()
+-        fd = os.open(USER_BASEDIR + self._filename, os.O_CREAT|os.O_TRUNC|os.O_RDWR, 0644)
++        fd = os.open(USER_BASEDIR + self._filename, os.O_CREAT|os.O_TRUNC|os.O_RDWR, 0o644)
+         fp = os.fdopen(fd, "w")
+         self._parser.write(fp)
+         fp.close()
+@@ -203,7 +203,7 @@
+             d = self.gets(oldsection)
+             self._parser.remove_section(oldsection)
+             self._parser.add_section(newsection)
+-            for k in d.keys():
++            for k in list(d.keys()):
+                 self._parser.set(newsection, k, str(d[k]))
+     
+     def __chksec__(self, section):
+@@ -216,7 +216,7 @@
+     
+     def add(self, section, itemsdict):
+         self.__chksec__(section)
+-        for k in itemsdict.keys():
++        for k in list(itemsdict.keys()):
+             if k == OPT_ORDER:
+                 continue
+             v = _enval(itemsdict[k])
+@@ -274,7 +274,7 @@
+             if not self._parser.has_option(sec, OPT_ORDER):
+                 return secs #has no order option
+         result = []
+-        for n in xrange(len(secs)):
++        for n in range(len(secs)):
+             for sec in secs:
+                 order = self._parser.getint(sec, OPT_ORDER)
+                 if order == n:
+@@ -286,9 +286,9 @@
+ 
+     def show(self):
+         for sec in self._parser.sections():
+-            print "Section[%s]" % (sec)
++            print("Section[%s]" % (sec))
+             for i in self._parser.items(sec):
+-                print "  " + str(i)
++                print("  " + str(i))
+ 
+ 
+ 
+diff -urN orig/usr/libexec/okimfputl/papersize.py work/usr/libexec/okimfputl/papersize.py
+--- orig/usr/libexec/okimfputl/papersize.py	2018-09-03 07:47:53.000000000 +0300
++++ work/usr/libexec/okimfputl/papersize.py	2026-06-04 19:24:40.606726283 +0300
+@@ -273,18 +273,18 @@
+         rl.setLevel(LOGLEVELS[sys.argv[1]])
+     
+     for p in PAPERSIZES:
+-        print p
+-        print p.toStr(UNIT_MM)
+-        print p.toStr(UNIT_INCH)
+-        print p.toStr(UNIT_POINT)
++        print(p)
++        print(p.toStr(UNIT_MM))
++        print(p.toStr(UNIT_INCH))
++        print(p.toStr(UNIT_POINT))
+     p = PaperSize("Test1", width_pt=100, height_pt=200, pagetypename="custom", gstype=False)
+-    print p
+-    print p.toStr(UNIT_MM)
+-    print p.toStr(UNIT_INCH)
+-    print p.toStr(UNIT_POINT)
++    print(p)
++    print(p.toStr(UNIT_MM))
++    print(p.toStr(UNIT_INCH))
++    print(p.toStr(UNIT_POINT))
+     p = PaperSize("Test2", width_inch=1.5, height_pt=200, pagetypename="custom", gstype=False)
+-    print p
+-    print p.toStr(UNIT_MM)
+-    print p.toStr(UNIT_INCH)
+-    print p.toStr(UNIT_POINT)
++    print(p)
++    print(p.toStr(UNIT_MM))
++    print(p.toStr(UNIT_INCH))
++    print(p.toStr(UNIT_POINT))
+ 
+diff -urN orig/usr/libexec/okimfputl/pushass.py work/usr/libexec/okimfputl/pushass.py
+--- orig/usr/libexec/okimfputl/pushass.py	2018-09-03 07:47:53.000000000 +0300
++++ work/usr/libexec/okimfputl/pushass.py	2026-06-04 19:24:40.636051954 +0300
+@@ -296,7 +296,7 @@
+     def stop(self):
+         pyscand.exit_client()
+         self.__run = False
+-        for i in xrange(10):
++        for i in range(10):
+             time.sleep(1)
+             if self.__end:
+                 return True
+@@ -346,7 +346,7 @@
+         while True:
+             try:
+                 gtk.main()
+-            except KeyboardInterrupt,e:
++            except KeyboardInterrupt as e:
+                 logging.info("Abort")
+                 sys.exit(0)
+             time.sleep(1)
+diff -urN orig/usr/libexec/okimfputl/scantool.py work/usr/libexec/okimfputl/scantool.py
+--- orig/usr/libexec/okimfputl/scantool.py	2018-09-03 07:47:53.000000000 +0300
++++ work/usr/libexec/okimfputl/scantool.py	2026-06-04 19:24:40.811494644 +0300
+@@ -107,7 +107,7 @@
+             iconpath = ICON_TOAPP_IMG_PATH
+         else:
+             pass
+-    except KeyError, e:
++    except KeyError as e:
+         iconpath = ICON_TOFOLDER_IMG_PATH
+     return iconpath
+ 
+@@ -133,7 +133,7 @@
+             if w > MAXICONSZ:
+                 pb = pb.scale_simple(MAXICONSZ, MAXICONSZ, gtk.gdk.INTERP_BILINEAR)
+         return pb
+-    except Exception, e:
++    except Exception as e:
+         logging.error(str(e))
+         return None
+ 
+@@ -254,7 +254,7 @@
+                     pass
+             if not self._user_callback == None:
+                 self._user_callback(type, args)
+-        except Exception,e:
++        except Exception as e:
+             logging.error("_scan_callback error. exception="+str(e))
+     
+     
+@@ -335,7 +335,7 @@
+                         cvlist = converter.convert(self.outputs)
+                         imgfilecv.deletefiles(self.outputs)
+                         self.outputs = cvlist
+-                    except Exception, e:
++                    except Exception as e:
+                         logging.error("Convert Error: " + str(e))
+                         gtk.gdk.threads_enter()
+                         self._scan_callback(CB_ERRORMSG_IND, {CB_ARG_MSG:MSG_FILECONV_NG+" - "+str(e)})
+@@ -365,7 +365,7 @@
+                                 #os.system(cmd + " &")
+                                 os.stat(cmd.split()[0]) #check command exists
+                                 check_call(cmd + "&", shell=True)
+-                            except Exception, e:
++                            except Exception as e:
+                                 s, m ,sm = msg_comp(MSG_APP_EXEC_NG, str(e))
+                                 gtk.gdk.threads_enter()
+                                 self._scan_callback(CB_ERRORMSG_IND, {CB_ARG_MSG:s})
+@@ -424,7 +424,7 @@
+         
+         
+     def list_devices(self):
+-        return self.__thrs__.keys()
++        return list(self.__thrs__.keys())
+     
+     
+     def set_callback(self, callback):
+@@ -436,7 +436,7 @@
+         try:
+             self.__lock__.acquire()
+             try:
+-                if self.__thrs__.has_key(device):
++                if device in self.__thrs__:
+                     logging.info("Now Scanning. device=%s" % device)
+                     return pyscand.E_BUSY
+                 
+@@ -448,7 +448,7 @@
+                 if not self.__callback__ == None:
+                     self.__callback__(CBPRM_START_THREAD, device)
+                 return pyscand.E_SUCCESS
+-            except Exception,e:
++            except Exception as e:
+                 logging.error(str(e))
+                 return pyscand.E_ERROR
+         finally:
+@@ -458,7 +458,7 @@
+         global CBPRM_STOP_THREAD
+         try:
+             self.__lock__.acquire()
+-            if self.__thrs__.has_key(device):
++            if device in self.__thrs__:
+                 ctx = self.__thrs__.pop(device)
+                 pyscand.cancel_scan(device)
+         finally:
+@@ -470,7 +470,7 @@
+         result = False
+         try:
+             self.__lock__.acquire()
+-            if self.__thrs__.has_key(device):
++            if device in self.__thrs__:
+                 result = True
+         finally:
+             self.__lock__.release()
+@@ -1004,8 +1004,8 @@
+                 #scandlg = ScanDialog(retrieve_window(self), pname, None)
+                 scandlg = ScanDialog(None, pname, None)
+                 scandlg.show_all()
+-            except Exception, e:
+-                error_dialog(retrieve_window(self), TITLE_SCAN, unicode(e))
++            except Exception as e:
++                error_dialog(retrieve_window(self), TITLE_SCAN, str(e))
+             return pname
+         return None
+         
+@@ -1280,47 +1280,47 @@
+ 
+         if cfgdict != None:
+             k = OPT_SCANSRC
+-            if cfgdict.has_key(k):
++            if k in cfgdict:
+                 self.cb_scansrc.set_active(cfgdict[k])
+             
+             k = OPT_DUPSCAN
+-            if cfgdict.has_key(k):
++            if k in cfgdict:
+                 self.cb_dupscan.set_active(cfgdict[k])
+             
+             k = OPT_SCANMODE
+-            if cfgdict.has_key(k):
++            if k in cfgdict:
+                 self.cb_scanmode.set_active(cfgdict[k])
+             
+             k = OPT_PAPERSIZE
+-            if cfgdict.has_key(k):
++            if k in cfgdict:
+                 self.item_papersize.set_papersize(cfgdict[k])
+             
+             k = OPT_SCANRES
+-            if cfgdict.has_key(k):
++            if k in cfgdict:
+                 self.sb_scanres.set_value(cfgdict[k])
+             
+             k = OPT_OUTFMT
+-            if cfgdict.has_key(k):
++            if k in cfgdict:
+                 set_active_ComboBox(self.cb_filetype, cfgdict[k])
+             
+             k = OPT_OUTDIR
+-            if cfgdict.has_key(k):
++            if k in cfgdict:
+                 self.item_outpath.set_path(cfgdict[k])
+             else:
+                 self.item_outpath.set_path(os.path.expanduser(SPV_DEF_OUTDIR))
+             
+             k = OPT_OUTFILE
+-            if cfgdict.has_key(k):
++            if k in cfgdict:
+                 self.text_outfile.set_text(cfgdict[k])
+             else:
+                 self.text_outfile.set_text(SPV_DEF_OUTFILE)
+             
+             k = OPT_EXEAPP
+-            if cfgdict.has_key(k):
++            if k in cfgdict:
+                 self.item_appcfg.set(cfgdict[k])
+             
+             k = OPT_ICON
+-            if cfgdict.has_key(k):
++            if k in cfgdict:
+                 p = cfgdict[k]
+                 if p == BUILTIN_ICON_TOFOLDER:
+                     self.cb_chooseicon.set_active(0)
