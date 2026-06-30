@@ -1,0 +1,55 @@
+name=brave-origin-nightly
+version=1.94.12
+release=1
+summary="The minimalist browser from the makers of Brave (nightly binary release)"
+group="Networking/WWW"
+desc="$summary."
+maintainer="Maxim Slipenko <maks1ms@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://brave.com/origin/download-nightly"
+license=("MPL2")
+provides=()
+conflicts=()
+appstream_app_id='com.brave.Origin.nightly'
+
+sources=(
+	'local:///brave-origin-nightly.sh'
+	"https://github.com/brave/brave-browser/releases/download/v${version}/${name}-${version}-1.x86_64.rpm"
+)
+
+checksums=(
+	'sha256:3416320e156fedf6d81a314a72af5fdee516e0edbd096cf0b769367901899c46'
+	'sha256:6df9e1cd7613ee67392269edc7968366e268e5b6e4e78b8b7c76ef1c95ffd191'
+)
+
+build_deps=()
+
+deps=()
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+package() {
+	cp -a opt usr "$pkgdir"
+	rm -f "$pkgdir/usr/bin/${name}"
+	install -Dm0755 "$name.sh" "$pkgdir/usr/bin/${name}"
+	install -Dm0644 "opt/brave.com/${name}/product_logo_128_nightly.png" "$pkgdir/usr/share/pixmaps/${name}.png"
+	install -Dm0664 -t "$pkgdir/usr/share/licenses/$name" "opt/brave.com/${name}/LICENSE"
+}
+
+files() {
+	files-find-binary "${name}"
+	files-find-pixmap "${name}".png
+	files-find-desktop "${name}.desktop" "${appstream_app_id}.desktop"
+	files-find-license "${name}"
+
+	files-find \
+		"/usr/share/appdata/${name}.appdata.xml" \
+		"/usr/share/gnome-control-center/default-apps/${name}.xml" \
+		"/usr/share/man/man1/${name}.1.gz"
+
+	files-find "/opt/**/*"
+}

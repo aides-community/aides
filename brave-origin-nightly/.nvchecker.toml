@@ -1,0 +1,5 @@
+[brave-browser-nightly]
+source = "rpmrepo"
+pkg = "brave-browser-nightly"
+repo = "https://brave-browser-rpm-nightly.s3.brave.com/x86_64"
+arch = "x86_64"
