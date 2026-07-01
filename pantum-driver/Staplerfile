@@ -1,0 +1,92 @@
+sfe_249_new_extractor=1
+
+name=pantum-driver
+version=1.1.166
+release=1
+summary="CUPS and SANE drivers for Pantum printers and scanners"
+summary_ru="Драйверы CUPS и SANE для принтеров и сканеров Pantum"
+group="System/Configuration/Printing"
+desc="$summary."
+maintainer="Ajrat Makhmutov <rauty@altlinux.org>"
+architectures=("amd64")
+homepage="https://www.pantum.ru"
+license=("custom")
+
+nonfree=1
+nonfree_url="https://www.pantum.com/"
+nonfree_msgfile=license.txt
+
+provides=()
+conflicts=()
+
+# Pantum's primary CDN (drivers.pantum.com) blocks automated downloads with a
+# Tengine anti-bot ACL, so we use the pantum.ru mirror, which serves the ZIP
+# directly.
+sources=(
+	"https://www.pantum.ru/wp-content/uploads/2026/05/pantum-linux-driver-v${version}.zip"
+)
+
+checksums=(
+	sha256:06735f13f27b5aa3e2d423e3bf4036d4266ad37f4105feae05d2cac6012b4916
+)
+
+scripts=(
+	['postinstall']='postinstall.sh'
+)
+
+build_deps=(
+	bsdtar
+	binutils
+)
+
+deps=(
+	cups
+	sane
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+prepare() {
+	# The new extractor only unpacks the outer ZIP; the inner .deb has to be
+	# opened by hand. The driver directory name contains spaces and dots.
+	cd "$srcdir"/Pantum*Linux*Driver*/Resources
+	bsdtar -xf pantum_*_amd64.deb data.tar.xz
+	mkdir -p "$srcdir/data"
+	# --no-same-owner: the build runs in a user namespace (root inside), so
+	# restoring the archived root ownership would fail with a chown error.
+	tar --no-same-owner -xf data.tar.xz -C "$srcdir/data"
+}
+
+package() {
+	cd "$srcdir/data"
+
+	# /opt without the vendored ipp-usb (ALT ships its own ipp-usb).
+	install -d "$pkgdir/opt/pantum"
+	cp -a opt/pantum/bin opt/pantum/lib "$pkgdir/opt/pantum/"
+
+	# CUPS filters and PPD models: paths match ALT, copy as-is.
+	cp -a --parents usr/lib/cups/filter usr/share/cups/model "$pkgdir/"
+
+	# SANE backends: Debian multiarch -> /usr/lib64/sane (where ALT sane looks).
+	install -d "$pkgdir/usr/lib64/sane"
+	cp -a usr/lib/x86_64-linux-gnu/sane/* "$pkgdir/usr/lib64/sane/"
+
+	# SANE configs and udev rules (the /usr/local duplicates are dropped).
+	cp -a --parents etc/sane.d etc/udev/rules.d "$pkgdir/"
+}
+
+files() {
+	# ptqpdf lives in /opt/pantum/bin, not /usr/bin, so it is covered by the
+	# /opt/pantum glob below rather than files-find-binary.
+	files-find \
+		"/opt/pantum/**/*" \
+		"/usr/lib/cups/filter/*" \
+		"/usr/lib64/sane/**/*" \
+		"/usr/share/cups/model/**/*" \
+		"/etc/sane.d/**/*" \
+		"/etc/udev/rules.d/60-pantum_*.rules"
+}
