@@ -10,6 +10,9 @@ An unofficial proprietary repository for ALT (powered by [Stapler](https://stplr
 >
 > **Attention!** This community project has not been verified, is not affiliated with, and is not supported by LLC "Basealt LLC" and the ALT Linux Team community.
 
+| [Project website](https://aides.space) | [Package catalog](https://pkgs.aides.space) |
+| --- | --- |
+
 ## How to use?
 
 1. Install Stapler:
