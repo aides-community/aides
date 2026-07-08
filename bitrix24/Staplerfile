@@ -1,5 +1,5 @@
 name=bitrix24
-version=22.0.28.91-1
+version=23.0.32.91-1
 release=1
 summary="Bitrix24 unified workspace app (CRM, comms, tasks, and more)"
 group="Communications"
@@ -14,9 +14,9 @@ appstream_app_id="ru.bitrix24.Bitrix24"
 sfe_249_new_extractor=1
 
 _source_url="https://repos.1c-bitrix.ru/b24/${name}_desktop.deb"
-_source_checksum=sha256:a5c947100d1e18c2a7362dc535a6967e03f031e476ef87fc057d04d823553942
-_source_etag=69dcbf3c-a902aa4
-_source_last_modified='Mon, 13 Apr 2026 10:02:36 GMT'
+_source_checksum=sha256:fa3588cd11ea1234b70d2cf7f2774070397ef517f182bbab44bc01c9ac407071
+_source_etag=6a4d0326-a634534
+_source_last_modified='Tue, 07 Jul 2026 13:46:14 GMT'
 
 sources=(
 	"$_source_url"
