@@ -1,7 +1,5 @@
-sfe_249_new_extractor=1
-
 name=google-chrome-stable
-version=150.0.7871.114
+version=150.0.7871.128
 release=1
 group="Networking/WWW"
 summary="The popular web browser by Google (Stable Channel)"
@@ -21,7 +19,7 @@ sources=(
 )
 
 checksums=(
-	sha256:0f19e68dca574849632e25229f15853d2beac33fa06498feed43f34628bc2d53
+	sha256:83ed59c85878ebb8fa53915ebe7066cafc58d1c04c1c95449486e6f9d99a1efb
 	sha256:e93c01576427cad9099f2cf0df0be70d0a2cc0a3a66c743318b2138aa7c4ed93
 )
 
