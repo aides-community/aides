@@ -1,5 +1,5 @@
 name=rustrover
-version=2026.1.4
+version=2026.2
 release=1
 summary="Cross-platform IDE for Rust from JetBrains"
 group="Development/Tools"
@@ -25,7 +25,7 @@ appstream_app_id='com.jetbrains.RustRover'
 
 _jb_name=$name
 _jb_code="rustrover/RustRover"
-_jb_checksum=sha256:f31fc03fab8a49525abf08c0f6d613d48335c55b29399673c26730a4696821cc
+_jb_checksum=sha256:c4783477bc1d95c5f2ddcff949395669ea2e577acc04435107594ba994ae96a1
 
 checksums=(
 	sha256:d34f87d7af95a28530d3acc8b8c6b4f23bd31772d594e1eb0a4689f791919297
