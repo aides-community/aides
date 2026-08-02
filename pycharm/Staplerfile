@@ -1,5 +1,5 @@
 name=pycharm
-version=2026.2
+version=2026.2.0.1
 release=1
 summary="Python IDE for Professional Developers"
 group="Development/Tools"
@@ -24,7 +24,7 @@ provides=(
 
 checksums=(
 	'sha256:61286adfef1bb2fc854f937fb64dfdfb7932f450a36ddafa13396918d517b363'
-	'sha256:ac36f7c0743465215bf8227079b77272945338c485c1da6b924e56468046bd5a'
+	'sha256:4a37cb2d15703553c61e814d8e014bfa47308508470de5f968c4e9645b771675'
 )
 
 _jb_name=$name
