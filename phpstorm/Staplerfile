@@ -1,5 +1,5 @@
 name=phpstorm
-version=2026.1.2
+version=2026.2.1
 release=1
 summary="PHP IDE for Professional Development"
 group="Development/Tools"
@@ -39,7 +39,7 @@ sources=(
 )
 
 checksums=(
-	sha256:55b5ec7ca6a1a755f8030002d74560844f999314e1a2f9d81c7632be4393b457
+	sha256:96131f898139a8b964823a068a84bfea0d79303acc74c37121d9e507ce6c8559
 	sha256:aa9f39fbadfd561b502cc4cb2d916851c853a04b5c509a5de5a58b1f33ccdafe
 )
 
