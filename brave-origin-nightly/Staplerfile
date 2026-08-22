@@ -1,5 +1,5 @@
 name=brave-origin-nightly
-version=1.95.45
+version=1.95.62
 release=1
 summary="The minimalist browser from the makers of Brave (nightly binary release)"
 group="Networking/WWW"
@@ -19,7 +19,7 @@ sources=(
 
 checksums=(
 	'sha256:3416320e156fedf6d81a314a72af5fdee516e0edbd096cf0b769367901899c46'
-	'sha256:1533625b5ce9b6c4899cc0a5c57d6ec235bf045b6b67dd63c65062b285df5bf1'
+	'sha256:8a3347df715e49590b64053aa08ee87c72735058c01e416b923e1b385402708e'
 )
 
 build_deps=()
