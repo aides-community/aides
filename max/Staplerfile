@@ -1,5 +1,5 @@
 name=max
-_upstream_version=26.28.2.77301
+_upstream_version=26.29.0.77636
 version=${_upstream_version%.*}
 release=1
 summary="Russian messenger released by VK"
@@ -17,7 +17,7 @@ sources=(
 )
 
 checksums=(
-	sha256:40dd56a82c67785f5dbc410e6c053e6294af625f6a1f47fe28881358aa08b230
+	sha256:1dced2a20aaa4dea5948ad9eca49b005d8d9d2b46bf80b5d2abbfb7cac490c68
 )
 
 auto_reqprov_method=dirty
