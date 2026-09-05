@@ -1,5 +1,5 @@
 name=vivaldi
-version=8.2.4133.45
+version=8.2.4133.47
 release=1
 summary="An advanced browser made with the power user in mind"
 group="Networking/WWW"
@@ -25,7 +25,7 @@ sources=(
 )
 
 checksums=(
-	sha256:36ad3494c6a47c64b2cba8ea158fe3ae5e69e1490cea9de516c32950fb6f9911
+	sha256:bee37eb5035cd32b0bc8a6d3c3b9a01f96c9754678b551d8167f821a6683f7ab
 )
 
 auto_reqprov_method=dirty
