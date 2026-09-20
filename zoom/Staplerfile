@@ -1,5 +1,5 @@
 name=zoom
-version=7.1.5.4332
+version=7.2.0.5705
 release=1
 summary="Video Conferencing and Web Conferencing Service"
 summary_ru="Сервис видеоконференций и веб-конференций"
@@ -29,7 +29,7 @@ sources=(
 )
 
 checksums=(
-	sha256:e739d936bc92811aecf48e7386a379a7974f7d7a441d729ff28d9d59e6133eca
+	sha256:40580a3abfea1d19c403d8ee9c644b8674f3ed875dc99c0aed484f567cf746bb
 )
 
 auto_reqprov_method=dirty
