@@ -1,5 +1,5 @@
 name=packer
-version=1.16.0
+version=1.16.1
 release=1
 summary="Packer is a tool for creating identical machine images for multiple platforms from a single source configuration"
 summary_ru="Packer — это инструмент для создания идентичных образов машин для различных платформ из единой конфигурации"
@@ -25,7 +25,7 @@ sources=(
 )
 
 checksums=(
-	sha256:5edcd14ab59b535040c512dbecd6ec9ef976a000b073c19d93e4c431c948581e
+	sha256:af38a9e93e4ed1b9ca68206ae969c64c300c82a3dde46a780dfa629f0867f651
 )
 
 auto_reqprov_method=dirty
