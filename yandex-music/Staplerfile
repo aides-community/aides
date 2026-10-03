@@ -1,5 +1,5 @@
 name=yandex-music
-version=5.121.2
+version=5.122.0
 release=1
 summary='Linux client for Yandex Music'
 summary_ru='Linux-клиент для Яндекс Музыки'
@@ -26,7 +26,7 @@ sources=(
 )
 
 checksums=(
-	sha256:a5c369bfb2be56216dbbf1679930ae3c5f4fd6d2a8a4ede9961f59799a52d8c0
+	sha256:909133996189943126f5ea518b178abaf3d33dba26e7a83a8f5be12990dc43e3
 	sha256:6ffc89c0ecda4f2fd901ba949d2c7f812db64f73d154b3018f5764918b6ee5b2
 )
 
