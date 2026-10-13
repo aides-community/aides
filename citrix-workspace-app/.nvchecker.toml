@@ -1,0 +1,4 @@
+[citrix-workspace-app]
+source = "regex"
+url = "https://www.citrix.com/downloads/workspace-app/linux/workspace-app-for-linux-latest.html"
+regex = 'ICAClient-rhel-gcc-8-([\d.]+)-0\.x86_64\.rpm'
