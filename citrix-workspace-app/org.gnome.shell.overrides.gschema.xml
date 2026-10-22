@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Restored from gnome-shell, which dropped this schema in GNOME 44.
+     wfica reads workspaces-only-on-primary from it during seamless init and
+     aborts via g_error() -> SIGTRAP when the schema is missing. -->
+<schemalist>
+  <schema id="org.gnome.shell.overrides" path="/org/gnome/shell/overrides/">
+    <key name="attach-modal-dialogs" type="b">
+      <default>true</default>
+      <summary>Attach modal dialog to the parent window</summary>
+      <description>This key overrides the key in org.gnome.mutter when running GNOME Shell.</description>
+    </key>
+    <key name="edge-tiling" type="b">
+      <default>true</default>
+      <summary>Enable edge tiling when dropping windows on screen edges</summary>
+      <description>This key overrides the key in org.gnome.mutter when running GNOME Shell.</description>
+    </key>
+    <key name="dynamic-workspaces" type="b">
+      <default>true</default>
+      <summary>Workspaces are managed dynamically</summary>
+      <description>This key overrides the key in org.gnome.mutter when running GNOME Shell.</description>
+    </key>
+    <key name="workspaces-only-on-primary" type="b">
+      <default>true</default>
+      <summary>Workspaces only on primary monitor</summary>
+      <description>Determines whether workspace switching should happen for windows on all monitors or only for windows on the primary monitor.</description>
+    </key>
+    <key name="focus-change-on-pointer-rest" type="b">
+      <default>true</default>
+      <summary>Delay focus changes in mouse mode until the pointer stops moving</summary>
+      <description>This key overrides the key in org.gnome.mutter when running GNOME Shell.</description>
+    </key>
+  </schema>
+</schemalist>

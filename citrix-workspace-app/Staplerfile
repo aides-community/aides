@@ -1,6 +1,6 @@
 name=citrix-workspace-app
 version=23.2.0.10
-release=1
+release=2
 summary="Citrix Workspace app for Linux"
 summary_ru="Приложение Citrix Workspace для Linux"
 group="Networking/Remote access"
@@ -21,10 +21,12 @@ conflicts=(ICAClient)
 
 sources=(
 	"https://web.archive.org/web/20230314134727id_/https://downloads.citrix.com/21641/ICAClient-rhel-${version}-0.x86_64.rpm?__gda__=exp=1678804225~acl=/*~hmac=3d33ee5e40cc357775187334e673017cd76c522825c00b8575f661de892be390&~name=${name}-${version}.rpm"
+	"local:///org.gnome.shell.overrides.gschema.xml"
 )
 
 checksums=(
 	"sha256:f0d969e1776e520ba1bf59c757d67c22ad8be8337dda0e3fc1b4f72aa0895002"
+	"sha256:6a4e11738d81d04a5817d0738d62c6119a48d064a55e47286238c68363fc1abe"
 )
 
 deps=(
@@ -52,11 +54,14 @@ disable_network=1
 
 package() {
 	cp -a opt etc "${pkgdir}"/
+	install -Dm0644 org.gnome.shell.overrides.gschema.xml \
+		"${pkgdir}/usr/share/glib-2.0/schemas/org.gnome.shell.overrides.gschema.xml"
 }
 
 files() {
 	files-find \
 		"/opt/Citrix" \
 		"/opt/Citrix/**/*" \
-		"/etc/init.d/ctxcwalogd"
+		"/etc/init.d/ctxcwalogd" \
+		"/usr/share/glib-2.0/schemas/org.gnome.shell.overrides.gschema.xml"
 }
