@@ -1,0 +1,68 @@
+name=lolka
+version=1.0.100
+release=1
+summary="Lolka - voice chat and screen sharing application"
+group="Communications"
+desc="Lolka is a platform for real-time communication: servers with text
+and voice channels, roles, screen sharing (up to 5 streams per channel),
+direct and group chats, custom emoji and reactions.
+
+The desktop client provides an in-game overlay. The service works
+without VPN and offers import of roles and channel structure
+from Discord."
+maintainer="Oleg Shchavelev <oleg@alt-gnome.ru>"
+architectures=("amd64")
+homepage="https://lolka.app"
+license=("custom")
+appstream_app_id="app.lolka.Lolka"
+nonfree=1
+nonfree_url="https://lolka.app/terms"
+
+sources=(
+	"https://storage.yandexcloud.net/lolka-electron/releases/Lolka_${version}_amd64.deb"
+)
+
+checksums=(
+	sha256:15c25d3c45314d859db3753764d1b0e6d91d2528c410ef070f502483bdfc9b2c
+)
+
+build_deps=(
+	"desktop-file-utils"
+)
+
+auto_reqprov_method=dirty
+auto_req=1
+auto_prov=1
+
+disable_network=1
+
+package() {
+	tar -xf data.tar.xz -C "$pkgdir/"
+
+	# The app calls app.setDesktopName("lolka.desktop"), so the window
+	# identifies itself as "lolka" on Wayland (xdg app_id) and X11 (WM_CLASS).
+	# Upstream ships StartupWMClass=Lolka with a capital L - a leftover from
+	# older Electron; GNOME matches the app_id against StartupWMClass
+	# case-sensitively, so the stale hint shadows the real id and the window
+	# gets a generic icon in the overview/dash under Wayland.
+	desktop-file-edit --set-key=StartupWMClass --set-value="$name" \
+		"$pkgdir/usr/share/applications/$name.desktop"
+
+	install -d "$pkgdir/usr/bin"
+	ln -s "/opt/Lolka/lolka" "$pkgdir/usr/bin/$name"
+}
+
+files() {
+	files-find \
+		"/opt/Lolka/**/*" \
+		"/usr/share/icons/hicolor/*/apps/$name.png"
+
+	files-find-binary \
+		"$name"
+
+	files-find-desktop \
+		"$name.desktop"
+
+	files-find-doc \
+		"$name"
+}

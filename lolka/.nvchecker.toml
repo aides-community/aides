@@ -1,0 +1,7 @@
+# This file describes how to check for updates using nvchecker.
+# For more information, visit l.aides.space/nvchecker
+
+[lolka]
+source = "regex"
+url = "https://storage.yandexcloud.net/lolka-electron/releases/latest-linux.yml"
+regex = 'version: ([\d.]+)'
