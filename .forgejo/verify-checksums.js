@@ -6,6 +6,36 @@ module.exports = async ({ forgejo, exec }) => {
     const glob = require('glob');
     const path = require('path');
 
+    const maxAttempts = 3;
+    const retryDelayMs = 10_000;
+
+    /** @param {number} ms */
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    async function clearCache() {
+        await exec.exec(`rm -rf $HOME/.cache/.stapler-spec`);
+    }
+
+    /**
+     * @param {string} file
+     * @returns {Promise<boolean>}
+     */
+    async function verifyWithRetry(file) {
+        for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+            try {
+                await exec.exec(`stplr-spec verify-checksums --path "${file}"`);
+                return true;
+            } catch (e) {
+                console.log(`Attempt ${attempt}/${maxAttempts} failed: ${e instanceof Error ? e.message : e}`);
+                if (attempt < maxAttempts) {
+                    await clearCache();
+                    await sleep(retryDelayMs * attempt);
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * @param {string} pkg
      */
@@ -72,13 +102,12 @@ module.exports = async ({ forgejo, exec }) => {
         const pkg = path.basename(pkgDir);
         console.log(`Checking ${pkg}...`);
 
-        try {
-            await exec.exec(`stplr-spec verify-checksums --path "${file}"`);
-            reportSuccess(pkg);
-        } catch {
-            reportFailed(pkg);
-        } finally {
-            await exec.exec(`rm -rf $HOME/.cache/.stapler-spec`)
+        const ok = await verifyWithRetry(file);
+        await clearCache();
+        if (ok) {
+            await reportSuccess(pkg);
+        } else {
+            await reportFailed(pkg);
         }
     }
 }
