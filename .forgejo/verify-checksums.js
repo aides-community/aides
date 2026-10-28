@@ -1,5 +1,5 @@
 // @ts-check
-/** @param {{ forgejo: import('forgejo-js').Api<unknown>, exec: import('@actions/exec') }} params */
+/** @param {{ forgejo: import('@maks1ms/forgejo-js').Api<unknown>, exec: import('@actions/exec') }} params */
 module.exports = async ({ forgejo, exec }) => {
     const owner = "aides-pkgs";
     const title = "Checksum verification failed";

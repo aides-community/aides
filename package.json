@@ -2,7 +2,7 @@
   "devDependencies": {
     "@actions/exec": "^1.1.1",
     "@types/node": "^24.10.1",
-    "forgejo-js": "^11.0.0"
+    "@maks1ms/forgejo-js": "^16.0.0"
   },
   "dependencies": {
     "glob": "^13.0.0"

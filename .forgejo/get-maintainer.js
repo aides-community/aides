@@ -1,5 +1,5 @@
 // @ts-check
-/** @param {{ forgejo: import('forgejo-js').Api<unknown>, core: any  }} params */
+/** @param {{ forgejo: import('@maks1ms/forgejo-js').Api<unknown>, core: any  }} params */
 module.exports = async ({ core }) => {
     const PACKAGE = `${process.env.PACKAGE}`;
 
