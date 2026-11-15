@@ -1,5 +1,5 @@
 name=pycharm
-version=2026.2.2
+version=2026.3
 release=1
 summary="Python IDE for Professional Developers"
 group="Development/Tools"
@@ -24,19 +24,34 @@ provides=(
 
 checksums=(
 	'sha256:61286adfef1bb2fc854f937fb64dfdfb7932f450a36ddafa13396918d517b363'
-	'sha256:60448e3fb4e6a700e3d2ad3583ea8de1505b3f436e6715329a5a35e31c34aced'
+	'sha256:906e447f9670e0e698618049b82b4ad98ca41eb6f8b5edbd6cd34b42d570d787'
 )
 
 _jb_name=$name
 _jb_code="python/$name"
+_snap_url=https://api.snapcraft.io/api/v1/snaps/download/ghX2Y34cboxJCeWFjBhjyqwaBeTIfcpm_141.snap
 
 ##BEGIN:jb-template##
 disable_network=1
+_stapler_update_preset=snap
+_snap_name="$_jb_name"
+_snap_channel=stable
+
+build_deps+=(squashfs-tools)
 
 sources=(
 	local:///$_jb_name.desktop
-	https://download-cdn.jetbrains.com/$_jb_code-$version.tar.gz
+	"$_snap_url"
 )
+
+prepare() {
+	_snaps=("${srcdir}/"*.snap)
+	if [[ -e ${_snaps[0]} ]]; then
+		unsquashfs "${_snaps[0]}"
+		rm -rf squashfs-root/snap
+		mv squashfs-root "$_jb_name-$version"
+	fi
+}
 
 package() {
 	mkdir -p "$pkgdir/opt/$_jb_name"
