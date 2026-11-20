@@ -1,5 +1,5 @@
 name=yandex-disk
-version=0.1.6.1080
+version=0.1.6.1081
 release=4
 summary='Yandex.Disk for Linux client'
 summary_ru='Клиент Яндекс.Диск для Linux'
@@ -31,7 +31,7 @@ sources=(
 )
 
 checksums=(
-	sha256:47ba503b4dfccecc824386d67d686abe4b5356b8b546e48fce8811b5fa88a718
+	sha256:7970b3da0ad644f06f7b3ae4f0c69cc28d4730f95a0a02b7af2b58eb6000f9c5
 	sha256:84cf1946b9fa1a43ffebeebfcca71eb0c2e928ed0b7794b89e63fdb493bc20db
 	sha256:795f8b9cfc7193bb09a18a9f20ff15b470ff05a04b9a564081ad14f35eb8b668
 )
